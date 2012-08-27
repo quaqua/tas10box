@@ -15,13 +15,20 @@ require 'tas10/content_repository'
 
 module Tas10box
 
-  def defaults( options=nil )
+  def self.defaults( options=nil )
+    @defaults ||= { :locales => ["de", "en"], :site => { :name => 'My Company' } }
     if options
-      @@defaults || @@defaults = options
-    else
-      @@defaults ||= {}
+      @defaults.merge( options )
     end
-    @@defaults
+    @defaults
+  end
+
+  def self.default_user_settings( options=nil )
+    @default_user_settings || @default_user_settings = {}
+    if options
+      @default_user_settings.merge( options )
+    end
+    @default_user_settings
   end
 
   module Rails

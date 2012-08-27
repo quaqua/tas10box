@@ -1,5 +1,4 @@
 require 'digest/sha2'
-require File::expand_path '../group', __FILE__
 
 class User
 	include Mongoid::Document
@@ -14,11 +13,10 @@ class User
   field :salt, type: String
   field :confirmation_key, type: String
   field :suspended, type: Boolean
-	field :settings, type: Hash
 
   embeds_many :login_log_entries
   embeds_many :request_log_entries
-  embeds_one :user_setting, :as => :settings
+  embeds_one :settings, :class_name => "UserSetting"
 
   validates_presence_of :email
   validates_format_of :email,
@@ -36,7 +34,7 @@ class User
 
   # hooks
 	before_save :encrypt_password
-  before_create :generate_salt, :generate_password_if_none, :generate_confirmation_key
+  before_create :generate_salt, :generate_password_if_none, :generate_confirmation_key, :setup_default_settings
 
   def update_request_log( request )
     puts request.inspect
@@ -67,6 +65,7 @@ class User
   # with the previously generated salt
   #
 	def encrypt_password
+    generate_salt unless self.salt
     unless self.password.blank?
   		self.encrypted_password = encrypt( self.password, self.salt )
     end
@@ -98,6 +97,10 @@ class User
     if new_record?
       self.confirmation_key = SecureRandom.hex(10)
     end
+  end
+
+  def setup_default_settings
+    settings = UserSetting.new( Tas10box::default_user_settings )
   end
 
 	#has_one :details, class: Tas10::Contact

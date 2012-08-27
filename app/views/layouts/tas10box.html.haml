@@ -1,0 +1,14 @@
+!!! 5
+%html
+  %head
+
+    = javascript_include_tag :tas10box
+    = javascript_include_tag :defaults
+    = stylesheet_link_tag :tas10box
+    = stylesheet_link_tag :defaults
+
+    %title= "#{Tas10box.defaults[:site][:name]}'s tas10box"
+    = yield(:head)
+
+  %body
+    = yield

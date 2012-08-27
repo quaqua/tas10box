@@ -2,11 +2,18 @@ module Tas10box
 
   class Tas10boxEngine < ::Rails::Engine
 
-    initializer :assets do |config|
-      #::Rails.application.config.assets.precompile += %w( tas10box.js tas10box.css jquery.Jcrop.min.js tas10box-mobile.js tas10box-mobile.css ) 
+    tas10js = %w( tas10.js tas10box.js )
+    tas10css = %w( tas10box.css )
+
+    if ENV['RAILS_ENV'] == 'production'
+      initializer :assets do |config|
+        ::Rails.application.config.assets.precompile += tas10js
+        ::Rails.application.config.assets.precompile += tas10css
+      end
     end
 
     initializer "tas10box_initializer"  do |app|
+
 
       require File::expand_path("../../controller_extensions", __FILE__)
       #require File::expand_path("../../post_process_image", __FILE__)
@@ -17,6 +24,7 @@ module Tas10box
       Mime::Type.register_alias "text/html", :snippet # html snippets (usually rendered as partials but to have them in views available)
       
     end
+
 
   end
 end

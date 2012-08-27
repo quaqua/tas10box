@@ -1,0 +1,25 @@
+- unless flash.empty?
+  .login-error-container
+    %span= flash('error', 'sweep')
+
+.login-logo
+
+.login-container
+
+  = form_tag( login_path ) do
+
+    %p
+      %label= t('login.name_email')
+    %p
+      = text_field_tag( :name_or_email, '', :class => 'js-get-focus')
+
+    %p
+      %label= t('login.password')
+    %p
+      = password_field_tag( :password )
+
+      = submit_tag( t('login.title') )
+
+.login-footer-container
+  &copy; TASTENWERK (2o12)
+

@@ -1,0 +1,442 @@
+/*
+ *= require '3rdparty/tipsy'
+ *= require 'user'
+ */
+
+html
+  margin: 0
+  padding: 0
+
+body
+  font: 13px "Lucida Grande", Helvetica, Arial, sans-serif
+  margin: 0
+  padding: 0
+  background-image: url("/images/main_bg.png")
+
+a
+  color: #444
+
+input
+  padding: 3px 0
+  border: 1px solid #ddd
+  background-color: #fff
+  &:hover, &:focus
+    outline: none
+  &[type=submit]
+    margin: 0
+    padding: 6px 10px
+    font-size: 14px
+    cursor: pointer
+    background-color: #8a0
+    border: none
+    color: #fff
+    &:hover, &:focus
+      background-color: #444
+
+.fill-width
+  width: 100%
+
+.float-right
+  float: right
+
+.float-left
+  float: left
+
+.desc
+  color: #999
+  font-size: 10px
+
+label.desc
+  text-transform: uppercase
+  font-size: 12px
+
+.tas10-shadow
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5)
+
+h1.p
+  margin-bottom: 0
+
+p
+  &.p
+    margin-bottom: 0
+  &.h1
+    margin-top: 0
+
+.tas10-button
+  color: #fff
+  background-color: #8a0
+  border: 1px solid #999
+  padding: 7px 20px
+  font-weight: 900
+  text-transform: uppercase
+  outline: none
+  cursor: pointer
+  text-decoration: none
+  &:hover, &:focus
+    background-color: #444
+  &:hover .ui-icon, &:focus .ui-icon
+    background-image: url("/stylesheets/3rdparty/jquery-ui/images/ui-icons_ffffff_256x240.png")
+  .disabled
+    opacity: 0.1
+    &:hover, &:focus
+      opacity: 0.1
+      box-shadow: none
+  .small
+    padding: 2px 5px
+    font-size: 10px
+    cursor: pointer
+  .delete
+    background-color: #d44
+    border: 1px solid #a44
+
+fieldset
+  &.tas10-steps
+    border: none
+    border-top: 1px solid #aaa
+    legend
+      font-size: 14px
+      color: #666
+      text-align: right
+      font-weight: 900
+      text-transform: uppercase
+    p.desc
+      margin: 0
+      color: #888
+  &.title
+    border: none
+    border-top: 1px solid #ccc
+    legend
+      font-size: 14px
+      color: #444
+      font-weight: 900
+      text-transform: uppercase
+      padding: 0
+
+#tas10-top-panel
+  margin: 10px
+  #account-info
+    float: right
+    min-width: 300px
+    a
+      color: #333
+      font-size: 12px
+      text-decoration: none
+      opacity: 0.8
+      &:hover
+        opacity: 1
+    img.userpic
+      width: 30px
+      height: 30px
+      float: right
+      opacity: 0.8
+      border: 1px solid #ddd
+    .username
+      float: right
+      margin: 7px 0 0
+      opacity: 0.7
+    .logout
+      float: right
+      opacity: 0.4
+      padding: 6px
+      margin: 1px 5px 0 0
+
+#tas10-logo
+  cursor: pointer
+  background-image: url("/images/logo_30x30.png")
+  width: 30px
+  height: 30px
+  cursor: pointer
+  margin: 10px
+  position: absolute
+  top: 0
+  left: 5px
+
+#tas10-loader
+  position: absolute
+  top: 10px
+  left: 17px
+  display: none
+  background-color: #8a0
+  padding: 7px 6px 4px
+  width: 16px
+  height: 19px
+
+.browser-actions
+  margin: 4px
+  border: 1px solid #ddd
+  span.spacer
+    float: left
+    height: 16px
+    padding: 3px 5px 3px 4px
+  a
+    float: left
+    background: none
+    padding: 3px 5px 3px 4px
+    cursor: pointer
+    &:hover .ui-icon
+      opacity: 1
+    .ui-icon
+      opacity: 0.5
+    .disabled
+      cursor: default
+      background: none
+      .ui-icon
+        opacity: 0.2
+      &:hover
+        box-shadow: none
+        margin-right: 0
+        padding-right: 4px
+    .paste
+      background-color: #ffc
+      .disabled
+        background: none
+
+.context-trigger:hover .context-content
+  display: block
+
+.context-content
+  display: none
+  background-color: #fff
+  padding: 10px
+  border: 1px solid #ddd
+  z-index: 10
+  position: absolute
+  top: 15px
+  right: -1px
+  width: 200px
+  max-height: 500px
+  overflow: auto
+
+.tas10-overlay
+  display: none
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  width: 100%
+  height: 100%
+  background-color: rgba(255, 255, 255, 0.8)
+  z-index: 9998
+
+#tas10-notifier
+  display: none
+  position: absolute
+  top: 28px
+  left: 100px
+  right: 100px
+  text-align: center
+  z-index: 999
+  display: none
+  font-size: 10px
+  .wrapper
+    font-weight: 900
+    text-align: center
+    padding: 2px 10px
+  .error .wrapper
+    &.high
+      color: #d00
+      border: 1px solid #500
+    &.low
+      color: #d55
+      border: 1px solid #d00
+  .wrapper
+    &.high
+      color: #540
+      background-color: #fc0
+      border: 1px solid #bbb
+    &.low
+      color: #666
+      background-color: #fff
+      border: 1px solid #ddd
+  a
+    opacity: 0.5
+    text-decoration: none
+    width: 16px
+    height: 16px
+    margin: 0 -9px 0 5px
+    position: relative
+    display: inline-block
+    cursor: pointer
+    &:hover
+      opacity: 1
+    .ui-icon
+      position: absolute
+      top: 4px
+
+.tas10-dialog
+  display: none
+  position: absolute
+  padding: 10px
+  background-color: #fff
+  color: #333
+  box-shadow: 3px 5px 10px #ddd
+  z-index: 9999
+  border: 1px solid #ddd
+  .tas10-dialog-header
+    color: #999
+    font-weight: 900
+    margin: 3px 5px
+  .border-top
+    background-image: url("/images/tas10-container-tabs-sprites.png")
+    background-position: -10px -4px
+    width: 100%
+    height: 15px
+    position: absolute
+    top: -14px
+    left: 0
+  .ui-icon-closethick
+    float: right
+    cursor: pointer
+    border: 1px solid #000
+    opacity: 0.2
+    &:hover
+      opacity: 1
+      border-color: #333
+  label
+    text-transform: uppercase
+  .title
+    font-size: 14px
+    font-weight: 900
+  .info-container
+    min-width: 400px
+  h3
+    font-size: 12px
+    font-weight: 500
+    color: #aaa
+    text-transform: uppercase
+
+.tas10-form
+  label
+    text-transform: uppercase
+    color: #999
+  input[type='text']
+    padding: 5px 0
+    font-size: 14px
+    &:focus
+      border-color: #999
+    &.name
+      font-weight: 900
+
+ul.tas10-tree
+  margin: 0
+  list-style-type: none
+  padding: 0
+  ul
+    margin: 0
+    list-style-type: none
+    padding: 0
+  height: 100%
+  overflow: auto
+  li
+    margin: 0
+    padding: 0
+    font-size: 11px
+    cursor: pointer
+    .drop-hover
+      background-color: #fc6 !important
+    .item-container
+      padding: 4px 0
+    a
+      text-decoration: none
+      font-weight: 500
+      color: #555
+    .title.item-color
+      border-radius: 3px
+      padding: 0 5px
+      color: #fff
+    .tb-icon16
+      margin: -1px 3px 0 0
+    .spacer
+      width: 16px
+      height: 16px
+      float: left
+    .opener
+      margin: -2px 0 0
+      opacity: 0.5
+      cursor: default
+      &:hover
+        opacity: 1
+      &.loading
+        background-image: url("/images/loading_16x16.gif") !important
+        background-position: 0 0 !important
+
+.selected-item div.item-container
+  background-color: #6db4ff
+  font-weight: 900
+  a
+    color: #fff
+
+.path-item
+  float: left
+  margin: 0 5px
+  padding: 3px 5px
+  background-color: #d64
+  color: #fff
+
+#tas10-find
+  position: absolute
+  left: 320px
+  right: 10px
+  top: 53px
+  height: 32px
+  background-color: #fff
+  border: 1px solid #ddd
+  .submit
+    position: absolute
+    top: 4px
+    right: 30px
+    opacity: 0.5
+    &:hover
+      opacity: 1
+  .settings
+    position: absolute
+    top: 8px
+    right: 10px
+    opacity: 0.5
+    &:hover
+      opacity: 1
+  .available-scripts
+    list-style-type: none
+    margin: 0
+    padding: 0
+    li
+      padding: 3px
+      cursor: pointer
+      &:hover
+        background-color: #6db4ff
+  input[type=text]
+    border: none
+    background: none
+    font-size: 16px
+    position: absolute
+    width: 300px
+    margin: 3px 60px 0 0
+    &:focus
+      outline: none
+  .path, .conditions
+    margin: 5px 8px
+    float: left
+  .field-condition
+    float: left
+    margin: 0 5px
+    padding: 3px 5px
+    background-color: #ddd
+    color: #000
+  .label-res
+    list-style-type: none
+    padding: 0
+    margin: 0
+    position: absolute
+    top: 30px
+    width: 200px
+    background-color: #fff
+    z-index: 10
+    border: 1px solid #ddd
+    box-shadow: 0 3px 3px #555
+    li
+      padding: 5px
+      .selected-res
+        background-color: #6db4ff
+        color: #fff
+        cursor: pointer

@@ -3,25 +3,12 @@ module Tas10box
       
       module ClassMethods
 
-        # enable and setup tas10box with this method
-        #
-        # :open_registration grant registration by anybody
-        #
-        # :session_duration  duration in minutes after which a user is beeing logged off the system (default: 20)
-        def tas10box_defaults(options={})
-          @open_registration = true if options[:open_registration]
-          @session_duration = options[:session_timeout] || 20
-          setup_helper_methods
-        end
-        
-        private
-             
-        def setup_helper_methods
-          helper_method :authenticated?
-          helper_method :current_user
-          helper_method :l_time_ago_in_words
-          helper_method :current_user_or_anybody
-          helper_method :known_users_and_groups
+        def self.included(model)
+          model.helper_method :authenticated?
+          model.helper_method :current_user
+          model.helper_method :l_time_ago_in_words
+          model.helper_method :current_user_or_anybody
+          model.helper_method :known_users_and_groups
         end
       
       end
@@ -112,6 +99,7 @@ module Tas10box
         end
 
         def try_authentication(name,password)
+          puts "AUTH HERE!"
           came_from = session[:came_from]
           reset_session
           @current_user = Tas10::User.first(:name => name)
@@ -125,7 +113,7 @@ module Tas10box
             session[:tas10box] = {:user_id => @current_user.id, :group_id => @current_user.group_ids}
             session[:came_from] = came_from
             if @current_user.update_request_log( request )
-              I18n.locale = session[:locale] = (@current_user.settings["locale"] || I18n.locale)
+              I18n.locale = session[:locale] = (@current_user.settings.locale || I18n.locale)
               return true
             end
             return false

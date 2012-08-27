@@ -1,8 +1,7 @@
 class Tas10boxController < ActionController::Base
 
   protect_from_forgery
-  tas10box_defaults
-  layout 'tastenbox'
+  layout 'tas10box'
 
   before_filter :renew_authentication,
                 :set_locale,
@@ -10,13 +9,12 @@ class Tas10boxController < ActionController::Base
 
   def set_locale
     return if session[:locale] and !params.has_key?(:locale)
-    known = Tastenbox::env.get(:known_locales) || ["de","en"]
-    if params[:locale] && known.include?(params[:locale].downcase)
+    if params[:locale] && Tas10box.defaults[:locales].include?(params[:locale].downcase)
       I18n.locale = (session[:locale] = params[:locale])
     elsif current_user and current_user.default_locale
       I18n.locale = (session[:locale] = current_user.default_locale)
     elsif request.env.has_key?("HTTP_ACCEPT_LANGUAGE") and detected_locale = request.env["HTTP_ACCEPT_LANGUAGE"][0..1] 
-      if known.include?(detected_locale.downcase)
+      if Tas10box.defaults[:locales].include?(detected_locale.downcase)
         I18n.locale = (session[:locale] = detected_locale)
       else
         session[:locale] = I18n.locale
