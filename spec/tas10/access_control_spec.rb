@@ -7,9 +7,9 @@ describe "Access Control" do
 
   before(:all) do
     PlainDoc.delete_all
-    Tas10::User.delete_all
-    @a = Tas10::User.create( :email => 'b@test.com' )
-    @b = Tas10::User.create( :email => 'a@test.com' )
+    User.delete_all
+    @a = User.create( :email => 'b@test.com' )
+    @b = User.create( :email => 'a@test.com' )
     @doc1 = PlainDoc.create_with_user( @a, :name => 'doc1' )
   end
 

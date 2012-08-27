@@ -1,7 +1,7 @@
 require 'digest/sha2'
 require File::expand_path '../group', __FILE__
 
-class Tas10::User
+class User
 	include Mongoid::Document
   include Mongoid::Versioning
   include Mongoid::Paranoia
@@ -10,22 +10,23 @@ class Tas10::User
 
 	field :name, type: String
 	field :email, type: String
-	field :log, type: Array
-	field :actions, type: Array
 	field :encrypted_password, type: String
   field :salt, type: String
   field :confirmation_key, type: String
+  field :suspended, type: Boolean
 	field :settings, type: Hash
 
-  has_and_belongs_to_many :groups
-  has_many :log_entries
+  embeds_many :login_log_entries
+  embeds_many :request_log_entries
+  embeds_one :user_setting, :as => :settings
 
   validates_presence_of :email
   validates_format_of :email,
     :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i,
     :message => 'not a valid email address'
 
-	has_many :known_users, class_name: "Tas10::User"
+	has_many :known_users, class_name: "User"
+  has_and_belongs_to_many :groups
 
   index( {:email => 1}, { :unique => true, :background => true } )
   index( {:name => 1}, { :background => true } )
@@ -37,14 +38,37 @@ class Tas10::User
 	before_save :encrypt_password
   before_create :generate_salt, :generate_password_if_none, :generate_confirmation_key
 
+  def update_request_log( request )
+    puts request.inspect
+    request_log_entries.push( :ip => request.env['REMOTE_ADDR'],
+                              :url => 'address',
+                              :at => Time.now )
+    save(:safe => true)
+  end
+
+  def update_login_log( request )
+    login_log_entries.push( :ip => request.env['REMOTE_ADDR'],
+                            :url => 'address',
+                            :at => Time.now )
+    save(:safe => true)
+  end
+
   private
+
+  def encrypt( pass, salt )
+    Digest::SHA256::hexdigest( pass + salt )
+  end
+
+  def match_password( pass )
+    encrypted_password == encrypt( pass, self.salt )
+  end
 
   # encrypt the password in combination
   # with the previously generated salt
   #
 	def encrypt_password
     unless self.password.blank?
-  		self.encrypted_password = Digest::SHA256::hexdigest( self.password + self.salt )
+  		self.encrypted_password = encrypt( self.password, self.salt )
     end
 	end
 

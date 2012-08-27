@@ -7,9 +7,9 @@ describe "Plain Document" do
 
   before(:all) do
     PlainDoc.delete_all
-    Tas10::User.delete_all
-    @user = Tas10::User.create( :email => 'test@test.com' )
-    @buser = Tas10::User.create( :email => 'best@test.com' )
+    User.delete_all
+    @user = User.create( :email => 'test@test.com' )
+    @buser = User.create( :email => 'best@test.com' )
     @doc1 = PlainDoc.create_with_user( @user, :name => 'doc1' )
   end
 
@@ -34,7 +34,7 @@ describe "Plain Document" do
     pd = PlainDoc.new.with_user( @user )
     pd.class.should == PlainDoc
     pd.user.should_not == nil
-    pd.user.class.should == Tas10::User
+    pd.user.class.should == User
     pd.user.id.class.should == Moped::BSON::ObjectId
   end
 

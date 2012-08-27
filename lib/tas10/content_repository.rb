@@ -105,7 +105,7 @@ module Tas10
     end
 
     def with_user( user )
-      @user = user if user.is_a?( Tas10::User )
+      @user = user if user.is_a?( User )
       self
     end
 

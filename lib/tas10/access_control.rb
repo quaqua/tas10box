@@ -125,7 +125,7 @@ module Tas10
     end
 
     def valid_user_or_group?( user )
-      user.is_a?(Tas10::User) || user.is_a?(Tas10::Group)
+      user.is_a?(User) || user.is_a?(Group)
     end
 
   end

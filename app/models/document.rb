@@ -1,4 +1,4 @@
 class Tas10::Document
-  include ContentRepository
+  include ::Tas10::ContentRepository
 
 end

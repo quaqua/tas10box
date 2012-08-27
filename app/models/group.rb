@@ -1,7 +1,7 @@
 require 'digest/sha2'
 #require 'securerandom'
 
-class Tas10::Group
+class Group
 	include Mongoid::Document
 
   field :name, type: String

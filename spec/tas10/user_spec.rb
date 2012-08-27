@@ -3,15 +3,15 @@ require 'digest/sha2'
 require File::expand_path '../../../app/models/user', __FILE__
 require File::expand_path '../../../app/models/group', __FILE__
 
-describe "Tas10::User" do
+describe "User" do
 
   before(:each) do
-    @u = Tas10::User.new
+    @u = User.new
   end
 
 	it "new user can be defeind" do
-		u = Tas10::User.new(:name => 'u1')
-		u.class.should == Tas10::User
+		u = User.new(:name => 'u1')
+		u.class.should == User
 		u.name.should == 'u1'
 	end
 
@@ -29,7 +29,7 @@ describe "Tas10::User" do
   end
 
   it "password field cannot be set through mass assignment" do
-    u = Tas10::User.create(:email => 'test@test.com', :password => 'test')
+    u = User.create(:email => 'test@test.com', :password => 'test')
     u.password.should_not == 'test'
     u.password = 'test'
     u.password.should == 'test'
