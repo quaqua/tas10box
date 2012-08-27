@@ -1,0 +1,2 @@
+class NotPersistedError < StandardError
+end

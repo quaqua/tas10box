@@ -1,0 +1,2 @@
+class InvalidDocumentError < StandardError
+end

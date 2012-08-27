@@ -11,23 +11,24 @@ module Tas10
       def acts_as_document
         include Mongoid::Document
         include Mongoid::Versioning
+        max_versions 30
         include Mongoid::Paranoia
 
-        max_versions 30
-
         include AccessControl
+        include Labeling::InstanceMethods
 
         field :name, type: String
-        field :label_ids, type: Array
+        field :label_ids, type: Array, default: []
         field :pos, type: Integer, default: 99
         field :acl, type: Hash, default: {}
-        #field :log, type: Array, default: []
+
         field :comments, type: Array
 
         index name: 1
         index label_ids: 1
 
         before_save :update_log, :check_write_permission
+        after_save :share_children_on_change, :unshare_children_on_change
         before_create :setup_creator
         before_destroy :check_delete_permission
 
@@ -45,8 +46,18 @@ module Tas10
 
       def first_with_user( user )
         doc = with_user( user ).first
+        return unless doc
         doc.user = user
         doc
+      end
+
+      def all_with_user( user )
+        docs = with_user( user ).all
+        return unless docs
+        docs.each do |doc|
+          doc.user = user
+        end
+        docs
       end
 
       def create_with_user( user, attrs )
@@ -75,12 +86,17 @@ module Tas10
         #self.acl[:"#{@user.id}"] = { :privileges => "rwsd", :inherited => nil }
       end
 
+      def reload
+        return self.class.with_user( @user ).where( :id => id ).first
+      end
+
     end
 
     include InstanceMethods
 
     def self.included(model)
       model.extend ClassMethods
+      model.extend Labeling::ClassMethods
       model.acts_as_document
     end
 

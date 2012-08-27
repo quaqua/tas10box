@@ -10,7 +10,7 @@ describe "Plain Document" do
     Tas10::User.delete_all
     @user = Tas10::User.create( :email => 'test@test.com' )
     @buser = Tas10::User.create( :email => 'best@test.com' )
-    #@doc1 = PlainDoc.create_with_user( @user, :name => 'doc1' )
+    @doc1 = PlainDoc.create_with_user( @user, :name => 'doc1' )
   end
 
   before(:each) do
@@ -78,6 +78,13 @@ describe "Plain Document" do
   it "won't save if no user object is passed properly" do
     pd = PlainDoc.new(:name => 'p').with_user( 1 )
     lambda{ pd.run_before_callbacks(:create) }.should raise_error( Tas10::InvalidUserError )
+  end
+
+  it "reloads itself completely from the database" do
+    PlainDoc.with_user( @user ).where(:name => 'doc1').inc(:pos, 1)
+    @doc1.pos.should == 99
+    doc1 = @doc1.reload
+    doc1.pos.should == 100
   end
 
 end
