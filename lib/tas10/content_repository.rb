@@ -41,7 +41,11 @@ module Tas10
       end
 
       def with_user( user )
-        where :"acl.#{user.id}.privileges" => /r\w*/
+        q = [{ :"acl.#{user.id}.privileges" => /r\w*/ }]
+        user.group_ids.each do |group_id|
+          q.push({:"acl.#{group_id.to_s}.privileges" => /r\w*/})
+        end
+        where( "$or" => q )
       end
 
       def first_with_user( user )

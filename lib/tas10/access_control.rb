@@ -11,41 +11,45 @@ module Tas10
     # @returns [ TrueClass ] if everything goes fine
     #
     def share( user, privileges )
-      raise InvalidUserError if user.nil? || !user.is_a?(Tas10::User)
+      raise InvalidUserError if user.nil? || !valid_user_or_group?( user )
       unless new_record?
-        raise InvalidUserError if @user.nil? || !user.is_a?(Tas10::User)
+        raise InvalidUserError if @user.nil? || !valid_user_or_group?( @user )
         return false unless can_share?
       end
       self.acl["#{user.id}"] = { "privileges" => privileges, "inherited" => {}, "invited" => (new_record? ? nil : @user.id), "at" => Time.now }
     end
 
     def privileges( user=@user )
-      raise InvalidUserError if user.nil? || !user.is_a?(Tas10::User)
-      self.acl["#{user.id}"] ? self.acl["#{user.id}"]["privileges"] : ''
+      raise InvalidUserError if user.nil? || !valid_user_or_group?( user )
+      return self.acl["#{user.id}"]["privileges"] if self.acl["#{user.id}"]
+      user.groups.each do |group|
+        return self.acl[group.id.to_s]["privileges"] if self.acl[group.id.to_s]
+      end
+      ''
     end
 
     def unshare( user )
-      raise InvalidUserError if user.nil? || !user.is_a?(Tas10::User)
+      raise InvalidUserError if user.nil? || !valid_user_or_group?( user )
       self.acl.delete "#{user.id}"
     end
 
     def can_share?( user=@user )
-      raise InvalidUserError if user.nil? || !user.is_a?(Tas10::User)
+      raise InvalidUserError if user.nil? || !valid_user_or_group?( user )
       privileges(user).include? 's'
     end
 
     def can_write?( user=@user )
-      raise InvalidUserError if user.nil? || !user.is_a?(Tas10::User)
+      raise InvalidUserError if user.nil? || !valid_user_or_group?( user )
       privileges(user).include? 'w'
     end
 
     def can_delete?( user=@user )
-      raise InvalidUserError if user.nil? || !user.is_a?(Tas10::User)
+      raise InvalidUserError if user.nil? || !valid_user_or_group?( user )
       privileges(user).include? 'd'
     end
 
     def can_read?( user=@user )
-      raise InvalidUserError if user.nil? || !user.is_a?(Tas10::User)
+      raise InvalidUserError if user.nil? || !valid_user_or_group?( user )
       privileges(user).include? 'r'
     end
 
@@ -118,6 +122,10 @@ module Tas10
         @negative_changes << u_id unless acl_change.last.include?(u_id)
       end
       @negative_changes
+    end
+
+    def valid_user_or_group?( user )
+      user.is_a?(Tas10::User) || user.is_a?(Tas10::Group)
     end
 
   end

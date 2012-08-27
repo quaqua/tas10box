@@ -59,14 +59,6 @@ describe "Tas10::User" do
     @u.encrypted_password.should == Digest::SHA256::hexdigest( @u.password + @u.salt )
   end
 
-  it "can be added to a group" do
-    @u.email = "u1@test.com"
-    @u.save.should == true
-    @u.groups.size.should == 0
-    @u.groups.create(:name => 'g1')
-    @u.groups.size.should == 1
-  end
-
 
 end
 
