@@ -1,0 +1,76 @@
+#tas10-left-panel
+  position: absolute
+  top: 53px
+  bottom: 7px
+  left: 10px
+  width: 300px
+  z-index: 0
+
+.tas10-left-panel-button-content
+  background: #fff
+  position: absolute
+  top: 0
+  right: 0
+  left: 40px
+  bottom: 0
+  height: 100%
+  width: 260px
+  border: 1px solid #ccc
+
+#tas10-navbar
+  position: absolute
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  width: 35px
+  .main_info
+    position: absolute
+    top: 5px
+    width: 24px
+    height: 10px
+    text-align: center
+    font-size: 10px
+    font-weight: 900
+  .main_info_sub
+    position: absolute
+    top: 15px
+    width: 24px
+    height: 7px
+    text-align: center
+    font-size: 6px
+  #active-tab-arrow
+    position: absolute
+    top: 0
+    left: 4px
+    width: 30px
+    height: 28px
+    z-index: 1
+    border: 1px solid #ccc
+  .navbar-button
+    position: relative
+    z-index: 2
+    margin: 2px 3px 5px 8px
+    border: none
+    cursor: pointer
+    opacity: 0.5
+    &:hover
+      opacity: 1
+      background-color: #8a0
+      border: 2px solid #8a0
+      border-left-width: 3px
+      border-right-width: 3px
+      border-bottom-width: 3px
+      margin: 0 0 5px 5px
+      background-image: url("/assets/tas10-icons_24x24w.png")
+    .current
+      opacity: 0.7
+  .separator
+    width: 24px
+    height: 24px
+    float: left
+    margin: 2px 0 5px 8px
+    &:hover
+      background: none
+      border: none
+      cursor: default

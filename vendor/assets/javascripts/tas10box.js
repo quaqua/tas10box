@@ -1,10 +1,22 @@
-// require 'tas10'
-// require_self
-// require 'tipsy'
+//= require jquery
+//= require jquery-ui
+//= require tools/center
+//= require tas10
+//= require widgets/tas10_container
+//= require widgets/tas10_find
+//= require widgets/tas10_inline_edit
+//= require widgets/tas10_navbar
+//= require widgets/tas10_new
+//= require widgets/tas10_tree
+//= require 3rdparty/jquery-ui.min
+//= require 3rdparty/jquery.tipsy
+//= require i18n
+//= require i18n/translations
+//= require_self
 
 $( function(){
 
-  $.i18n.init({ fallbackLng: 'en', useLocalStorage: false }, function(t){} );
+  // oldversion: $.i18n.init({ fallbackLng: 'en', useLocalStorage: false }, function(t){} );
 
   $('.js-get-focus:last').focus();
   $('.live-tipsy').tipsy({live: true});

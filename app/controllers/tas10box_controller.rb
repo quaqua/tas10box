@@ -1,5 +1,6 @@
 class Tas10boxController < ActionController::Base
 
+  setup_tas10box
   protect_from_forgery
   layout 'tas10box'
 
@@ -11,8 +12,8 @@ class Tas10boxController < ActionController::Base
     return if session[:locale] and !params.has_key?(:locale)
     if params[:locale] && Tas10box.defaults[:locales].include?(params[:locale].downcase)
       I18n.locale = (session[:locale] = params[:locale])
-    elsif current_user and current_user.default_locale
-      I18n.locale = (session[:locale] = current_user.default_locale)
+    elsif current_user and current_user.settings["locale"]
+      I18n.locale = (session[:locale] = current_user.settings["locale"])
     elsif request.env.has_key?("HTTP_ACCEPT_LANGUAGE") and detected_locale = request.env["HTTP_ACCEPT_LANGUAGE"][0..1] 
       if Tas10box.defaults[:locales].include?(detected_locale.downcase)
         I18n.locale = (session[:locale] = detected_locale)

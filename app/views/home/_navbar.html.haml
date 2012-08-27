@@ -1,0 +1,8 @@
+.action-container
+
+  %div.tab-header
+  =render 'common/browser_actions'
+
+  %ul#tas10-browser-tree.tas10-tree.tas10-labels-tree{ :style => "margin: 10px;" }
+  %script
+    $('#tas10-browser-tree').tas10Tree({ url: '/labels?roots=true' });

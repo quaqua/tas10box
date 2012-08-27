@@ -1,0 +1,20 @@
+#tas10-find
+  = form_tag( find_documents_path, :remote => true ) do
+    %input{ :type => 'hidden', :name => 'label_ids' }
+    %input{ :type => 'hidden', :name => 'types' }
+    %input{ :type => 'hidden', :name => 'conditions' }
+
+    %span.conditions
+    %span.path
+    %input{ :type => 'text', :name => 'query' }
+
+    %a.submit{ :href => '#' }
+      %span.tas10-icon24.float-right.tas10-icon-find
+
+    .settings.context-trigger
+      %span.ui-icon.ui-icon-triangle-1-s
+      .context-content.settings
+        %h4= t( 'settings' )
+        %p= t( 'plugin.script.available' )
+        %ul.available-scripts.query
+

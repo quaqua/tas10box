@@ -3,12 +3,12 @@ module Tas10box
       
       module ClassMethods
 
-        def self.included(model)
-          model.helper_method :authenticated?
-          model.helper_method :current_user
-          model.helper_method :l_time_ago_in_words
-          model.helper_method :current_user_or_anybody
-          model.helper_method :known_users_and_groups
+        def setup_tas10box
+          helper_method :authenticated?
+          helper_method :current_user
+          helper_method :l_time_ago_in_words
+          helper_method :current_user_or_anybody
+          helper_method :known_users_and_groups
         end
       
       end
@@ -45,7 +45,9 @@ module Tas10box
         def renew_authentication
           #session[:came_from] = request.path_info
           if valid_session?
-            return current_user.update(:last_request_at => Time.now, :skip_audit => true)
+            return current_user.update_request_log( request.env['REMOTE_ADDR'], request.env['REQUEST_PATH'] )
+          else
+            flash[:error] = I18n.t 'login.session_expired', :limit => Tas10box.defaults[:session_timeout]
           end
           false
         end
@@ -55,7 +57,7 @@ module Tas10box
           return true if renew_authentication
           if name.blank? or password.blank?
             session[:came_from] = request.path_info #unless session[:came_from]
-            flash[:error] = I18n.t 'login_required'
+            flash[:error] = I18n.t 'login.required' if flash[:error].blank?
             flash[:notice] = flash[:notice]
             redirect_to login_path
             return false
@@ -99,12 +101,11 @@ module Tas10box
         end
 
         def try_authentication(name,password)
-          puts "AUTH HERE!"
           came_from = session[:came_from]
           reset_session
-          @current_user = Tas10::User.first(:name => name)
-          @current_user = Tas10::User.first(:email => name) unless @current_user
-          @current_user = nil unless @current_user.match_password( password )
+          @current_user = Tas10::User.where(:name => name).first
+          @current_user = Tas10::User.where(:email => name).first unless @current_user
+          @current_user = nil if !@current_user && !@current_user.match_password( password )
           if @current_user
             if @current_user.suspended?
               flash[:error] = I18n.t('user_has_been_suspended')
@@ -112,13 +113,13 @@ module Tas10box
             end
             session[:tas10box] = {:user_id => @current_user.id, :group_id => @current_user.group_ids}
             session[:came_from] = came_from
-            if @current_user.update_request_log( request )
-              I18n.locale = session[:locale] = (@current_user.settings.locale || I18n.locale)
+            if @current_user.update_login_log( request.env['REMOTE_ADDR'], request.env['REQUEST_PATH'] )
+              I18n.locale = session[:locale] = (@current_user.settings["locale"] || I18n.locale)
               return true
             end
             return false
           else
-            flash[:error] = I18n.t('login_failed')
+            flash[:error] = I18n.t('login.failed')
             return false
           end
         end
@@ -127,8 +128,8 @@ module Tas10box
           return false unless session[:tas10box]
           @current_user = Tas10::User.where(:id => session[:tas10box][:user_id]).first
           return false unless @current_user
-          timeout = ( Tas10box::defaults[:session_timeout_minutes].to_i ).minutes.ago
-          if @current_user.request_log_entries.last.at && @current_user.request_log_entries.last.at < timeout
+          timeout = ( Tas10box::defaults[:session_timeout].to_i ).minutes.ago
+          if @current_user.user_log_entries.last.at && @current_user.user_log_entries.last.at < timeout
             came_from = session[:came_from]
             reset_session
             session[:came_from] = came_from

@@ -4,13 +4,9 @@ class UserLogEntry
   include Mongoid::Document
 
   field :at, type: Time
-  field :ip
+  field :ip, type: String
   field :url, type: String
+  field :login, type: Boolean, :default => false
 
-end
-
-class LoginLogEntry < UserLogEntry
-end
-
-class RequestLogEntry < UserLogEntry
+  embedded_in :user, :class_name => "Tas10::User"
 end

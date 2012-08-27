@@ -1,0 +1,16 @@
+#tas10-logo.live-tipsy-w{ :"original-title" => t('dashboard.goto') }
+
+=render 'panels/top'
+=render 'panels/left_navbar'
+=render 'panels/find'
+
+
+#tas10-overlay.tas10-overlay
+#tas10-dialog.tas10-dialog
+%input#tas10-current-label.tas10-current-label{ :type => 'hidden' }
+
+//include tmpls/all
+
+#tas10-main-container
+  #tas10-tab-container
+  #tas10-dashboard

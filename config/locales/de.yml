@@ -1,5 +1,23 @@
 de:
   login: 
     title: "Anmelden"
+    required: "Anmeldung erforderlich!"
     name_or_email: "Name oder Email"
     password: "Passwort"
+    failed: "Anmeldung fehlgeschlagen"
+    session_expired: "Ihre Sitzung ist abgelaufen (Limit: %{limit} Minuten)"
+
+  dashboard:
+    goto: "Zum Dashboard"
+  home:
+    title: "Meine Dokumente"
+
+  new: "Neu"
+  cut: "Ausschneiden"
+  copy: "Kopieren"
+  paste: "Einfügen"
+  info: "Info"
+  share: "Teilen"
+  edit: "Bearbeiten"
+  delete: "Löschen"
+  settings: "Einstellungen"

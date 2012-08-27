@@ -4,11 +4,11 @@ describe "Group Inheritance Access Control" do
 
   before(:all) do
     PlainDoc.delete_all
-    User.delete_all
-    Group.delete_all
-    @a = User.create(:email => 'a@test.com')
-    @b = User.create(:email => 'b@test.com')
-    @g = Group.create(:name => 'g')
+    Tas10::User.delete_all
+    Tas10::Group.delete_all
+    @a = Tas10::User.create(:email => 'a@test.com')
+    @b = Tas10::User.create(:email => 'b@test.com')
+    @g = Tas10::Group.create(:name => 'g')
     @a.groups.push( @g )
     @b.groups.push( @g )
     @doc1 = PlainDoc.create_with_user( @a, :name => 'doc1' )

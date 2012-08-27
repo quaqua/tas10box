@@ -1,0 +1,19 @@
+#tas10-top-panel
+
+  #account-info{ :"data-id" => current_user.id }
+    %img.userpic{ :class => "user_#{current_user.id}_pic32.userpic", :src => "#{picture_of_user_path( current_user )}?size=30" }
+    %a.live-tipsy.logout{ :href => logout_path, :"original-title" => t('logout') }
+      %span.ui-icon.ui-icon-power.float-right
+    %a.live-tipsy.username{ :href => user_path(current_user), :"data-remote" => true, :"original-title" => t('user.click_to_edit_profile') }
+      = current_user.fullname_or_name
+
+  #tas10-loader
+    =image_tag(' loading_16x16.gif' )
+
+  //div.tas10-item-title
+
+  #tas10-notifier
+    %span.wrapper
+      %span.content
+      %a{ :onclick => "$('#tas10-notifier').hide();" }
+        %span.ui-icon.ui-icon-close

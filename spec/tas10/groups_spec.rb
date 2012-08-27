@@ -3,10 +3,10 @@ require 'spec_helper'
 describe "Users Groups" do
 
   before(:all) do
-    User.delete_all
-    Group.delete_all
-    @u = User.create(:email => 'u@test.com')
-    @g = Group.create(:name => 'g')
+    Tas10::User.delete_all
+    Tas10::Group.delete_all
+    @u = Tas10::User.create(:email => 'u@test.com')
+    @g = Tas10::Group.create(:name => 'g')
   end
 
   it "a user can have many groups" do

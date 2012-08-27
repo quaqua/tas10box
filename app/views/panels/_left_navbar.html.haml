@@ -1,0 +1,30 @@
+#tas10-left-panel
+
+  #tas10-navbar
+
+    %span#active-tab-arrow
+
+    - Tas10box.plugins.each do |plugin|
+      - if plugin.class.name == 'Tas10box::NavBarPlugin'
+
+        %span.navbar-button.tas10-icon24.live-tipsy-w.float-left{ :id => "button_#{ plugin.name }", :class => "tas10-icon-#{plugin.name}", :"original-title" => t( "#{plugin.name}.title"), :"data-dblclk-url" => (plugin.double_click_action ? plugin.double_click_action : nil) }
+
+    %span.separator.navbar-button
+
+    - Tas10box.plugins.each do |plugin|
+
+      - if plugin.class.name == 'Tas10box::ApplicationPlugin'
+
+        %a.navbar-button.tas10-icon24.float-left{ :id => "button_#{ plugin.name }", :class => "tas10-icon-#{plugin.name}", :"original-title" => t("#{plugin.name}.title"), :"data-dblclk-url" => (plugin.double_click_action ? plugin.double_click_action : nil) }
+    
+    .tas10-left-panel-button-content
+
+      #tas10-button-tabs
+
+        - Tas10box.plugins.each do |plugin|
+
+          - if plugin.class.name.match(/NavBarPlugin|Application/)
+
+            .navtab{ :id => "tab_#{ plugin.name }" }
+
+              =render "#{plugin.name}/navbar"

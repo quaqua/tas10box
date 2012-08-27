@@ -1,75 +1,78 @@
 require 'digest/sha2'
 
-class User
-	include Mongoid::Document
+class Tas10::User
+  include Mongoid::Document
   include Mongoid::Versioning
   include Mongoid::Paranoia
 
   max_versions 30
 
-	field :name, type: String
-	field :email, type: String
-	field :encrypted_password, type: String
+  field :name, type: String
+  field :fullname, type: String
+  field :email, type: String
+  field :encrypted_password, type: String
   field :salt, type: String
   field :confirmation_key, type: String
   field :suspended, type: Boolean
+  field :settings, type: Hash
 
-  embeds_many :login_log_entries
-  embeds_many :request_log_entries
-  embeds_one :settings, :class_name => "UserSetting"
+  embeds_many :user_log_entries
 
   validates_presence_of :email
   validates_format_of :email,
     :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i,
     :message => 'not a valid email address'
 
-	has_many :known_users, class_name: "User"
-  has_and_belongs_to_many :groups
+  has_many :known_users, class_name: "Tas10::User"
+  has_and_belongs_to_many :groups, class_name: "Tas10::Group"
 
   index( {:email => 1}, { :unique => true, :background => true } )
   index( {:name => 1}, { :background => true } )
 
-	attr_accessor :password
+  attr_accessor :password
   attr_protected :password
 
   # hooks
-	before_save :encrypt_password
+  before_save :encrypt_password
   before_create :generate_salt, :generate_password_if_none, :generate_confirmation_key, :setup_default_settings
 
-  def update_request_log( request )
-    puts request.inspect
-    request_log_entries.push( :ip => request.env['REMOTE_ADDR'],
-                              :url => 'address',
+  def update_request_log( ip, url )
+    user_log_entries.create( :ip => ip,
+                              :url => url,
                               :at => Time.now )
     save(:safe => true)
   end
 
-  def update_login_log( request )
-    login_log_entries.push( :ip => request.env['REMOTE_ADDR'],
-                            :url => 'address',
+  def update_login_log( ip, url )
+    user_log_entries.create( :ip => ip,
+                            :url => url,
+                            :login => true,
                             :at => Time.now )
-    save(:safe => true)
   end
 
+  def match_password( pass )
+    self.encrypted_password == encrypt( pass, self.salt )
+  end
+
+  def fullname_or_name
+    fullname.blank? ? ( name.blank? ? email : name ) : fullname
+  end
+  
   private
 
   def encrypt( pass, salt )
     Digest::SHA256::hexdigest( pass + salt )
   end
 
-  def match_password( pass )
-    encrypted_password == encrypt( pass, self.salt )
-  end
-
   # encrypt the password in combination
   # with the previously generated salt
   #
-	def encrypt_password
+  def encrypt_password
     generate_salt unless self.salt
     unless self.password.blank?
-  		self.encrypted_password = encrypt( self.password, self.salt )
+      self.encrypted_password = encrypt( self.password, self.salt )
     end
-	end
+  end
 
   # generate a password salt
   # to be mixed in when password is
@@ -100,12 +103,12 @@ class User
   end
 
   def setup_default_settings
-    settings = UserSetting.new( Tas10box::default_user_settings )
+    self.settings = Tas10box::default_user_settings
   end
 
-	#has_one :details, class: Tas10::Contact
+  #has_one :details, class: Tas10::Contact
 
-	#documents implement later
+  #documents implement later
 
 end
 

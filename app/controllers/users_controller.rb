@@ -22,5 +22,12 @@ class UsersController < ApplicationController
         dashboard_path )
     end
   end
+  
+  # logut the user
+  #
+  def logout
+    logout_user
+    redirect_to login_path
+  end
 
 end

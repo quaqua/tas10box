@@ -17,6 +17,8 @@ gem "jquery-rails"
 # gem 'debugger'
 
 gem 'mongoid', '>= 3.0.5'
+gem 'haml-rails', '>= 0.3.4'
+gem 'i18n-js'
 
 gem 'rspec', :group => [:development]
 gem 'rspec-rails', :group => [:development]

@@ -1,0 +1,42 @@
+.browser-actions.ui-helper-clearfix
+    %a.disabled.multi.single.default.new-item.live-tipsy{ :"original-title" => t( 'new' )}
+        %span.ui-icon.ui-icon-plusthick
+    %span.spacer
+    %a.disabled.multi.single.default.cut.live-tipsy{ :"original-title" => t( 'cut' )}
+        %span.ui-icon.ui-icon-scissors
+    %a.disabled.multi.single.default.copy.live-tipsy{ :"original-title" => t( 'copy' )}
+        %span.ui-icon.ui-icon-copy
+    %a.disabled.multi.single.default.paste.live-tipsy{ :"original-title" => t( 'paste' )}
+        %span.ui-icon.ui-icon-clipboard
+    %a.disabled.multi.single.default.info.live-tipsy{ :"original-title" => t( 'info' )}
+        %span.ui-icon.ui-icon-lightbulb
+    %a.disabled.multi.single.default.share.live-tipsy{ :"original-title" => t( 'share' )}
+        %span.ui-icon.ui-icon-person
+    %a.disabled.multi.single.default.edit.live-tipsy{ :"original-title" => t( 'edit' )}
+        %span.ui-icon.ui-icon-pencil
+    %a.disabled.multi.single.default.delete.live-tipsy{ :"original-title" => t( 'delete' )}
+        %span.ui-icon.ui-icon-trash
+    %span.spacer
+    %a.preferences.context-trigger.live-tipsy{ :"original-title" => t( 'settings' ) }
+        %span.ui-icon.ui-icon-triangle-1-s
+
+        .context-content
+            %h3= t( 'view_type' )
+            %select.tas10-select{ :name => 'view-type-selector' }
+                %option{ :value => 'tree' }= t('tree')
+                %option{ :value => 'list' }= t('list')
+                %option{ :value => 'bussiness-cards' }= t('bussiness_cards')
+                %option{ :value => 'table'}= t('table')
+
+            %h3= t( 'filter' )
+
+            %ul.browser-filter
+                - Tas10box.plugins.each do |plugin|
+                    - if plugin.creates
+                        %li{ :"data-filter" => plugin.name }
+                            %span.tas10-icon16.float-left{ :class => "tas10-icon-#{plugin.name}"}
+
+            .sort-filter.ui-helper-clearfix
+                %h3= t( 'sort' )
+
+                %select.tas10-select{ :name => 'sort' }

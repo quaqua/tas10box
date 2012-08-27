@@ -1,15 +1,14 @@
 require 'spec_helper'
 require 'digest/sha2'
-require File::expand_path '../../../app/models/user', __FILE__
 require 'mongoid'
 
 describe "Access Control" do
 
   before(:all) do
     PlainDoc.delete_all
-    User.delete_all
-    @a = User.create( :email => 'b@test.com' )
-    @b = User.create( :email => 'a@test.com' )
+    Tas10::User.delete_all
+    @a = Tas10::User.create( :email => 'b@test.com' )
+    @b = Tas10::User.create( :email => 'a@test.com' )
     @doc1 = PlainDoc.create_with_user( @a, :name => 'doc1' )
   end
 

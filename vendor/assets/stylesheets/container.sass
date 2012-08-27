@@ -1,0 +1,115 @@
+/**
+ * tas10Container styles
+
+.tas10-container
+  position: absolute
+  left: 320px
+  right: 10px
+  top: 120px
+  bottom: 7px
+  color: #333
+  z-index: 1
+  .tab-content
+    display: none
+    position: absolute
+    overflow-y: auto
+    width: 100%
+    top: 0
+    bottom: 0
+    background-color: #fff
+    border: 1px solid #ccc
+    h1.title, p.title
+      color: #444
+
+.tas10-container-tabs-wrapper
+  position: absolute
+  top: -29px
+  left: 0
+  height: 32px
+  width: 100%
+  overflow: hidden
+  z-index: 2
+
+.tas10-container-tabs-line
+  position: absolute
+  top: 15px
+  width: 100%
+  height: 0
+
+.tas10-container-tabs
+  list-style-type: none
+  margin: 0
+  padding: 0
+  width: 2500px
+  height: 30px
+  .tab
+    background: none
+    text-align: center
+    color: rgba(0, 0, 0, 0.3)
+    height: 15px
+    float: left
+    margin: 0 5px 0 0
+    padding: 5px 10px
+    cursor: pointer
+    border: 1px solid #ccc
+    &:hover
+      color: rgba(0, 0, 0, 0.5)
+      border-color: #999
+      .tab-close
+        opacity: 0.5
+    .center
+      margin-top: -2px
+    &.active
+      color: #333
+      background: #fff
+      font-weight: 900
+      cursor: default
+      border-bottom: none
+      padding: 7px 10px
+      &:hover
+        border-color: #ccc
+        color: #333
+      .tab-close
+        opacity: 0.1
+        &.loading
+          background-image: url("/images/tab-loading-active.gif")
+          background-position: 0 0
+      .tab-sprite
+        &.left
+          background-position: -39px 0
+        &.right
+          background-position: -59px 0
+        &.center
+          background-position: -250px 0
+  .tab-sprite
+    width: 10px
+    height: 20px
+    &.left
+      background-position: 0 0
+      float: left
+    &.right
+      background-position: -20px 0
+      float: left
+    &.center
+      background-position: -100px 0
+      float: left
+      width: 150px
+      text-align: center
+      height: 14px
+      padding: 3px 5px
+      max-width: 100px
+      overflow: hidden
+  .tab-close
+    opacity: 0
+    background-image: url("/images/tas10-container-tabs-sprites.png")
+    float: right
+    width: 10px
+    height: 10px
+    background-position: -391px -8px
+    margin: 1px -8px 0 5px
+    cursor: default
+    &.loading
+      background-image: url("/images/tab-loading.gif")
+      background-position: 0 0
+  .center
+    font-size: 12px
