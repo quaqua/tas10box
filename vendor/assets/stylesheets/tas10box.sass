@@ -5,7 +5,11 @@
  *= require left_navbar
  *= require icons
  *= require container
+ *= require comments
+ *= require info_container
  */
+
+$button_color: #8a0
 
 html
   margin: 0
@@ -31,7 +35,7 @@ input
     padding: 6px 10px
     font-size: 14px
     cursor: pointer
-    background-color: #8a0
+    background-color: $button_color
     border: none
     color: #fff
     &:hover, &:focus
@@ -66,9 +70,19 @@ p
   &.h1
     margin-top: 0
 
+img.userpic
+  opacity: 0.8
+  border: 1px solid #ddd
+  .x30
+    width: 30px
+    height: 30px
+  .x50
+    width: 50px
+    height: 50px
+
 .tas10-button
   color: #fff
-  background-color: #8a0
+  background-color: $button_color
   border: 1px solid #999
   padding: 7px 20px
   font-weight: 900
@@ -79,7 +93,7 @@ p
   &:hover, &:focus
     background-color: #444
   &:hover .ui-icon, &:focus .ui-icon
-    background-image: url("/stylesheets/3rdparty/jquery-ui/assets/ui-icons_ffffff_256x240.png")
+    background-image: url("/assets/3rdparty/jquery-ui/images/ui-icons_ffffff_256x240.png")
   .disabled
     opacity: 0.1
     &:hover, &:focus
@@ -92,6 +106,14 @@ p
   .delete
     background-color: #d44
     border: 1px solid #a44
+.with-icon
+  @extend .tas10-button
+  padding: 2px
+  background-color: #fff
+  &:hover
+    background-color: $button_color
+    .ui-icon
+      background-image: url("/assets/3rdparty/jquery-ui/images/ui-icons_ffffff_256x240.png")
 
 fieldset
   &.tas10-steps
@@ -106,6 +128,8 @@ fieldset
     p.desc
       margin: 0
       color: #888
+    p.default-width
+      width: 400px
   &.title
     border: none
     border-top: 1px solid #ccc
@@ -128,12 +152,6 @@ fieldset
       opacity: 0.8
       &:hover
         opacity: 1
-    img.userpic
-      width: 30px
-      height: 30px
-      float: right
-      opacity: 0.8
-      border: 1px solid #ddd
     .username
       float: right
       margin: 7px 0 0
@@ -160,7 +178,7 @@ fieldset
   top: 10px
   left: 17px
   display: none
-  background-color: #8a0
+  background-color: $button_color
   padding: 7px 6px 4px
   width: 16px
   height: 19px
@@ -230,7 +248,7 @@ fieldset
   left: 100px
   right: 100px
   text-align: center
-  z-index: 999
+  z-index: 10000
   display: none
   font-size: 10px
   .wrapper
@@ -271,7 +289,6 @@ fieldset
 .tas10-dialog
   display: none
   position: absolute
-  padding: 10px
   background-color: #fff
   color: #333
   box-shadow: 3px 5px 10px #ddd
@@ -280,7 +297,10 @@ fieldset
   .tas10-dialog-header
     color: #999
     font-weight: 900
-    margin: 3px 5px
+    margin: 3px 5px 10px 5px
+  .tas10-dialog-content
+    overflow: auto
+    padding: 10px
   .border-top
     background-image: url("/assets/tas10-container-tabs-sprites.png")
     background-position: -10px -4px
@@ -289,14 +309,17 @@ fieldset
     position: absolute
     top: -14px
     left: 0
-  .ui-icon-closethick
-    float: right
+  .close-button
+    margin: 5px
     cursor: pointer
     border: 1px solid #000
     opacity: 0.2
     &:hover
       opacity: 1
-      border-color: #333
+      background-color: $button_color
+      border-color: $button_color
+      .ui-icon-closethick
+        background-image: url("/assets/3rdparty/jquery-ui/images/ui-icons_ffffff_256x240.png")
   label
     text-transform: uppercase
   .title
@@ -321,6 +344,8 @@ fieldset
       border-color: #999
     &.name
       font-weight: 900
+  .continue-creating
+    margin: 7px 10px 0 0
 
 ul.tas10-tree
   margin: 0
@@ -374,7 +399,7 @@ ul.tas10-tree
 .path-item
   float: left
   margin: 0 5px
-  padding: 3px 5px
+  padding: 2px 5px
   background-color: #d64
   color: #fff
 
@@ -419,12 +444,12 @@ ul.tas10-tree
     &:focus
       outline: none
   .path, .conditions
-    margin: 5px 8px
+    margin: 6px 8px
     float: left
   .field-condition
     float: left
     margin: 0 5px
-    padding: 3px 5px
+    padding: 2px 5px
     background-color: #ddd
     color: #000
   .label-res

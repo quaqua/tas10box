@@ -15,6 +15,7 @@ class Tas10::User
   field :confirmation_key, type: String
   field :suspended, type: Boolean
   field :settings, type: Hash
+  field :admin, type: Boolean
 
   embeds_many :user_log_entries
 

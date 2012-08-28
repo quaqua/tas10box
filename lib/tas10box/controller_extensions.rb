@@ -64,6 +64,21 @@ module Tas10box
           end
           try_authentication(name,password)
         end
+
+        # safefully creates the passed document and
+        # creates according flash messages
+        #
+        # @param [ Tas10::Document ] doc
+        #
+        def tas10_safe_create( doc )
+
+          if doc.save( :safe => true )
+            flash[:notice] = t( 'created', :name => doc.name )
+          else
+            flash[:error] = t( 'creation_failed', :name => ( doc.name ? doc.name : '' ), :reason => doc.errors.messages )
+          end
+
+        end
         
         # HTTP Authentication. Can be used, if #authenticate is bypassed and
         # http authentication desired

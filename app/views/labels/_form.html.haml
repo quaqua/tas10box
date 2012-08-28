@@ -1,0 +1,22 @@
+= form_for( @docs["label"], :remote => true, :html => {:class => 'tas10-form'} ) do |f|
+  = f.hidden_field( :label_ids )
+
+  %p.desc.default-width= t( 'labels.desc' )
+
+  %p
+    %label= t( 'name' )
+    %br
+    = f.text_field( :name, :class => "name js-get-focus", :required => true )
+
+  %p
+    %label= t( 'labels.template' )
+    %br
+    %span.desc.default-width= t( 'labels.template_desc' )
+    %br
+    = f.select( :template, get_tas10box_plugin_options( :labelTemplates ), :class => "template tas10-select" )
+
+  %p
+    %input.tas10-button.float-right{ :type => 'submit', :value => t( 'create' ) }
+    %span.float-right.continue-creating.desc
+      %input.continue-editing.tas10-checkbox{ :type => 'checkbox', :name => 'continue-creating' }
+      =t( 'continue_creating' )

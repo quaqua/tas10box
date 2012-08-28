@@ -1,0 +1,69 @@
+<script id="document-info-template" type="text/x-jsrender">
+
+      <div data-id="{{:_id}}" class="info-container">
+
+            <div class="info-title">
+                  <div class="separator-border">
+                        <div class="separator"></div>
+                  </div>
+                  <div class="icon-container">
+                        <span class="tas10-icon16 tas10-icon-{{:_type.toLowerCase()}}"></span>
+                  </div>
+                  <h1 data-name="name" data-url="/document/{{:_id}}.js">
+                  <span class="text tas10-item-title item_{{:_id}}_title">{{:name}}</span>
+                  </h1>
+            </div>
+
+            <table>
+
+                  <tr>
+                  <td><label>{{: ~t('star')}}:</label></td>
+                  <td><span class="starred" data-id="{{:_id}}"><span class="tas10-icon16 black tas10-icon-star-{{: starred ? 'full' : 'empty'}} star float-left"></span></span></td>
+                  </tr>
+
+                  <tr>
+                  <td><label>{{:~t('created_at')}}</label></td>
+                  <td>{{:~formattedDate(history[0].at)}}</td>
+                  </tr>
+
+                  <tr>
+                  <td><label>{{:~t('modified_at')}}</label></td>
+                  <td>{{:~formattedDate(history[history.length-1].at)}}</td>
+                  </tr>
+
+                  <tr>
+                  <td><label style="padding-top: 6px; float:left;">{{:~t('plugin.labels.title') }}</label></td>
+                  <td>{{if true tmpl="#labels-template" /}}</td>
+                  </tr>
+
+                  {{if ~defined(color)}}
+                  <tr>
+                  <td><label style="padding-top: 2px; float:left;">{{:~t('color') }}</label></td>
+                  <td>{{if true tmpl="#color-template" /}}</td>
+                  </tr>
+                  {{/if}}
+
+                  <tr>
+                  <td><label style="padding-top: 6px; float:left;">{{:~t('acl.share') }}</label></td>
+                  <td>{{if true tmpl="#acl-template" /}}</td>
+                  </tr>
+
+
+      	</table>
+
+            <a href="#" onclick="$(this).next('.history').slideToggle({easing: 'easeInOutQuart'}}); $('#tas10-dialog').center(); ">{{:~t('show_history')}}</a>
+
+            <table class="history" style="display:none">
+
+                  {{for history}}}}
+                  <tr>
+                  <td>{{:by.name}}</td>
+                  <td>{{:~formattedDate(at)}}</td>
+                  <td>{{:changed}}</td>
+                  </tr>
+                  {{/for}}}}
+
+            </table>
+
+    </div>
+</script>

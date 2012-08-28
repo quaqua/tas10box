@@ -2,7 +2,7 @@ module Tas10box
 
   class Plugin
 
-    attr_accessor :name, :creates
+    attr_accessor :name, :creates, :label_templates
 
     def initialize( attrs )
       if attrs.is_a?( Hash )

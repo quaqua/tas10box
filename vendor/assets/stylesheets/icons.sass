@@ -2,8 +2,6 @@
   background-image: url("/assets/tas10-icons_24x24.png")
   width: 24px
   height: 24px
-  .white
-    background-image: url("/assets/tas10-icons_24x24w.png")
   &.tas10-icon-home
     background-position: -432px 0
   &.tas10-icon-star
@@ -24,13 +22,14 @@
     background-position: -240px -72px
   &.tas10-icon-appointment
     background-position: -192px -24px
+.white
+  @extend .tas10-icon24
+  background-image: url("/assets/tas10-icons_24x24w.png")
 
 .tas10-icon16
   background-image: url("/assets/tas10-icons_16x16.png")
   width: 16px
   height: 16px
-  .white
-    background-image: url("/assets/tas10-icons_16x16w.png")
   &.tas10-icon-new
     background-position: -272px 0
   &.tas10-icon-gear
@@ -64,3 +63,6 @@
     background-position: -419px -3px
     &.checked
       background-position: -440px -3px
+.white
+  @extend .tas10-icon16
+  background-image: url("/assets/tas10-icons_16x16w.png")

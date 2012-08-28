@@ -1,0 +1,3 @@
+<script id="acl-entry-template" type="text/x-jsrender">
+	<span class="tas10-acl-entry" data-id="${this.index}">{{name}} ({{privileges}}){{if this.index != _holder_id }}{{if privileges.indexOf('s')}} <span class="remove ui-icon ui-icon-close live-tipsy" original-title="<%= t('acl.remove') %>"></span>{{/if}}{{/if}}</span>
+</script>

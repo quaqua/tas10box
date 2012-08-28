@@ -30,7 +30,8 @@ tas10['setupNewDialog'] = function( options ){
 		$('#tas10-dialog').center();
 	});
 
-	$('#tas10-dialog .tas10-path').addClass('path-item').html( $('#tas10-find .path-item:last').html() );
+	if( $('#tas10-find .path-item:last').html().length > 2 )
+		$('#tas10-dialog .tas10-path').addClass('path-item').html( $('#tas10-find .path-item:last').html() );
 	$('#tas10-dialog .tas10-current-label').val( $('#tas10-current-label').val() );
 
 	if( options.completed && typeof(options.completed) === 'function' )

@@ -5,11 +5,11 @@
                var options =  $.extend({ // Default values
                     inside:window, // element, center into window
                     transition: 0, // millisecond, transition time
-                    minX:0, // pixel, minimum left element value
-                    minY:0, // pixel, minimum top element value
-                    withScrolling:true, // booleen, take care of the scrollbar (scrollTop)
-                    vertical:true, // booleen, center vertical
-                    horizontal:true // booleen, center horizontal
+                    minX: 10, // pixel, minimum left element value
+                    minY: 10, // pixel, minimum top element value
+                    withScrolling: true, // booleen, take care of the scrollbar (scrollTop)
+                    vertical: true, // booleen, center vertical
+                    horizontal: true // booleen, center horizontal
                }, options);
                return this.each(function() {
                     var props = {position:'absolute'};

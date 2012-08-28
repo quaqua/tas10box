@@ -3,6 +3,7 @@ PATH
   specs:
     tas10box (0.0.1)
       haml-rails (>= 0.3.4)
+      i18n-js
       rails (~> 3.2.8)
 
 GEM
@@ -47,6 +48,8 @@ GEM
       railties (~> 3.0)
     hike (1.2.1)
     i18n (0.6.0)
+    i18n-js (2.1.2)
+      i18n
     journey (1.0.4)
     jquery-rails (2.1.1)
       railties (>= 3.1.0, < 5.0)
@@ -119,6 +122,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  haml-rails (>= 0.3.4)
+  i18n-js
   jquery-rails
   mongoid (>= 3.0.5)
   rspec

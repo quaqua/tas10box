@@ -1,0 +1,6 @@
+$('#tas10-main-container').tas10Container( 'append', {
+  title: '<%= @doc.name %>', 
+  id: '<%= @doc.id %>', 
+  content: '<%= escape_javascript render('labels/show') %>'
+  }, function( container ){ }
+);

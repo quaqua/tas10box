@@ -21,8 +21,7 @@ module Tas10
         field :label_ids, type: Array, default: []
         field :pos, type: Integer, default: 99
         field :acl, type: Hash, default: {}
-
-        field :comments, type: Array
+        field :starred, type: Boolean, default: false
 
         index name: 1
         index label_ids: 1
@@ -79,9 +78,7 @@ module Tas10
     module InstanceMethods
 
       def update_log
-        self.log_entries.build :at => Time.now, 
-          :user => @user,
-          :changes => previous_changes
+        self.log_entries.build :user => @user, :changes => previous_changes
       end
 
       def setup_creator

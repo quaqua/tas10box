@@ -80,49 +80,7 @@ tas10['prompt'] = function tas10Prompt( msg, text, callback ){
 }
 
 tas10['infoDialog'] = function tas10InfoDialog(id){
-
-  $.ajax({ url: '/documents/'+id, dataType: 'json',
-       success: function( data ){
-        tas10.dialog( 'new', $('#document-info-template').render( data ),
-          function( data ){
-            //setupTBColorPicker();
-
-            var hexDigits = new Array
-                    ("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"); 
-
-            function rgb2hex(rgb) {
-             rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-             return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
-            }
-
-            function hex(x) {
-              return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
-             }
-
-            $('#tas10-dialog .color-chooser').bind('click', function(){
-              var color = $(this).css('background-color');
-              if( $(this).hasClass('reset') )
-                color = '';
-              else if( color )
-                color = rgb2hex(color);
-              $(this).closest('form').find('.'+$(this).attr('data-color-receiver')).val(color);
-              $(this).closest('form').find('.color-chooser').removeClass('selected');
-              $(this).addClass('selected');
-              var elem = $('[data-id='+$(this).closest('.info-container').data('id')+']').find('.title');
-              if( color === '' )
-                $(elem).removeClass('item-color').css('background-color','');
-              else
-                $(elem).addClass('item-color').css('background-color', color);
-              $(this).closest('form').submit();
-            });
-            $('#tas10-dialog abbr.timeago').timeago();  
-            
-            $('#tas10-dialog .info-title h1').tas10InlineEdit();
-          }
-         );
-       }
-  });
-
+  $.getScript( '/documents/'+id+'/info' );
 }
 
 tas10['shareDialog'] = function tas10ShareDialog(id){
@@ -150,9 +108,9 @@ tas10['dialog'] = function tas10Dialog( action, text, callback ){
   }
 
   $('#tas10-overlay').show();
-  $('#tas10-dialog').show().html('<img src="/images/loading_50x50.gif" class="loading" />').center();
+  $('#tas10-dialog').show().html('<img src="/assets/loading_50x50.gif" class="loading" />').center();
 
-  $('#tas10-dialog').html('<span class="ui-icon ui-icon-closethick float-right" onclick="$(\'#tas10-dialog\').hide(); $(\'#tas10-overlay\').hide();"></span>');
+  $('#tas10-dialog').html('<div class="close-button float-right"><span class="ui-icon ui-icon-closethick float-right" onclick="$(\'#tas10-dialog\').hide(); $(\'#tas10-overlay\').hide();"></span></div>');
   $('#tas10-dialog').append( text );
 
   if( typeof( action ) === 'object' ){
@@ -163,8 +121,11 @@ tas10['dialog'] = function tas10Dialog( action, text, callback ){
       , bTop = $('<div class="border-top" />').css('backgroundPosition', '-'+(off + 10)+'px -4px');
     $('#tas10-dialog').css({ top: $(action).offset().top + $(action).outerHeight() + 20,
                left: l, borderTop: 'none' }).prepend(bTop).find('.ui-icon-closethick').remove();
-  } else
+  } else{
+    if( $('#tas10-dialog').height() > $(window).height() )
+      $('#tas10-dialog .tas10-dialog-content').css('height', $(window).height() - 150 );
     $('#tas10-dialog').center();
+  }
 
   $('.tas10-datepicker').datepicker({
     firstDay: 1,
@@ -178,7 +139,7 @@ tas10['dialog'] = function tas10Dialog( action, text, callback ){
 
 tas10['renameItem'] = function( name, id ){
 
-  tas10.prompt($.i18n.t('enter_name'), name, function(newName){
+  tas10.prompt(I18n.t('enter_name'), name, function(newName){
     $.ajax({ url: '/documents/' + id,
          type: 'put',
          data: {_csrf: $('#_csrf').val(), document: {name: newName}},

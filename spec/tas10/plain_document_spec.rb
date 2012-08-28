@@ -42,7 +42,7 @@ describe "Plain Document" do
     pd.log_entries.size.should == 0
     pd.run_before_callbacks :save
     pd.log_entries.size.should == 1
-    pd.log_entries[0].at.class.should == ActiveSupport::TimeWithZone
+    pd.log_entries[0].created_at.class.should == ActiveSupport::TimeWithZone
   end
 
   it "sets up default acl for creator" do

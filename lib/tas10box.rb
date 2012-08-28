@@ -7,6 +7,7 @@ require 'tas10/errors'
 require 'tas10/log_entry'
 require 'tas10/user_setting'
 require 'tas10/user_log_entry'
+require 'tas10/comment'
 require 'tas10/access_control'
 require 'tas10/document_array'
 require 'tas10/labeling'
@@ -27,11 +28,16 @@ module Tas10box
   def self.defaults( options=nil )
     @defaults ||= { :locales => ["de", "en"], 
       :site => { :name => 'My Company' },
-      :session_timeout => 20 }
+      :session_timeout => 20,
+      :datastore => File::join( ::Rails.root, 'datastore' ) }
     if options
       @defaults.merge( options )
     end
     @defaults
+  end
+
+  def self.root
+    File::expand_path "../../", __FILE__
   end
 
   def self.default_user_settings( options=nil )

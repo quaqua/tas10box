@@ -21,3 +21,42 @@ de:
   edit: "Bearbeiten"
   delete: "Löschen"
   settings: "Einstellungen"
+  continue_creating: "Weitere anlegen"
+  create: "Anlegen"
+  close: "Schließen"
+  cancel: "Abbrechen"
+  post: "Speichern"
+
+  by: "von"
+  at: "am"
+  ago: "vor"
+  never: "nie"
+
+  really_delete: "Möchten Sie '%{name}' wirklich löschen?"
+
+  none: "keine"
+  type: "Typ"
+
+# actions
+  created: "'%{name}' wurde erfolgreich angelegt"
+  creation_failed: "'%{name}' konnte nicht erstellt werden (%{reaseon})"
+
+  document:
+    star: "Favorit"
+    created: "Angelegt"
+    modified: "Geändert"
+
+    log:
+      show: "Logdatei einsehen"
+  labels:
+    title: "Label"
+    title_pl: "Labels"
+    desc: "Labels können wie Ordner in einem Dateisystem verstanden werden. Dokumente können beliebig viele Labels tragen und können so kategorisiert und zugeordnet werden."
+    associate_desc: "Zugeordnete Labels helfen, dieses Dokument zu finden und zu verwalten."
+    template: "Vorlage"
+    template_desc: "Mit einer Vorlage kann beim öffnen dieses Labels eine spezielle Ansicht bestimmt werden."
+
+  comments:
+    title: "Kommentare"
+    new: "Neu schreiben..."
+    created: "Kommentar für '%{name}' wurde gespeichert"

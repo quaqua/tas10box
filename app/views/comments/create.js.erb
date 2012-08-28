@@ -1,0 +1,7 @@
+tas10.notify( '<%= escape_javascript(flash[:error] || flash[:notice]) %>', '<%= flash[:error] ? "error" : "notice" %>' );
+$($('.document-<%= @doc.id %>-comments tr')[1]).after('<%= escape_javascript( render @comment ) %>');
+$('[data-id=<%= @comment.id %>]').effect('highlight', { color: '#fc6' }, 2000 );
+var form = $('.comment-form:visible').closest('tr');
+$(form).hide();
+$(form).prev('tr').show();
+$('#tas10-dialog').center();

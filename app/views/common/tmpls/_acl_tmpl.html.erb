@@ -1,0 +1,26 @@
+<script id="acl-template" type="text/x-jsrender">
+	<div class="tas10-acl" data-id="{{parent._id}}">
+
+		{{if showTitle}}
+		<p style="margin-bottom: 10px">
+			<label>{{:~t('acl.title') }}</label>
+		</p>
+		{{/if}}
+
+		<span class="tas10-icon16 black tas10-icon-plus add live-tipsy" original-title="{{:~t('acl.add')}}"></span>
+		
+		<div class="tas10-acl-{{parent._id}}">
+			{{for acl tmpl="#acl-entry-template" /}}
+		</div>
+
+		<form action="/document/{{parent._id}}/acl" method="post">
+			<a href="#" class="ui-button close ui-state-default float-right" onclick="$(this).closest('form').hide();"><span class="ui-icon ui-icon-close"></span></a>
+			<a href="#" class="tas10-acl-priv del">d</a>
+			<a href="#" class="tas10-acl-priv share">s</a>
+			<a href="#" class="tas10-acl-priv write sel">w</a>
+			<a href="#" class="tas10-acl-priv read sel">r</a>
+			<input type="hidden" name="user[privileges]" value="rw" class="privileges" />
+			<select name="user[_id]" class="select-user-combobox"></select>
+		</form>
+	</div>
+</script>

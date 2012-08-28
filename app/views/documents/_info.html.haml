@@ -1,0 +1,54 @@
+.tas10-info-container{ :"data-id" => @doc.id }
+  .info-title.tas10-dialog-header
+    .separator-border
+      .separator
+    .icon-container
+      %span.tas10-icon16.float-left.white{ :class => "tas10-icon-#{@doc.class.name.downcase}"}
+    %h1{ :"data-name" => "name", :"data-url" => document_path( @doc ) }
+      %span.text.tas10-item-title{ :class => "item_#{@doc.id}_title"}= @doc.name
+
+  .tas10-dialog-content
+    %table.comments
+      %tr
+        %td
+          %label.desc= t('document.star')
+        %td
+          %span.starred{ :"data-id" => @doc.id }
+            %span.tas10-icon16.star.float-left{ :class => "tas10-icon-star-#{@doc.starred ? 'full' : 'empty'}"}
+      %tr
+        %td
+          %label.desc= t('document.created')
+        %td
+          %span.small= l( @doc.log_entries.first.created_at )
+          %br
+          %span.small= "#{t('by')} #{@doc.log_entries.first.user.fullname_or_name}"
+      %tr
+        %td
+          %label.desc= t('document.modified')
+        %td
+          - if @doc.log_entries.size > 1
+            %span.small= l( @doc.log_entries.last.created_at, :format => :default )
+            %br
+            %span.small= "#{t('by')} #{@doc.log_entries.last.user.fullname_or_name}"
+          - else
+            %span.small= t('never')
+      %tr
+        %td
+          %label.desc= t('labels.title')
+        %td
+          //= render "common/labels"
+
+      %tr
+        %td
+          %label.desc= t('comments.title')
+
+    = render "common/comments"
+
+    %a.desc{ :href => "#", :onclick => "$(this).next('.log').slideToggle({easing: 'easeInOutQuart'}); $('#tas10-dialog').center(); "}= t('document.log.show')
+
+    %table.log
+      - @doc.log_entries.each_with_index do |log_entry, i|
+        %tr
+          %td.modifier= log_entry.user.name
+          %td.created_at= l( log_entry.created_at )
+          %td.changed= (i > 1 ? @doc.versions[i-1] : t('document.created'))

@@ -1,0 +1,14 @@
+%tr{ :"data-id" => comment.id }
+  %td
+    - if comment.user
+      = image_tag( picture_of_user_path(comment.user), :class => "userpic x50 live-tipsy float-right" )
+    - else
+      = image_tag( picture_of_user_path(current_user), :class => "userpic x50 float-right" )
+  %td
+    %p.date
+      = link_to( raw("<span class=\"ui-icon ui-icon-trash\"></span>"), comment, :class => "delete-comment float-right tas10-button with-icon delete", :remote => true, :method => :delete, :confirm => t('really_delete', :name => comment.content) )
+      -if comment.user
+        = comment.user.fullname_or_name
+      = t('ago')
+      = time_ago_in_words( comment.created_at )
+    %p.small= comment.content

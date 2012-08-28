@@ -3,7 +3,7 @@
  */
 
 tas10.getTemplate = function getTemplate( doc ){
-	var name = '#'+doc.className.toLowerCase()+'-tree-item-template';
+	var name = '#'+doc._type.toLowerCase()+'-tree-item-template';
 	if( $(name).length )
 		return name;
 	else

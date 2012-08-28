@@ -1,15 +1,21 @@
 //= require jquery
+//= require jquery_ujs
 //= require jquery-ui
+//= require 3rdparty/jsrender
+//= require 3rdparty/jquery-ui.min
+//= require 3rdparty/jquery.tipsy
+//= require 3rdparty/jquery.timeago
+//= require 3rdparty/moment.min
 //= require tools/center
 //= require tas10
+//= require tas10_browser_actions
+//= require jsrender_tags_helpers
 //= require widgets/tas10_container
 //= require widgets/tas10_find
 //= require widgets/tas10_inline_edit
 //= require widgets/tas10_navbar
 //= require widgets/tas10_new
 //= require widgets/tas10_tree
-//= require 3rdparty/jquery-ui.min
-//= require 3rdparty/jquery.tipsy
 //= require i18n
 //= require i18n/translations
 //= require_self
@@ -26,6 +32,20 @@ $( function(){
   $('.tas10-checkbox').live('click', function(e){
     $(this).toggleClass('checked');
   });
+
+  $('.comment-form-trigger').live('click', function(){
+    $(this).closest('tr').next('tr').show().find('textarea').focus();
+    $(this).closest('tr').hide();
+  })
+  $('.comment-form-close').live('click', function(){
+    $(this).closest('tr').prev('tr').show();
+    $(this).closest('tr').hide();
+  })
+  $('.add-button').live('hover', function(){
+    $(this).attr('src', $(this).attr('src').replace('.png','h.png') );
+  }, function(){
+    $(this).attr('src', $(this).attr('src').replace('h.png','.png') );
+  })
 
   
   $('.starred').live('click', function(){
@@ -95,25 +115,6 @@ $( function(){
     $('.ajax-button').live('click', function(){
       $(this).addClass('want-to-load-ajax');
     });
-
-    $('form[data-remote=true]').live('submit', function(e){
-      e.preventDefault();
-      $.ajax({ url: $(this).attr('action'),
-           dataType: 'script',
-           data: $(this).serializeArray(),
-           type: $(this).attr('method') });
-    });
-
-    $('a[data-remote=true]').live('click', function(e){
-      e.preventDefault();
-      var elem = this;
-      if( $(this).attr('data-confirm') )
-        tas10.confirm( $(elem).attr('data-confirm'), function(){
-          tas10.ajaxLoad( elem );
-      });
-      else
-        tas10.ajaxLoad( this );
-    })
 
   }
 

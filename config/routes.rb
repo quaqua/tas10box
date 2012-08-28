@@ -25,6 +25,14 @@ Rails.application.routes.draw do
     collection do
       get :find
     end
+    member do
+      get :info
+    end
+    resources :comments
   end
+  resources :tas10_comments, :controller => "Comments"
+  resources :comments
+
+  resources :labels
 
 end

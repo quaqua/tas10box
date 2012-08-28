@@ -6,9 +6,8 @@ module Tas10
 
       # returns all documents that are not labeled with any other document
       #
-      def roots( options={ :query => false } )
+      def roots
         query = where(:label_ids => [])
-        return query.all unless options[:query]
       end
 
     end

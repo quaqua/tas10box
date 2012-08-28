@@ -1,0 +1,19 @@
+%table.comments{ :class => "document-#{@doc.id}-comments" }
+  %tr
+    %td
+      = image_tag( "add_50x50.png", :class => "float-right userpic x50 comment-form-trigger add-button live-tipsy", :"original-title" => t('comments.new') )
+    %td
+
+  %tr.comment-form
+    %td
+      = image_tag( picture_of_user_path(current_user), :class => "float-right userpic x50" )
+    %td
+      =form_for( @doc.comments.build, :url => "#{document_path(@doc)}/comments", :remote => true, :html => { :class => 'ui-helper-clearfix' } ) do |f|
+        = f.text_area :content
+        %br
+        = f.submit( t('post'), :class => 'tas10-button float-right' )
+        %a.float-right.comment-form-close{ :href => "#" }= t('cancel')
+
+  -@doc.comments.each do |comment|
+    - unless comment.new_record?
+      = render comment

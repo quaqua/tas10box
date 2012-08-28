@@ -1,0 +1,18 @@
+<script id="labels-template" type="text/x-jsrender">
+	<div class="tas10-tags" data-id="{{:#data._id}}">
+		{{if showTitle}}
+		<p>
+			<label>{{:~t('tags.title')}}</label>
+		</p>
+		{{/if}}
+
+		<span class="tb-icon16 black tb-icon-plus add live-tipsy" original-title="{{~t('plugin.labels.add')}}"></span>
+		
+		
+
+		<form action="/documents/{{:#data._id}}/tags" method="post">
+			<a href="#" class="ui-button close ui-state-default float-right" onclick="$(this).closest('form').hide();"><span class="ui-icon ui-icon-close"></span></a>
+			<select name="tag_id" class="select-tag-combobox"></select>
+		</form>
+	</div>
+</script>

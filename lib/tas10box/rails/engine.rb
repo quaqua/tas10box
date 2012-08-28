@@ -24,6 +24,7 @@ module Tas10box
       Mime::Type.register_alias "text/html", :snippet # html snippets (usually rendered as partials but to have them in views available)
       
       Tas10box.register_plugin ::Tas10box::NavBarPlugin.new( :name => 'home' )
+      Tas10box.register_plugin ::Tas10box::Plugin.new( :name => 'labels', :creates => true )
     end
 
 

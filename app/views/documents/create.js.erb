@@ -1,0 +1,16 @@
+var doc = <%= raw @doc.to_json %>;
+tas10.notify( I18n.t('created', {name: doc.name}) );
+if( doc.template && doc.template !== 'none' ){
+  $('#tas10-' + doc.template + '-tree').tas10Tree( 'append', doc );
+} else {
+  $('#tas10-browser-tree').tas10Tree( 'append', doc );
+}
+$('.create-form:visible input[type=text]').val('');
+if( $('#tas10-dialog .create-form:visible .continue-editing').hasClass('checked') )
+  $('#tas10-dialog .create-form:visible .js-get-focus').focus();
+else {
+  tas10.dialog('close');
+  $('#tas10-dialog .create-form:visible select.template option:first').attr('selected',true);
+}
+tas10.appendToList( doc );
+$('[data-id=' + doc._id + ']').effect('highlight', { color: '#fc6' }, 2000 );

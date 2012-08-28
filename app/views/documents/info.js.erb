@@ -1,0 +1,36 @@
+tas10.dialog( 'new', '<%= escape_javascript render("documents/info") %>',
+  function( data ){
+    //setupTBColorPicker();
+
+    var hexDigits = new Array
+            ("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"); 
+
+    function rgb2hex(rgb) {
+     rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+     return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+    }
+
+    function hex(x) {
+      return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
+     }
+
+    $('#tas10-dialog .color-chooser').bind('click', function(){
+      var color = $(this).css('background-color');
+      if( $(this).hasClass('reset') )
+        color = '';
+      else if( color )
+        color = rgb2hex(color);
+      $(this).closest('form').find('.'+$(this).attr('data-color-receiver')).val(color);
+      $(this).closest('form').find('.color-chooser').removeClass('selected');
+      $(this).addClass('selected');
+      var elem = $('[data-id='+$(this).closest('.info-container').data('id')+']').find('.title');
+      if( color === '' )
+        $(elem).removeClass('item-color').css('background-color','');
+      else
+        $(elem).addClass('item-color').css('background-color', color);
+      $(this).closest('form').submit();
+    });
+    
+    $('#tas10-dialog .info-title h1').tas10InlineEdit();
+  }
+);
