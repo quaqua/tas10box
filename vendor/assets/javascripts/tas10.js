@@ -40,12 +40,15 @@ var tas10 = {
 };
 
 tas10['notify'] = function tas10Notify( msg, error ){
+  var notifier = '#tas10-notifier';
   if( error )
-    $('#tas10-notifier').addClass('error');
+    $(notifier).addClass('error');
   else
-    $('#tas10-notifier').removeClass('error');
+    $(notifier).removeClass('error');
   $('#tas10-notifier .content').html(msg);
-  $('#tas10-notifier').show().find('.wrapper').switchClass('low','high', 0).delay(2000).switchClass('high','low', 600, 'easeOutBack');
+  $(notifier).css('zIndex', 10002).show().delay(3000).animate({'zIndex': 9998});
+  $(notifier).find('.wrapper').switchClass('low','high', 0)
+    .delay(2000).switchClass('high','low', 600, 'easeOutBack');
 }
 
 tas10['flash'] = function tas10Flash( flash ){

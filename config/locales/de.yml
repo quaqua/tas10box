@@ -27,6 +27,9 @@ de:
   cancel: "Abbrechen"
   post: "Speichern"
 
+  insufficient_rights: "Sie besitzen nicht genügend Rechte auf '%{name}' um diese Aktion auszuführen"
+  not_found: "Das angeforderte Dokument wurde nicht gefunden"
+
   by: "von"
   at: "am"
   ago: "vor"
@@ -40,11 +43,14 @@ de:
 # actions
   created: "'%{name}' wurde erfolgreich angelegt"
   creation_failed: "'%{name}' konnte nicht erstellt werden (%{reaseon})"
+  saved: "'%{name}' wurde erfolgreich gespeichert"
+  saving_failed: "'%{name}' konnte nicht gespeichert werden (%{reason})"
 
   document:
     star: "Favorit"
     created: "Angelegt"
     modified: "Geändert"
+    saved_with_changes: "'%{name}' wurde gespeichert. Änderungen: %{changes}"
 
     log:
       show: "Logdatei einsehen"
@@ -60,3 +66,5 @@ de:
     title: "Kommentare"
     new: "Neu schreiben..."
     created: "Kommentar für '%{name}' wurde gespeichert"
+    deleted: "Kommentar '%{name}' wurde gelöscht"
+    deletion_failed: "Kommentar '%{name} konnte nicht gelöscht werden"

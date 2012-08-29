@@ -129,14 +129,16 @@ $( function(){
   }).bind('keydown', function(e){
       // ESC
       if ( e.keyCode === 27 ){
-        if( $('#tas10-dialog').is(':visible') )
-            tas10.dialog('close');
-          else if( $('#tas10-find .label-res').length )
-            $('#tas10-find .label-res').remove();
+        if( $('.tas10-inline-edit-form').length )
+          $('.tas10-inline-edit-form').remove()
+        else if( $('#tas10-dialog').is(':visible') )
+          tas10.dialog('close');
+        else if( $('#tas10-find .label-res').length )
+          $('#tas10-find .label-res').remove();
         else if( $('.selected-item').length ){
-            $('.selected-item').removeClass('selected-item');
-            tas10.setPath([]);
-          }
+          $('.selected-item').removeClass('selected-item');
+          tas10.setPath([]);
+        }
       }
   });
 

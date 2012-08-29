@@ -6,9 +6,11 @@
       = image_tag( picture_of_user_path(current_user), :class => "userpic x50 float-right" )
   %td
     %p.date
-      = link_to( raw("<span class=\"ui-icon ui-icon-trash\"></span>"), comment, :class => "delete-comment float-right tas10-button with-icon delete", :remote => true, :method => :delete, :confirm => t('really_delete', :name => comment.content) )
-      -if comment.user
+      -if current_user.id == comment.user.id || current.user.admin?
+        = link_to( raw("<span class=\"ui-icon ui-icon-trash\"></span>"), document_comment_path( @doc, comment ), :class => "delete-comment float-right tas10-button with-icon delete", :remote => true, :method => :delete, :confirm => t('really_delete', :name => comment.content) )
+      %b
         = comment.user.fullname_or_name
       = t('ago')
-      = time_ago_in_words( comment.created_at )
+      %span.live-tipsy{ :"original-title" => l( comment.created_at ) }
+        = time_ago_in_words( comment.created_at )
     %p.small= comment.content

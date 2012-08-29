@@ -31,13 +31,14 @@ class Tas10::User
   index( {:name => 1}, { :background => true } )
 
   attr_accessor :password
-  attr_protected :password
+  attr_protected :password, :admin
 
   # hooks
   before_save :encrypt_password
   before_create :generate_salt, :generate_password_if_none, :generate_confirmation_key, :setup_default_settings
 
   def update_request_log( ip, url )
+    user_log_entries.where( :login => false ).all.delete
     user_log_entries.create( :ip => ip,
                               :url => url,
                               :at => Time.now )

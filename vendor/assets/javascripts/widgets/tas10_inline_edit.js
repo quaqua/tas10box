@@ -14,23 +14,36 @@ $(function(){
 			var elem = this
 			  , form = $('<form data-remote="true" method="put" class="tas10-inline-edit-form" />');
 			$(form).attr('action', $(this).attr('data-url'));
-			$(form).append('<input type="hidden" name="_csrf" value="' + $('#_csrf').val() + '" />');
-			var input = $('<input type="text" name="document[' + $(this).attr('data-name') + ']" />');
-			$(input).css({width: $(this).outerWidth()}).val($(this).find('span.text').text());
-			$(form).append(input);
-			var cancel = $('<a href="#" class="tas10-inline-cancel"><span class="ui-icon ui-icon-close"></span></a>');
+
+			// input field
+			var input = $('<input type="text" name="tas10_document[' + $(this).attr('data-name') + ']" />')
+				.val($(elem).find('span.text').text());
+
+			// cancel button
+			var cancel = $('<a href="#" class="float-right"><span class="float-right ui-icon ui-icon-close"></span></a>');
 			$(cancel).on('click', function(e){
 				e.stopImmediatePropagation();
 				$(form).remove();
-				$(elem).find('span.text').show();
+				//$(elem).find('span.text').show();
 			});
+
+			// cancel button
+			var save = $('<a href="#" class="float-right"><span class="float-right ui-icon ui-icon-disk"></span></a>');
+			$(save).on('click', function(e){
+				e.stopImmediatePropagation();
+				$(form).submit();
+			});
+
 			$(form).append(cancel);
+			$(form).append(save);
+			$(form).append(input);
+			$(form).css({top: $(elem).offset().top, left: $(elem).offset().left});
 			$(form).on('submit', function(){
 				$(form).remove();
 				$(elem).find('span.text').show();
 			});
-			$(elem).append(form);
-			$(elem).find('span.text').hide();
+			$('body').append(form);
+			//$(elem).find('span.text').hide();
 			$(form).find('input[type=text]').select();
 		})
 

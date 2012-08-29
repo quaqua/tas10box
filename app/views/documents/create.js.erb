@@ -1,5 +1,4 @@
 var doc = <%= raw @doc.to_json %>;
-tas10.notify( I18n.t('created', {name: doc.name}) );
 if( doc.template && doc.template !== 'none' ){
   $('#tas10-' + doc.template + '-tree').tas10Tree( 'append', doc );
 } else {
@@ -14,3 +13,4 @@ else {
 }
 tas10.appendToList( doc );
 $('[data-id=' + doc._id + ']').effect('highlight', { color: '#fc6' }, 2000 );
+<%= render "common/process_flash" %>

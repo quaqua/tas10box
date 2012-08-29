@@ -1,0 +1,5 @@
+<% @changes.each do |attr| %>
+  $('[data-attr-name=<%= attr %>-<%= @doc.id %>]').text( '<%= @doc.send(attr) %>' );
+  $('[data-attr-name=<%= attr %>-<%= @doc.id %>]').effect('highlight', { color: '#fc6' }, 2000 );
+<% end %>
+<%= render "common/process_flash" %>

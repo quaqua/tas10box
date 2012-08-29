@@ -13,15 +13,17 @@ class CommentsController < Tas10boxController
   end
 
   def destroy
-    @comment = Comment.where(:id => params[:id]).first
+    @doc = get_doc_by_id
+    @comment = @doc.comments.where(:id => params[:id]).first
+    puts "comment #{@comment.inspect} "
     if current_user.id == @comment.user_id || current_user.admin?
       if @comment.destroy
-        flash[:notice] = t('comments.deleted', :name => @comment.name)
+        flash[:notice] = t('comments.deleted', :name => @comment.content)
       else
-        flash[:error] = t('comments.deletion_failed', :name => @comment.name)
+        flash[:error] = t('comments.deletion_failed', :name => @comment.content)
       end
     else
-      flash[:error] = t('insufficient_rights', :doc => @comment.name)
+      flash[:error] = t('insufficient_rights', :name => @doc.name)
     end
   end
 
