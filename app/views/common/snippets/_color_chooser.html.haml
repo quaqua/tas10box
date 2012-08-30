@@ -1,0 +1,5 @@
+=form_for( @doc, :as => :tas10_document, :url => "/documents/#{@doc.id}", :remote => true ) do |f|
+  =f.hidden_field( :color, :"data-attr-name" => "color", :class => "color-chooser-receiver" )
+  %span.color-chooser.reset{ :class => (@doc.color.blank? ? 'selected' : '') }
+  - Tas10box.defaults[:colors].each do |color|
+    %span.color-chooser{ :class => "color#{(color == @doc.color ? ' selected' : '')}", :style => "background-color: #{color}" }

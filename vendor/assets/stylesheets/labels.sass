@@ -1,0 +1,88 @@
+
+@import colors
+.tas10-labels, .tas10-acl
+  margin: 5px 0 10px
+  position: relative
+  min-height: 2em
+  p:first-child
+    margin-bottom: 0
+  .add
+    float: left
+    margin: -1px 5px 0 0
+    opacity: 0.5
+    cursor: pointer
+    &:hover
+      opacity: 1
+  form
+    display: none
+.tas10-label, .tas10-acl-entry
+  padding: 2px 18px 2px 5px
+  background-color: #50659c
+  color: #fafafa
+  margin-right: 5px
+  position: relative
+  border-radius: 3px
+  box-shadow: 2px 2px 3px rgba(0,0,0,0.1)
+  font-size: 10px
+  .remove
+    position: absolute
+    opacity: 0.5
+    top: 0
+    right: 2px
+    cursor: pointer
+    &:hover
+      opacity: 1
+.tas10-labels-form, .tas10-acl-form
+  display: none
+  position: absolute
+  width: 280px
+  background: #fff
+  border: 1px solid #ddd
+  z-index: 10001
+  .close
+    margin: 2px 5px
+    border: 1px solid #ddd
+  .ui-icon-close
+    margin: 4px 3px
+  .ui-autocomplete-input
+    border: none !important
+    margin
+  .ui-button
+    border: none !important
+  .save-button, .close-button, .create-button
+    opacity: 0.5
+    float: right
+    margin: 6px 3px
+    &:hover
+      opacity: 1
+  .save-button
+    display: none
+.tas10-acl-form
+  width: 380px
+.tas10-acl-priv
+  float:right
+  color: #999
+  background-color: #f0f0f0
+  padding: 1px 3px
+  margin: 4px 0
+  text-decoration: none
+  text-align: center
+  border: 1px solid #ccc
+  cursor: pointer
+  font-size: 8px
+  &.sel
+    background-color: #777
+    color: #fff
+    border-color: #333
+    box-shadow: 0 0 3px #000
+  &:hover
+    background: $button_color
+    color: #fff
+  &.read
+    margin-left: 5px
+.tas10-acl-entry
+  background: #b7b
+
+@media screen and (-webkit-min-device-pixel-ratio:0)
+  .ui-autocomplete-input
+    padding: 6px 0 !important

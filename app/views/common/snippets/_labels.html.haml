@@ -1,0 +1,10 @@
+.tas10-labels{ :"data-id" => @doc.id }
+  %span.tas10-icon16.tas10-icon-plus.add.live-tipsy{ :"original-title" => t('labels.add') }
+
+  -@doc.labels.each do |label|
+    = render :partial => "common/snippets/label", :locals => {:label => label}
+
+  =form_tag( document_labels_path(@doc) ) do
+    %a.close-button{ :href => "#", :onclick => "$(this).closest('form').remove();" }
+      %span.ui-icon.ui-icon-closethick
+    %select.select-label-combobox{ :name => 'label_id' }

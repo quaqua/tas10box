@@ -1,0 +1,5 @@
+%span.tas10-acl-entry{ :"data-id" => user.id }
+  = user.fullname_or_name
+  = acl["privileges"]
+  -if user.id != current_user.id && @doc.privileges.index(/s/)
+    %span.remove.ui-icon.ui-icon-close.live-tipsy{ :"original-title" => t('acl.remove') }

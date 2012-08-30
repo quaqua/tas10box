@@ -1,0 +1,22 @@
+Hallo,
+
+<% if @doc %>
+<%= @inviter.fullname_or_name %> hat das Dokument '<%= @doc.name %>' mit
+dir geteilt und möchte dich einladen auf<% else %>
+<%= @inviter.fullname_or_name %> möchte dich einladen auf 
+<% end %><%= Tas10box::defaults[:site][:name] %>'s 
+tas10box mitzuarbeiten!
+
+Du kannst die Einladung annehmen, indem du auf folgenden Link klickst:
+
+<%= @url %>/confirm?email=<%= @user.email %>&key=<%= @user.confirmation_key %>
+
+<% if @doc %>
+Du kannst das Dokument erst einsehen, wenn du dich am System angemeldet hast.
+Danach kannst du folgenden Direktlink benutzen:
+
+<%= @doc_url %>
+<% end %>
+
+viel Spaß beim Arbeiten,
+  Dein tas10box automailer

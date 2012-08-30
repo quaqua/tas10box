@@ -1,0 +1,8 @@
+
+          if( data.flash && data.flash.info.length ){
+            $('.tas10-acl-'+data.doc._id).html('');
+            for( var i in data.doc.acl)
+              $('#acl-entry-template').tmpl( data.doc.acl[i], {index: i} ).appendTo('.tas10-acl-'+data.doc._id);
+            $('.tas10-acl form').hide();
+           }
+          tas10.flash(data.flash);
