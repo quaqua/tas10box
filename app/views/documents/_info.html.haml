@@ -66,6 +66,6 @@
     %table.log
       - @doc.log_entries.each_with_index do |log_entry, i|
         %tr
-          %td.modifier= log_entry.user.name
+          %td.modifier= log_entry.user.fullname_or_name
           %td.created_at= l( log_entry.created_at )
-          %td.changed= (i > 1 ? @doc.versions[i-1] : t('document.created'))
+          %td.changed= (i > 0 ? log_entry.changed_fields : t('document.created'))

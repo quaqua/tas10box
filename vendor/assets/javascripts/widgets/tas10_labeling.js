@@ -3,6 +3,7 @@
  */
 
 $(function(){
+  
   $('.tas10-labels .add').live('click', function(){
     var form = $(this).closest('.tas10-labels').find('form').clone();
     $('body').append(form);
@@ -17,14 +18,7 @@ $(function(){
   $('.tas10-labels .remove').live('click', function(){
     $.ajax({ url: '/documents/'+$(this).closest('.tas10-labels').attr('data-id')+'/labels/'+$(this).closest('.tas10-label').attr('data-id'),
          type: 'delete',
-         success: function( data ){
-          if( data.flash && data.flash.info.length ){
-            $('.tas10-labels[data-id='+data.doc._id+'] .tas10-label[data-id='+data.label._id+']').remove();
-            $('[data-id='+data.label._id+'] [data-id='+data.doc._id+']').remove();
-            $('#tas10-browser-tree').tastenboxTree( 'append', data.doc );
-           }
-          tas10.flash(data.flash);
-         }
+         dataType: 'script'
     });
   })
 });

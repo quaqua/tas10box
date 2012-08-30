@@ -31,15 +31,21 @@ class UsersController < Tas10boxController
       @user = get_user_by_id
     else
       @user = Tas10::User.where(:email => params[:tas10_user][:email], :confirmation_key => params[:tas10_user][:confirmation_key]).first
-      if @user && @user.password = params[:tas10_user][:password] && @user.save( :safe => true )
+      if @user
+        @user.password = params[:tas10_user][:password]
+        @user.password_confirmation = params[:tas10_user][:password_confirmation]
+        @user.save( :safe => true )
+        puts "LOG: #{@user.errors.messages.inspect}"
         if authenticate( params[:tas10_user][:email], params[:tas10_user][:password] )
           redirect_to dashboard_path
+          return
         else
-          flash[:error] = t('user.saving_failed', :reason => ' authentication failed ')
+          flash[:error] = t('user.saving_failed', :name => @user.fullname_or_name, :reason => ' authentication failed ')
         end
       else
-        flash[:error] = t('user.saving_failed', :reason => 'not found')
+        flash[:error] = t('user.saving_failed', :name => @user.fullname_or_name, :reason => 'not found')
       end
+      render :template => "users/confirm"
     end
   end
 
@@ -54,7 +60,7 @@ class UsersController < Tas10boxController
     user = get_user_by_id
     filename = File::join Tas10box.defaults[:datastore], "users", user.id.to_s
     size = params[:size] || "50"
-    use_filename = "picture_of_#{user.name.gsub(' ','_')}_#{size}x#{size}.png"
+    use_filename = "picture_of_#{user.fullname_or_name.gsub(' ','_')}_#{size}x#{size}.png"
     unless File::exists? filename
       filename = File::join( Tas10box::root, "/vendor/assets/images/nopic_#{size}x#{size}.png" )
       use_filename = "default_picture_#{size}x#{size}.png"

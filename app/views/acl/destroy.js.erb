@@ -1,0 +1,4 @@
+<% if flash[:notice] %>
+  $('.tas10-acl[data-id=<%= @doc.id %>] .tas10-acl-entry[data-id=<%= @user.id %>]').remove();
+<% end %>
+<%= render "common/process_flash" %>

@@ -5,6 +5,6 @@ class LogEntry
 
   field :created_at, type: Time, :default => ->{ Time.now }
   belongs_to :user, :class_name => "Tas10::User"
-  field :changed_fields, type: Hash
+  field :changed_fields, type: Array
 
 end

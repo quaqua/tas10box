@@ -50,17 +50,9 @@ $(function(){
   });
 
   $('.tas10-acl-entry .remove').live('click', function(){
-    $.ajax({ url: '/document/'+$(this).closest('.tas10-acl').data('id')+'/acl',
+    $.ajax({ url: '/documents/'+$(this).closest('.tas10-acl').data('id')+'/acl/'+$(this).closest('.tas10-acl-entry').data('id'),
          type: 'delete',
-         data: { _csrf: $(this).closest('.tas10-acl').find('form input[name=_csrf]').val(),
-             user: { _id: $(this).closest('.tas10-acl-entry').data('id') }
-            },
-         success: function( data ){
-          if( data.flash && data.flash.info.length ){
-            $('.tas10-acl-entry[data-id='+data.user._id+']').remove();
-           }
-          tas10.flash(data.flash);
-         }
+         dataType: 'script'
     });
   });
 

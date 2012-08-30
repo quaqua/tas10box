@@ -1,0 +1,14 @@
+<script id="default-list-item-template" type="text/x-jsrender">
+  <li data-id="{{:_id}}" data-type="{{:_type}}" class="item item-context-menu {{if taggable}}taggable{{/if}}">
+    <div class="item-container">
+      <span class="tas10-icon16 tas10-icon-checkbox tas10-checkbox"></span>
+      <span class="starred" data-id="{{:id}}"><span class="tas10-icon16 black tas10-icon-star-{{ starred ? 'full' : 'empty'}} star"></span></span>
+      <span class="type"><span class="tas10-icon16 black tas10-icon-${:_type.toLowerCase()} float-left"></span></span>
+      <a href="/{{:_type.toLowerCase()}}s/{{:_id}}" data-remote="true" class="title item_{{:_id}}_title{{if color && color.length > 0}} item-color" style="background-color: {{:color}}{{/if}}">{{:name}}</a>
+      {{if !defined(templ_short) }}
+      <span class="last-update">{{:~formattedDate(log_entries[log_entries.length-1].created_at) }}</span>
+      {{/if}}
+
+    </div>
+  </li>
+</script>

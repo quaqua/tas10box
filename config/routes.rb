@@ -36,7 +36,11 @@ Rails.application.routes.draw do
   resources :tas10_comments, :controller => "Comments"
   resources :comments
 
-  resources :labels
+  resources :labels do
+    member do
+      get :children
+    end
+  end
   resources :acl
 
 end

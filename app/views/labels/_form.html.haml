@@ -1,5 +1,5 @@
 = form_for( @docs["label"], :remote => true, :html => {:class => 'tas10-form'} ) do |f|
-  = f.hidden_field( :label_ids )
+  = f.hidden_field( :label_ids, :class => "tas10-current-label" )
 
   %p.desc.default-width= t( 'labels.desc' )
 

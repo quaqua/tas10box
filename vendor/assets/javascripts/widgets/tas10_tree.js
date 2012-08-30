@@ -2,7 +2,7 @@
  * tas10tree tas10box plugin (client side)
  */
 
-tas10.getTemplate = function getTemplate( doc ){
+tas10.getTreeTemplate = function getTreeTemplate( doc ){
 	var name = '#'+doc._type.toLowerCase()+'-tree-item-template';
 	if( $(name).length )
 		return name;
@@ -12,11 +12,11 @@ tas10.getTemplate = function getTemplate( doc ){
 
 (function( jQuery ){
 
-	var loadTreeItemTaggers = function loadTreeItemTaggers( handle, li, id, callback ){
-		$.getJSON('/labels/' + id + '/taggers?taggable=true', function(data){
+	var loadTreeItemChildren = function loadTreeItemChildren( handle, li, id, callback ){
+		$.getJSON('/labels/' + id + '/children?taggable=true', function(data){
 					if( data && data.length > 0 ){
-						$(li).append('<ul class="taggers" style="padding-left: 16px"></ul>');
-						$( tas10.getTemplate( data[i] )).render( data );
+						$(li).append('<ul class="children" style="padding-left: 16px"></ul>');
+						$(li).find('ul.children').append( $( tas10.getTreeTemplate( data[0] )).render( data ) );
 						$(handle).addClass('open ui-icon-triangle-1-s').removeClass('ui-icon-triangle-1-e');
 			    	} else 
 			    		$(handle).die('click')
@@ -40,12 +40,12 @@ tas10.getTemplate = function getTemplate( doc ){
 			  , id = $(li).attr('data-id');
 			if( $(this).hasClass('open') ){
 				$(this).removeClass('open').addClass('ui-icon-triangle-1-e').removeClass('ui-icon-triangle-1-s');
-				$(li).find('ul.taggers:first').hide();
+				$(li).find('ul.children:first').hide();
 			} else if( $(li).hasClass('loaded') ){
-				$(li).find('ul.taggers:first').show();
+				$(li).find('ul.children:first').show();
 				$(handle).addClass('ui-icon-triangle-1-s open').removeClass('ui-icon-triangle-1-e');
 			} else {
-				loadTreeItemTaggers(handle, li, id);
+				loadTreeItemChildren(handle, li, id);
 			}
 		})
 
@@ -58,11 +58,12 @@ tas10.getTemplate = function getTemplate( doc ){
 			if( $(e.target).hasClass('opener') )
 				return;
 
-			if( e.target.nodeName === 'A' )
+			var wasSelected = $(this).hasClass('selected-item')
+			//if( e.target.nodeName === 'A' )
+			if( !e.ctrlKey && !e.metaKey )
 				$('.selected-item').removeClass('selected').removeClass('selected-item');
 
-			
-			if( $(this).hasClass('selected-item') ){
+			if( wasSelected ){
 				$(this).removeClass('selected-item');
 				tas10.setPath();
 			} else {
@@ -115,28 +116,27 @@ tas10.getTemplate = function getTemplate( doc ){
 				if( 'items' in data )
 					data = data['items'];
 				if( data.length > 0 )
-					$(self).append( $( tas10.getTemplate( data[0] )).render( data ) );
+					$(self).append( $( tas10.getTreeTemplate( data[0] )).render( data ) );
 			});
 	    },
 	    append : function( doc ) {
-	    	console.log('call');
 	    	var self = this;
 	    	if( doc.label_ids.length > 0 )
 	    		for( var i in doc.label_ids){
 	    			var li = $('.tas10-tree li[data-id='+doc.label_ids[i]+']');
-	    			if( $(li).find('ul.taggers').length ){
+	    			if( $(li).find('ul.children').length ){
 	    				if( !$(li).find('.opener').hasClass('open') )
 	    					$(li).find('.opener').click();
-	    				if( ! $(li).find('ul.taggers li[data-id='+doc._id+']').length )
-	    					$(li).find('.ul.taggers').prepend( $( tas10.getTemplate( doc )).render( doc ) );
+	    				if( ! $(li).find('ul.children li[data-id='+doc._id+']').length )
+	    					$(li).find('.ul.children').prepend( $( tas10.getTreeTemplate( doc )).render( doc ) );
 	    				$(li).find('li[data-id='+doc._id+']').effect('highlight', {color: '#fc6'}, 2000);
 	    			} else
-	    				loadTreeItemTaggers( $(li).find('.opener'), li, doc.label_ids[i], function(){
+	    				loadTreeItemChildren( $(li).find('.opener'), li, doc.label_ids[i], function(){
 	    					$(li).find('li[data-id='+doc._id+']').effect('highlight', {color: '#fc6'}, 2000);	
 	    				});
 	    		}
 	    	else
-	    		$(this).prepend( $( tas10.getTemplate( doc )).render( doc ) );
+	    		$(this).prepend( $( tas10.getTreeTemplate( doc )).render( doc ) );
 	    },
 	    unselectAll: function(){
 	    	$('.selected-item').removeClass('selected-item');

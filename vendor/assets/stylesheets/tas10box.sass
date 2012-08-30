@@ -4,6 +4,7 @@
  *= require user
  *= require left_navbar
  *= require icons
+ *= require list
  *= require container
  *= require comments
  *= require labels
@@ -368,7 +369,8 @@ ul.tas10-tree
     .drop-hover
       background-color: #fc6 !important
     .item-container
-      padding: 4px 0
+      padding: 3px 0
+      margin: 1px 0
     a
       text-decoration: none
       font-weight: 500
@@ -393,7 +395,7 @@ ul.tas10-tree
         background-image: url("/assets/loading_16x16.gif") !important
         background-position: 0 0 !important
 
-.selected-item div.item-container
+.selected-item > .item-container
   background-color: #6db4ff
   font-weight: 900
   a

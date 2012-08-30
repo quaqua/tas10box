@@ -4,7 +4,7 @@ $('.tas10-labels[data-id=<%= @doc.id %>]').append(' <%= escape_javascript( rende
 // if first label, remove self everywhere
 $('li[data-id=<%= @doc.id %>]').remove();
 // and fill it in again where it belongs to
-$('#tas10-browser-tree').tastenboxTree( 'append', doc );
+$('#tas10-browser-tree').tas10Tree( 'append', doc );
 // also in table
 <% @doc.label_ids.each do |label_id| %>
   $('#tas10-table-<%= label_id %>').tas10Table('append', doc);

@@ -26,13 +26,15 @@ body
   border: 1px solid #ddd
   padding: 10px
   p
-    margin: 3px
+    margin: 1px
   input
     &[type=text], &[type=password]
       width: 280px
       padding: 5px
       font-size: 16px
       background: #fff !important
+      &.error
+        border-color: #d00
   label
     color: #999
   input[type=submit]

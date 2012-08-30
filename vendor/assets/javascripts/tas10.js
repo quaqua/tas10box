@@ -161,9 +161,9 @@ tas10['renameItem'] = function( name, id ){
 }
 
 tas10['getPath'] = function tas10GetPath( elem ){
-  var path = [{id: $(elem).data('id'), className: $(elem).attr('data-className'), name: $(elem).find('div.item-container:first .title').text()}];
+  var path = [{id: $(elem).data('id'), _type: $(elem).attr('data-_type'), name: $(elem).find('div.item-container:first .title').text()}];
   $(elem).parents('li.item').each( function( ){
-    path.push({id: $(this).attr('data-id'), className: $(this).attr('data-className'), name: $(this).find('div.item-container:first .title').text()});
+    path.push({id: $(this).attr('data-id'), _type: $(this).attr('data-_type'), name: $(this).find('div.item-container:first .title').text()});
   });
   return path.reverse();
 }
@@ -171,7 +171,11 @@ tas10['getPath'] = function tas10GetPath( elem ){
 tas10['setPath'] = function tas10SetPath( path, append ){
 
   path || (path = []);
-  var tas10PathMarkup = "&nbsp;/&nbsp;<a href=\"/{{:className ? className.toLowerCase()+'s' : ''}}/{{:id}}\" data-remote=\"true\" class=\"item_{{:id}}_title\">{{:name}}</a>";
+  for( var i in path )
+    if( typeof(path[i].id) === 'undefined' )
+      path.splice(i, 1);
+
+  var tas10PathMarkup = "&nbsp;/&nbsp;<a href=\"/{{:_type ? _type.toLowerCase()+'s' : ''}}/{{:id}}\" data-remote=\"true\" class=\"item_{{:id}}_title\">{{:name}}</a>";
   var tas10FindMarkup = "<span class=\"path-item item_{{:id}}_title\" data-id=\"{{:id}}\">{{:name}}</span>";
   $.templates("tas10Path", tas10PathMarkup);
   $.templates("tas10Find", tas10FindMarkup);

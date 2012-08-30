@@ -18,6 +18,7 @@
 //= require widgets/tas10_combobox
 //= require widgets/tas10_labeling
 //= require widgets/tas10_acl
+//= require widgets/tas10_list
 //= require widgets/tas10_tree
 //= require widgets/tas10_table
 //= require i18n

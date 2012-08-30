@@ -1,3 +1,5 @@
-%span.tas10-label{ :style => (@doc.color.blank? ? "background-color: #{@doc.color}" : "") }
+%span.tas10-label{ :style => (label.color.blank? ? "" : "background-color: #{label.color}"), :"data-id" => label.id }
+  &nbsp;
   = label.name
+  &nbsp;
   %span.remove.ui-icon.ui-icon-close.live-tipsy{ :"original-title" => t('labels.remove') }

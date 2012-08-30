@@ -1,10 +1,10 @@
 - unless flash.empty?
-  - if flash[:error]
-    .login-error-container
-      %span= flash[:error]
-  - else
+  - if flash[:notice]
     .login-error-container.notice
       %span= flash[:notice]
+  - else
+    .login-error-container
+      %span= flash[:error]
 
 .login-logo
 
@@ -24,7 +24,7 @@
     %p
       %label= t('login.password_confirm')
     %p
-      = f.password_field( :password_confirm, :class => "js-get-focus new-password", :style => "width: 200px" )
+      = f.password_field( :password_confirm, :class => "confirm-password", :style => "width: 200px" )
 
       =f.submit( t('user.activate') )
 
@@ -38,15 +38,29 @@
       return false;
   })
 
+  $('.confirm-password').bind('keydown', function(e){
+    if( e.keyCode == 13 && !checkPassword() )
+      return false;
+  })
+
   function checkPassword(){
     $('.login-container .error').removeClass('error');
-    var password = $('.new-password').val()
+    var password = $('.new-password').val();
+    var confirmation = $('.confirm-password').val();
     if( password.length > 5 ){
-      if( password.match(/^\w*(?=\w*\d)(?=\w*[a-z])(?=\w*[A-Z])\w*$/) )
-        return true;
-      else
+      if( password.match(/^\w*(?=\w*\d)(?=\w*[a-z])(?=\w*[A-Z])\w*$/) ){
+        if( password == confirmation )
+          return true;
+        else{
+          $('.confirm-password').addClass('error');
+          $('.new-password').addClass('error')
+          $('.confirm-password').focus();
+          return false;
+        }
+      } else
         $('.digit-error').addClass('error');
     } else
       $('.length-error').addClass('error');
+    $('.new-password').focus();
     return false;
   }

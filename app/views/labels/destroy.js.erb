@@ -1,0 +1,6 @@
+<% if flash[:notice] %>
+  $('.tas10-labels[data-id=<%= @doc.id %>] .tas10-label[data-id=<%= @label.id %>]').remove();
+  $('#tas10-browser-tree [data-id=<%= @label.id %>] [data-id=<%= @doc.id %>]').remove();
+  $('#tas10-browser-tree').tastenboxTree( 'append', <%= raw( @doc.to_json ) %> );
+<% end %>
+<%= render "common/process_flash" %>
