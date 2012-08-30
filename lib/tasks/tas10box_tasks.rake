@@ -15,7 +15,8 @@ namespace :tas10box do
       puts " \033[31mexists\033[0m #{user.name}"
     else
       mgr = Tas10::User.new(:email => 'manager@localhost.loc', :name => 'manager' )
-      mgr.password = 'mgr'
+      mgr.password = 'Manager1'
+      mgr.password_confirmation = 'Manager1'
       mgr.admin = true
       mgr.groups.push( admins )
       if mgr.save

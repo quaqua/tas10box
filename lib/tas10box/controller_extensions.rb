@@ -120,7 +120,7 @@ module Tas10box
           reset_session
           @current_user = Tas10::User.where(:name => name).first
           @current_user = Tas10::User.where(:email => name).first unless @current_user
-          @current_user = nil if !@current_user && !@current_user.match_password( password )
+          @current_user = nil if @current_user && !@current_user.match_password( password )
           if @current_user
             if @current_user.suspended?
               flash[:error] = I18n.t('user_has_been_suspended')

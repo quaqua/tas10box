@@ -1,7 +1,6 @@
 tas10.dialog( 'new', '<%= escape_javascript render("documents/info") %>',
   function( data ){
-    //setupTBColorPicker();
-
+    
     var hexDigits = new Array
             ("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"); 
 
@@ -14,16 +13,16 @@ tas10.dialog( 'new', '<%= escape_javascript render("documents/info") %>',
       return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
      }
 
-    $('#tas10-dialog .color-chooser').bind('click', function(){
+    $('.color-chooser').bind('click', function(){
       var color = $(this).css('background-color');
       if( $(this).hasClass('reset') )
         color = '';
       else if( color )
         color = rgb2hex(color);
-      $(this).closest('form').find('.'+$(this).attr('data-color-receiver')).val(color);
+      $(this).closest('form').find('input.color-chooser-receiver').val(color);
       $(this).closest('form').find('.color-chooser').removeClass('selected');
       $(this).addClass('selected');
-      var elem = $('[data-id='+$(this).closest('.info-container').data('id')+']').find('.title');
+      var elem = $('[data-id='+$(this).closest('.tas10-info-container').data('id')+']').find('.title');
       if( color === '' )
         $(elem).removeClass('item-color').css('background-color','');
       else

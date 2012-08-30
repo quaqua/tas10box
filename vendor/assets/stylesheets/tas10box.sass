@@ -6,10 +6,11 @@
  *= require icons
  *= require container
  *= require comments
+ *= require labels
  *= require info_container
  */
 
-$button_color: #8a0
+@import colors
 
 html
   margin: 0
@@ -485,3 +486,50 @@ ul.tas10-tree
     margin: 3px 2px 0 0
     &:hover
       opacity: 1
+
+.color-chooser
+  float: left
+  width: 10px
+  height: 10px
+  padding: 1px
+  border: 1px solid #fafafa
+  border-radius: 3px
+  margin: 2px 1px 0
+  cursor: pointer
+
+  &:hover, &.selected
+    box-shadow: 0 0 4px #000
+
+.reset
+  @extend .color-chooser
+  border: 1px solid #ddd
+  background-image: url('/assets/tas10-container-tabs-sprites.png')
+  background-position: -526px -6px
+  opacity: 0.2
+
+/* ui-autocomplete combobox overrides */
+.ui-autocomplete
+  max-height: 120px
+  overflow-y: auto
+  overflow-x: hidden
+  padding-right: 20px
+.ui-autocomplete-input
+  background: #fff
+  padding: 5px 0
+  border-right: none
+  border-color: #ddd
+  width: 225px
+  outline: none
+.ui-widget
+  font-size: 12px
+  font-family: 'Arial', sans-serif
+
+button.ui-button.ui-widget
+  background: #fff
+  border-left: none
+  border-color: #ddd
+.ui-state-default 
+  .ui-icon
+    background-image: url('/assets/3rdparty/jquery-ui/images/ui-icons_222222_256x240.png') !important
+.ui-widget-content
+  background: #fff

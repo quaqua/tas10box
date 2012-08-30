@@ -29,7 +29,11 @@ module Tas10box
     @defaults ||= { :locales => ["de", "en"], 
       :site => { :name => 'My Company' },
       :session_timeout => 20,
-      :datastore => File::join( ::Rails.root, 'datastore' ) }
+      :datastore => File::join( ::Rails.root, 'datastore' ),
+      :mail_system => {
+        :sender => "noreply@tastenwerk.com"
+      },
+      :colors => [ '#aa9d73', '#6d87d6', '#22884f', '#bf4e30', '#85a000' ] }
     if options
       @defaults.merge( options )
     end

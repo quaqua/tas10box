@@ -10,6 +10,7 @@ class Tas10::User
   field :name, type: String
   field :fullname, type: String
   field :email, type: String
+  field :invited_by, type: String
   field :encrypted_password, type: String
   field :salt, type: String
   field :confirmation_key, type: String
@@ -23,14 +24,19 @@ class Tas10::User
   validates_format_of :email,
     :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i,
     :message => 'not a valid email address'
+  validates_uniqueness_of :email
 
-  has_many :known_users, class_name: "Tas10::User"
+  validates :password, :confirmation => true,
+                       :length => {:within => 6..40}, :if => '!password.nil?'
+
+  has_and_belongs_to_many :known_users, class_name: "Tas10::User"
   has_and_belongs_to_many :groups, class_name: "Tas10::Group"
+  has_many :audit_logs, class_name: "Tas10::AuditLog", order: :created_at.desc
 
   index( {:email => 1}, { :unique => true, :background => true } )
   index( {:name => 1}, { :background => true } )
 
-  attr_accessor :password
+  attr_accessor :password, :password_confirmation
   attr_protected :password, :admin
 
   # hooks
@@ -63,6 +69,7 @@ class Tas10::User
   private
 
   def encrypt( pass, salt )
+    salt = "000a"
     Digest::SHA256::hexdigest( pass + salt )
   end
 
@@ -90,7 +97,7 @@ class Tas10::User
   #
   def generate_password_if_none
     if password.blank? && new_record?
-      self.password = SecureRandom.hex(4)
+      self.password = SecureRandom.hex(4) + "1Aa"
     end
   end
 

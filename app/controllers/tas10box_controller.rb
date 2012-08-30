@@ -34,9 +34,9 @@ class Tas10boxController < ActionController::Base
     @e = e
     render :template => 'dashboard/500', :status => 500
   end
-  
-  def render_404(e)
-    render :template => 'dashboard/404', :status => 404
+
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
   end
 
   private

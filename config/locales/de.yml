@@ -1,11 +1,14 @@
 de:
+  welcome_on_tas10box: "Willkommen auf der tas10box von %{name}"
   login: 
     title: "Anmelden"
     required: "Anmeldung erforderlich!"
     name_or_email: "Name oder Email"
     password: "Passwort"
+    password_confirm: "Passwort wiederholen"
     failed: "Anmeldung fehlgeschlagen"
     session_expired: "Ihre Sitzung ist abgelaufen (Limit: %{limit} Minuten)"
+  logou: "Abmelden"
 
   dashboard:
     goto: "Zum Dashboard"
@@ -53,6 +56,7 @@ de:
     saved_with_changes: "'%{name}' wurde gespeichert. Änderungen: %{changes}"
 
     log:
+      title: "Logdatei"
       show: "Logdatei einsehen"
   labels:
     title: "Label"
@@ -61,6 +65,15 @@ de:
     associate_desc: "Zugeordnete Labels helfen, dieses Dokument zu finden und zu verwalten."
     template: "Vorlage"
     template_desc: "Mit einer Vorlage kann beim öffnen dieses Labels eine spezielle Ansicht bestimmt werden."
+    add: "Label hinzufügen"
+  acl:
+    title: "Zugriffsrechte"
+    add: "Mit Person teilen"
+    remove: "Zugriffsrechte entziehen"
+    shared: "'%{name}' wurde mit Person '%{user}' erfolgreich mit Rechten '%{privileges}' geteilt."
+    invited_and_shared: "'Person '%{user_name}' wurde ins System eingeladen und '%{doc_name}' mit Rechten '%{privileges}' geteilt."
+    invited_but_sharing_failed: "'Person '%{user_name}' wurde ins System eingeladen, aber beim teilen des Dokuments '%{doc_name}' ist leider ein Fehler aufgetreten (%{reason})"
+    sharing_failed: "'%{name}' konnte nicht mit Person '%{user}' geteilt werden (%{reason})"
 
   comments:
     title: "Kommentare"
@@ -68,3 +81,15 @@ de:
     created: "Kommentar für '%{name}' wurde gespeichert"
     deleted: "Kommentar '%{name}' wurde gelöscht"
     deletion_failed: "Kommentar '%{name} konnte nicht gelöscht werden"
+    show: "Kommentare anzeigen"
+
+  user:
+    invite: "Emailadresse erstellen und Einladung schicken"
+    invitation_failed: "Person '%{name}' konnte nicht ins System eingeladen werden"
+    welcome_activate: "Um deine Registrierung zu vervollständigen, gib bitt ein Passwort mit <span class='length-error'>mind. 6 Zeichen</span> ein. Das Passwort muss aus <span class='digit-error'>mind. einer Zahl, einem Klein- und einem Großbuchstaben bestehen.</span>"
+    activate: "Aktivieren und Anmelden"
+
+  audit:
+    created: "angelegt"
+    updated: "geändert"
+    deleted: "gelöscht"

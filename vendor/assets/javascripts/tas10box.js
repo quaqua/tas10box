@@ -15,7 +15,11 @@
 //= require widgets/tas10_inline_edit
 //= require widgets/tas10_navbar
 //= require widgets/tas10_new
+//= require widgets/tas10_combobox
+//= require widgets/tas10_labeling
+//= require widgets/tas10_acl
 //= require widgets/tas10_tree
+//= require widgets/tas10_table
 //= require i18n
 //= require i18n/translations
 //= require_self
@@ -131,6 +135,10 @@ $( function(){
       if ( e.keyCode === 27 ){
         if( $('.tas10-inline-edit-form').length )
           $('.tas10-inline-edit-form').remove()
+        else if( $('.tas10-acl-form').length )
+          $('.tas10-acl-form').remove()
+        else if( $('.tas10-labels-form').length )
+          $('.tas10-labels-form').remove()
         else if( $('#tas10-dialog').is(':visible') )
           tas10.dialog('close');
         else if( $('#tas10-find .label-res').length )
@@ -141,8 +149,5 @@ $( function(){
         }
       }
   });
-
-  // if ($.browser.webkit) {
-  //   $('.login-container input').attr('autocomplete', 'off');
 
 });

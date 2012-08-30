@@ -1,6 +1,7 @@
-class UsersController < ApplicationController
+class UsersController < Tas10boxController
 
   layout "tas10box"
+  before_filter :authenticate, :except => [ :login, :update, :confirm, :forgot_password ]
 
   # log in a user
   #
@@ -20,6 +21,25 @@ class UsersController < ApplicationController
       redirect_to ( (camefrom && camefrom != "/login") ? 
         session[:came_from] : 
         dashboard_path )
+    end
+  end
+
+  # updates user's attributes
+  #
+  def update
+    if current_user
+      @user = get_user_by_id
+    else
+      @user = Tas10::User.where(:email => params[:tas10_user][:email], :confirmation_key => params[:tas10_user][:confirmation_key]).first
+      if @user && @user.password = params[:tas10_user][:password] && @user.save( :safe => true )
+        if authenticate( params[:tas10_user][:email], params[:tas10_user][:password] )
+          redirect_to dashboard_path
+        else
+          flash[:error] = t('user.saving_failed', :reason => ' authentication failed ')
+        end
+      else
+        flash[:error] = t('user.saving_failed', :reason => 'not found')
+      end
     end
   end
 
@@ -43,7 +63,24 @@ class UsersController < ApplicationController
               :type => "image/png",
               :filename => use_filename,
               :disposition => 'inline' )
+  end
 
+  # returns all known users for this
+  # user
+  def known
+    @known = Tas10::User.in( :id => current_user.known_user_ids ).all
+    respond_to do |format|
+      format.json{ render :json => @known.map{ |u| {:id => u.id, :name => u.fullname_or_name, :label => u.fullname_or_name } }.to_json }
+    end
+  end
+
+  # confirm an invitation
+  #
+  def confirm
+    flash[:notice] = t('welcome_on_tas10box', :name => Tas10box::defaults[:site][:name])
+    @user = Tas10::User.where(:email => params[:email], :confirmation_key => params[:key]).first
+    puts @user.inspect
+    not_found unless params[:key] and @user
   end
   
   # logut the user

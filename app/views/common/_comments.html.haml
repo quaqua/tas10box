@@ -1,4 +1,4 @@
-%table.comments{ :class => "document-#{@doc.id}-comments" }
+%table.comments{ :class => "document-#{@doc.id}-comments", :style => (defined?(hidden) && hidden ? "display:none" : "") }
   %tr
     %td
       = image_tag( "add_50x50.png", :class => "float-right userpic x50 comment-form-trigger add-button live-tipsy", :"original-title" => t('comments.new') )

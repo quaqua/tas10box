@@ -26,7 +26,7 @@ module Tas10
         index name: 1
         index label_ids: 1
 
-        before_save :update_log, :check_write_permission
+        before_save :remove_plain_label_ids, :update_log, :check_write_permission
         after_save :share_children_on_change, :unshare_children_on_change
         before_create :setup_creator
         before_destroy :check_delete_permission
@@ -89,6 +89,10 @@ module Tas10
 
       def reload
         return self.class.with_user( @user ).where( :id => id ).first
+      end
+      
+      def remove_plain_label_ids
+        self.label_ids = [] if self.label_ids == "[]"
       end
 
     end

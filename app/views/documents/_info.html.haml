@@ -5,10 +5,10 @@
     .icon-container
       %span.tas10-icon16.float-left.white{ :class => "tas10-icon-#{@doc.class.name.downcase}"}
     %h1{ :"data-name" => "name", :"data-url" => document_path( @doc ) }
-      %span.text.tas10-item-title{ :"data-attr-name" => "name-#{@doc.id}"}= @doc.name
+      %span.text.title{ :"data-attr-name" => "name-#{@doc.id}"}= @doc.name
 
   .tas10-dialog-content
-    %table.comments
+    %table
       %tr
         %td
           %label.desc= t('document.star')
@@ -32,19 +32,36 @@
             %span.small= "#{t('by')} #{@doc.log_entries.last.user.fullname_or_name}"
           - else
             %span.small= t('never')
+      - if @doc.respond_to? :color
+        %tr
+          %td
+            %label.desc= t('color')
+          %td
+            = render "common/snippets/color_chooser"
       %tr
         %td
           %label.desc= t('labels.title')
         %td
-          //= render "common/labels"
+          = render "common/snippets/labels"
 
       %tr
         %td
-          %label.desc= t('comments.title')
+          %label.desc= t('acl.title')
+        %td
+          = render "common/snippets/acl"
 
-    = render "common/comments"
+    %fieldset.tas10-steps
+      %legend{ :align => "right" }
+        %span.live-tipsy.float-right.ui-icon.ui-icon-triangle-1-s{ :"original-title" => t('comments.show'), :onclick => "$(this).closest('.tas10-info-container').find('table.comments').slideToggle()" }
+        = t('comments.title')
 
-    %a.desc{ :href => "#", :onclick => "$(this).next('.log').slideToggle({easing: 'easeInOutQuart'}); $('#tas10-dialog').center(); "}= t('document.log.show')
+    = render :partial => "common/comments", :locals => { :hidden => true }
+
+
+    %fieldset.tas10-steps
+      %legend{ :align => "right" }
+        %span.live-tipsy.float-right.ui-icon.ui-icon-triangle-1-s{ :"original-title" => t('document.log.show'), :onclick => "$(this).closest('.tas10-info-container').find('table.log').slideToggle(); $('#tas10-dialog').center();" }
+        = t('document.log.title')
 
     %table.log
       - @doc.log_entries.each_with_index do |log_entry, i|

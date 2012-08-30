@@ -1,3 +1,4 @@
+@import colors
 body
   background: #f6f4ee
 
@@ -36,6 +37,13 @@ body
     color: #999
   input[type=submit]
     margin-left: 20px
+    &:disabled
+      cursor: default
+      opacity: 0.5
+      &:hover
+        background: $button_color
+  .error
+    color: #d00
 
 .login-error-container
   position: absolute
@@ -48,6 +56,8 @@ body
   height: 16px
   color: #d00
   font-size: 12px
+  &.notice
+    color: #080
 
 .login-footer-container
   position: absolute
@@ -61,3 +71,4 @@ body
   height: 16px
   text-align: right
   font-size: 10px
+

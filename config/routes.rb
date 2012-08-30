@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     end
     member do
       get :picture_of
+      get :known
       get :confirm
       post :reset_password_for
       post :add_group_to
@@ -29,10 +30,13 @@ Rails.application.routes.draw do
       get :info
     end
     resources :comments
+    resources :labels
+    resources :acl
   end
   resources :tas10_comments, :controller => "Comments"
   resources :comments
 
   resources :labels
+  resources :acl
 
 end
