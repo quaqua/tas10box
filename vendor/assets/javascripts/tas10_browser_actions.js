@@ -30,15 +30,14 @@ $(function(){
 	$('.browser-actions .share').live('click', function(){
 		if( $(this).hasClass('disabled') )
 			return;
-		var actionContainer = $(this).closest('.action-container');
-		tas10.shareDialog($(actionContainer).find('.selected-item').attr('data-id'));
+		tas10.showAclMiniDialog( this, '/documents/'+$(this).closest('action-container').find('.selected-item').attr('data-id')+'/acl', true );
 	});
 
 	$('.browser-actions .edit').live('click', function(){
 		if( $(this).hasClass('disabled') )
 			return;
 		var item = $(this).closest('.action-container').find('.selected-item')
-		  , url = '/'+$(item).attr('data-classname').toLowerCase()+'/'+$(item).attr('data-id')+'/edit';
+		  , url = '/'+$(item).attr('data-_type').toLowerCase()+'s/'+$(item).attr('data-id')+'/edit';
 		$.getScript( url );
 	});
 
@@ -54,13 +53,16 @@ $(function(){
 			return;
 		var actionContainer = $(this).closest('.action-container');
 		$(actionContainer).find('.selected-item').each(function(){
-			$(this).attr('data-move', $(this).closest('li.item').data('id'));
-			if( !$(this).closest('li.item').length )
-				$(this).attr('data-move', $(this).attr('data-id'));
-		    if( !$(this).attr('data-move') && $(this).closest('.tab-content').data('id') )
-		    	$(this).attr('data-move', $(this).closest('.tab-content').data('id') )
-		    tas10.clipboard('push', this);
+			var li = this;
+			$(li).attr('data-move', null);
+			if( $(li).parent().parent().hasClass('item') )
+				$(li).attr('data-move', $(li).parent().parent().data('id'));
+	    else if( $(li).closest('.tab-content').data('id') )
+	    	$(li).attr('data-move', $(li).closest('.tab-content').data('id') )
+	    console.log('move', $(li).attr('data-move') );
+	    tas10.clipboard('push', li);
 		});
+	  
 	});
 
 	$('.browser-actions .copy').live('click', function(){
@@ -76,10 +78,20 @@ $(function(){
 	$('.browser-actions .paste').live('click', function(){
 		if( $(this).hasClass('disabled') )
 			return;
-		var elem = $(this).closest('.action-container').find('.selected-item');
-		var cS = tas10.clipboard('pullAll');
+		var labelId
+		  , elem = $(this).closest('.action-container').find('.selected-item')
+		  , cS = tas10.clipboard('pullAll');
+		if( $(elem).length )
+			labelId = $(elem).data('id');
+		else {
+			elem = $(this).closest('.tab-content');
+			if( $(elem).length )
+				labelId = $(elem).data('id');
+		}
+		console.log('elem id', labelId);
 		for( var i in cS )
-			tas10.moveCopyElem( $(elem).data('id'), cS[i] );
+			tas10.moveCopyElem( labelId, cS[i] );
+
 	});
 
 	$('.browser-actions .preferences').live('click', function(){

@@ -35,7 +35,53 @@ var tas10 = {
            type: method,
            data: data
       });
+  },
+
+  'clipboard': function tas10Clipboard( action, item ){
+    if( action === 'push'){
+      tas10.clipboardStore = this.clipboardStore || [];
+      tas10.clipboardStore.push( item );
+      $('.browser-actions .paste').removeClass('disabled');
+      tas10.disabledContextMenuItems.paste = true;
+      $(item).attr('data-orig-label-id', $(item).closest('.tab-content').attr('id') );
+      if( $(item).attr('data-move') )
+        $(item).remove();
+    } else if( action === 'pullAll'){
+      $('.browser-actions .paste').addClass('disabled');
+      var cb = tas10.clipboardStore;
+      tas10.clipboardStore = [];
+      return cb;
+    } else if( action === 'size' ){
+      return (tas10.clipboardStore ? tas10.clipboardStore.length : 0);
+    }
+    console.log('clipboardstore', tas10.clipboardStore);
+  },
+
+  'appendToList': function( data ){
+    if( typeof( data.labels ) !== 'undefined' && data.labels.length > 0 && $('#tab_'+data.labels[0]).length )
+      $('#tab_content_'+data.labels[0]+' .tas10-list').prepend( $( tas10.getListTemplate( data.labels[0] )).render( data.labels[0] ) );
+    else
+      $('#tab_content_home .tas10-list').prepend( $( tas10.getListTemplate( data )).render( data ) );
+    $('li.list-item[data-id='+data._id+']').effect('highlight', { duration: 3000, color: '#fc6' })
+  },
+
+  'moveCopyElem': function moveCopyElem( labelId, elem ){
+    if( labelId.indexOf('search') >= 0 ){
+      tas10.notify(I18n.t('errors.cannot_move_or_copy_here'), 'error');
+      $('#'+$(elem).attr('data-orig-label-id') + ' .tas10-list').prepend(elem);
+      return;
+    }
+    var newContainer = $('#tab_content_'+labelId);
+
+    console.log('moving', elem);
+    $.ajax({url: '/documents/' + $(elem).data('id') + '/labels',
+            data: { from_id: $(elem).attr('data-move'), label_id: labelId },
+            type: 'post',
+            dataType: 'script'
+    });
+
   }
+
 
 };
 
@@ -46,8 +92,8 @@ tas10['notify'] = function tas10Notify( msg, error ){
   else
     $(notifier).removeClass('error');
   $('#tas10-notifier .content').html(msg);
-  $(notifier).css('zIndex', 10002).show().delay(3000).animate({'zIndex': 9998});
-  $(notifier).find('.wrapper').switchClass('low','high', 0)
+  $(notifier).clearQueue().stop(true, true).css('zIndex', 10002).show().delay(3000).animate({'zIndex': 9998});
+  $(notifier).find('.wrapper').clearQueue().stop(true, true).switchClass('low','high', 0)
     .delay(2000).switchClass('high','low', 600, 'easeOutBack');
 }
 
@@ -205,3 +251,37 @@ tas10['setPath'] = function tas10SetPath( path, append ){
   }
 
 }
+
+$(function(){
+
+  /**
+   * liveDraggable
+   * to make draggable event attach to items live
+   */
+  (function ($) {
+     $.fn.liveDraggable = function (opts) {
+        this.live("mouseover", function() {
+           if (!$(this).data("init")) {
+              $(this).data("init", true).draggable(opts);
+           }
+        });
+        return $();
+     };
+  }(jQuery));
+
+  /**
+   * liveDroppable
+   * to make draggable event attach to items live
+   */
+  (function ($) {
+     $.fn.liveDroppable = function (opts) {
+        this.live("mouseover", function() {
+           if (!$(this).data("init")) {
+              $(this).data("init", true).droppable(opts);
+           }
+        });
+        return $();
+     };
+  }(jQuery));
+
+})

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     end
     member do
       get :info
+      get :children_for
     end
     resources :comments
     resources :labels

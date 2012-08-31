@@ -1,0 +1,20 @@
+<script id="acl-form-template" type="text/x-jsrender">
+  <form action="{{:action}}" data-remote="true" method="post" class="tas10-acl-form">
+    {{if showTitle}}
+    <p class="desc"><%= t('acl.share_selected_items') %></p>
+    {{/if}}
+    <a class="live-tipsy close-button" href="#" onclick="$(this).closest('form').remove();" original-title="<%= t('close') %>">
+      <span class="ui-icon ui-icon-closethick"></span>
+    </a>
+    <a class="live-tipsy create-button" href="#" original-title="<%= t('user.invite') %>" style="display:none">
+      <span class="ui-icon ui-icon-disk"></span>
+    </a>
+    <a href="#" class="tas10-acl-priv read sel">r</a>
+    <a href="#" class="tas10-acl-priv write sel">w</a>
+    <a href="#" class="tas10-acl-priv share sel">s</a>
+    <a href="#" class="tas10-acl-priv del sel">d</a>
+    <input type="hidden" name="privileges" value="rw" />
+    <input type="hidden" name="email" />
+    <select class="select-user-combobox" name="user_id" />
+  </form>
+</script>

@@ -81,7 +81,7 @@ tas10.getTreeTemplate = function getTreeTemplate( doc ){
 						$(this).addClass('disabled');
 				})
 			} else
-				$(actionContainer).find('.browser-actions a').addClass('disabled');
+				$(actionContainer).find('.browser-actions a.single, .browser-actions a.multi').addClass('disabled');
 			if( typeof(tas10.clipboardStore) === 'undefined' || tas10.clipboardStore.length == 0 )
 				$(actionContainer).find('.paste').addClass('disabled');
 
@@ -112,12 +112,14 @@ tas10.getTreeTemplate = function getTreeTemplate( doc ){
 	    },
 	    reload : function() {
 	    	var self = this;
-			$.getJSON( $(self).data('settings').url, function( data ){
-				if( 'items' in data )
-					data = data['items'];
-				if( data.length > 0 )
-					$(self).append( $( tas10.getTreeTemplate( data[0] )).render( data ) );
-			});
+        $(this).html('<li class="loading"><img src="/assets/loading_50x50.gif" /></li>');
+				$.getJSON( $(self).data('settings').url, function( data ){
+					if( 'items' in data )
+						data = data['items'];
+					if( data.length > 0 )
+						$(self).append( $( tas10.getTreeTemplate( data[0] )).render( data ) );
+					$(self).find('li.loading').remove();
+				});
 	    },
 	    append : function( doc ) {
 	    	var self = this;
@@ -132,6 +134,7 @@ tas10.getTreeTemplate = function getTreeTemplate( doc ){
 	    				$(li).find('li[data-id='+doc._id+']').effect('highlight', {color: '#fc6'}, 2000);
 	    			} else
 	    				loadTreeItemChildren( $(li).find('.opener'), li, doc.label_ids[i], function(){
+	    					$(li).find('.opener').addClass('open');
 	    					$(li).find('li[data-id='+doc._id+']').effect('highlight', {color: '#fc6'}, 2000);	
 	    				});
 	    		}

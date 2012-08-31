@@ -1,19 +1,6 @@
 .tas10-acl{ :"data-id" => @doc.id }
-  %span.tas10-icon16.tas10-icon-plus.add.live-tipsy{ :"original-title" => t('acl.add') }
+  %span.tas10-icon16.tas10-icon-plus.add.live-tipsy{ :"original-title" => t('acl.add'), :"data-url" => document_acl_index_path(@doc) }
 
   %div{ :class => "tas10-acl-#{@doc.id}" }
     - @doc.acl.each_pair do |user_id, acl|
       = render :partial => "common/snippets/acl_entry", :locals => { :user => Tas10::User.where(:id => user_id).first, :acl => acl }
-
-  =form_tag( document_acl_index_path(@doc), :remote => true ) do
-    %a.live-tipsy.close-button{ :href => "#", :onclick => "$(this).closest('form').remove();", :"original-title" => t('close') }
-      %span.ui-icon.ui-icon-closethick
-    %a.create-button.live-tipsy{ :href => "#", :"original-title" => t('user.invite'), :style => "display:none" }
-      %span.ui-icon.ui-icon-disk
-    %a.tas10-acl-priv.read.sel r
-    %a.tas10-acl-priv.write.sel w
-    %a.tas10-acl-priv.share s
-    %a.tas10-acl-priv.del d
-    %input{ :type => "hidden", :name => "privileges", :value => "rw" }
-    %input{ :type => "hidden", :name => "email" }
-    %select.select-user-combobox{ :name => 'user_id' }

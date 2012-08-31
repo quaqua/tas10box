@@ -2,6 +2,25 @@
  * acl
  */
 
+tas10['showAclMiniDialog'] = function showAclMiniDialog( elem, action, showTitle ){
+  var form = $($('#acl-form-template').render({ action: action, showTitle: (showTitle || false) }));
+  $('body').append(form);
+  $(form).css({top: $(elem).offset().top, left: $(elem).offset().left}).show();
+  if( ! $(form).find('.ui-autocomplete-input').length )
+    $(form).find('.select-user-combobox').tas10Combobox({ submitOnSelect: true, 
+      url: '/users/' + $('#account-info').data('id') + '/known',
+      emptyDataCallback: function(select, val){
+        var validEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if( validEmail.test(val) )
+          $(select).closest('.tas10-acl-form').find('.create-button').show();
+      },
+      hasDataCallback: function(select){
+        $(select).closest('.tas10-acl-form').find('.create-button').show();
+      }
+    });
+  $(form).find('.ui-autocomplete-input').focus();
+}
+
 $(function(){
 
   $('.tas10-acl-priv').live('click', function(e){
@@ -31,22 +50,7 @@ $(function(){
   });
 
   $('.tas10-acl .add').live('click', function(){
-    var form = $(this).closest('.tas10-acl').find('form').clone()
-    $('body').append(form);
-    $(form).addClass('tas10-acl-form').css({top: $(this).offset().top, left: $(this).offset().left}).show();
-    if( ! $(form).find('.ui-autocomplete-input').length )
-      $(form).find('.select-user-combobox').tas10Combobox({ submitOnSelect: true, 
-        url: '/users/' + $('#account-info').data('id') + '/known',
-        emptyDataCallback: function(select, val){
-          var validEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          if( validEmail.test(val) )
-            $(select).closest('.tas10-acl-form').find('.create-button').show();
-        },
-        hasDataCallback: function(select){
-          $(select).closest('.tas10-acl-form').find('.create-button').show();
-        }
-      });
-    $(form).find('.ui-autocomplete-input').focus();
+    tas10.showAclMiniDialog(this, $(this).attr('data-url') );
   });
 
   $('.tas10-acl-entry .remove').live('click', function(){

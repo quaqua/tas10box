@@ -14,6 +14,11 @@ module Tas10
 
     attr_accessor :query
 
+    def all
+      run_query unless @loaded
+      self
+    end
+
     def each
       run_query unless @loaded
       super
@@ -35,6 +40,14 @@ module Tas10
       raise InvalidDocumentError unless doc.id
       @labels_array ? push_to_label_ids( doc ) : push_to_doc_label_ids( doc )
       super( doc )
+    end
+
+    # push an existing document to this document's children
+    # this is inversive equivalent to the label_with method
+    def pull( doc )
+      raise InvalidDocumentError unless doc.id
+      @labels_array ? pull_from_label_ids( doc ) : pull_from_doc_label_ids( doc )
+      delete( doc )
     end
 
     def size
@@ -64,6 +77,16 @@ module Tas10
       return if @doc.label_ids.include?( doc.id )
       @doc.label_ids << doc.id
       inherit_access_control( doc, @doc )
+      @doc.save
+    end
+
+    def pull_from_doc_label_ids( doc )
+      doc.label_ids.delete @doc.id
+      doc.save
+    end
+
+    def pull_from_label_ids( doc )
+      @doc.label_ids.delete doc.id
       @doc.save
     end
 

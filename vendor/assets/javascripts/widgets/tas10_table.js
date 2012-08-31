@@ -290,6 +290,9 @@ $(function(){
   $.fn.tas10Table = function( options ) {
     if( $(this).length < 1 )
       return;
+    
+    if( $(this).data('id') && !options.id )
+      optoins.id = $(this).data('id');
 
     if( !($(this).attr('id')) ){
       if( 'id' in options )

@@ -5,6 +5,7 @@
  *= require left_navbar
  *= require icons
  *= require list
+ *= require table
  *= require container
  *= require comments
  *= require labels
@@ -201,7 +202,7 @@ fieldset
       opacity: 1
     .ui-icon
       opacity: 0.5
-    .disabled
+    &.disabled
       cursor: default
       background: none
       .ui-icon
@@ -210,13 +211,13 @@ fieldset
         box-shadow: none
         margin-right: 0
         padding-right: 4px
-    .paste
-      background-color: #ffc
-      .disabled
-        background: none
+    &.paste
+      background-color: #fc6
+      &.disabled
+        background-color: #fff
 
-.context-trigger:hover .context-content
-  display: block
+//.context-trigger:hover .context-content
+//  display: block
 
 .context-content
   display: none
@@ -366,6 +367,9 @@ ul.tas10-tree
     padding: 0
     font-size: 11px
     cursor: pointer
+    &.loading
+      text-align: center
+      padding: 50px
     .drop-hover
       background-color: #fc6 !important
     .item-container
@@ -396,10 +400,9 @@ ul.tas10-tree
         background-position: 0 0 !important
 
 .selected-item > .item-container
-  background-color: #6db4ff
-  font-weight: 900
+  background-color: #fea
   a
-    color: #fff
+    font-weight: 900
 
 .path-item
   float: left

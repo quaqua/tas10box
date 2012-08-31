@@ -32,13 +32,13 @@ class DocumentsController < Tas10boxController
   def update
     @doc = get_doc_by_id
     @doc.attributes = params[:tas10_document]
-    @changes = @doc.changes.join(', ')
-    #@doc.changes.each_pair do |attr, v|
-    #  @changes << attr
-    #end
+    @changes = []
+    @doc.changes.each_pair do |attr, v|
+      @changes << attr
+    end
     Tas10::AuditLog.create!( :user => current_user, :doc_name => @doc.name, :doc_type => @doc.class.name, :action => 'audit.changed' )
     if @doc.save(:safe => true)
-      flash[:notice] = t('document.saved_with_changes', :name => @doc.name, :changes => @changes)
+      flash[:notice] = t('document.saved_with_changes', :name => @doc.name, :changes => @changes.join(', '))
     else
       flash[:error] = t('saving_failed', :name => @doc.name, :reason => @doc.errors.messages.inspect)
     end
@@ -49,6 +49,15 @@ class DocumentsController < Tas10boxController
   def info
     @doc = get_doc_by_id
     respond_with @doc
+  end
+
+  # find children of this document
+  #
+  def children_for
+    @doc = get_doc_by_id
+    respond_to do |format|
+      format.json{ render :json => @doc.children.all.to_json }
+    end
   end
 
   def destroy

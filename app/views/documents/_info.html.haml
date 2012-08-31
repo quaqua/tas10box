@@ -68,4 +68,4 @@
         %tr
           %td.modifier= log_entry.user.fullname_or_name
           %td.created_at= l( log_entry.created_at )
-          %td.changed= (i > 0 ? log_entry.changed_fields : t('document.created'))
+          %td.changed= (i == @doc.log_entries.size ? t('document.created') : log_entry.changed_fields)

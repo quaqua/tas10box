@@ -31,7 +31,7 @@ module Tas10
         before_create :setup_creator
         before_destroy :check_delete_permission
 
-        embeds_many :log_entries
+        embeds_many :log_entries, order: :created_at.desc
 
         validates_presence_of :name
 
@@ -81,6 +81,7 @@ module Tas10
         c = changed
         c.delete('version')
         c.delete('label_ids')
+        self.log_entries.pop if self.log_entries.size > 10
         self.log_entries.build :user => @user, :changed_fields => c
       end
 

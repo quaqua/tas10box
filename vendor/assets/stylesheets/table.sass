@@ -1,0 +1,57 @@
+
+.tas10-table-wrapper
+  position: absolute
+  top: 40px
+  bottom: 0
+  left: 0
+  right: 0
+  overflow-y: auto
+.tas10-table
+  width: 100%
+  padding: 0
+  margin: 0
+  tr
+    background-color: #fff
+    .selected
+      background: #fea
+  thead 
+    tr
+      background: #fff
+    th
+      color: #666
+      font-weight: 500
+      cursor: pointer
+      .current-sort
+        font-weight: 900
+        color: #000
+  td
+    padding: 5px
+    position: relative
+  .checkbox
+    width: 16px
+    .tas10-checkbox
+      float: left
+      margin-top: -5px
+    .star
+      width: 16px
+      .tas10-icon16
+        float: left
+        opacity: 0.5
+
+#tas10-table-item-details
+  position: absolute
+  width: 68px
+  height: 26px
+  background-color: #fff
+  box-shadow: -3px 0 3px rgba(0,0,0,0.5)
+  z-index: 10
+  a:first-child
+    .ui-icon
+      margin-left: 6px
+  .ui-icon
+    float: left
+    margin-left: 2px
+    opacity: 0.5
+    margin-top: 5px
+    &:hover
+      opacity: 1

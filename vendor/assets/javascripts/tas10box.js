@@ -8,6 +8,7 @@
 //= require 3rdparty/moment.min
 //= require tools/center
 //= require tas10
+//= require_self
 //= require tas10_browser_actions
 //= require jsrender_tags_helpers
 //= require widgets/tas10_container
@@ -23,7 +24,6 @@
 //= require widgets/tas10_table
 //= require i18n
 //= require i18n/translations
-//= require_self
 
 $( function(){
 

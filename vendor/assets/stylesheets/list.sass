@@ -16,15 +16,18 @@
   list-style-type: none
   margin: 0
   padding: 0
+  li
+    &.loading
+      text-align: center
+      padding: 50px
 
 li.list-item, .tas10-list-h li
   padding: 3px 0
   min-height: 20px
-  background-color: #fff
   position: relative
   margin: 2px 0
   &:hover
-    background-color: #6db4ff
+    box-shadow: -3px 0 3px rgba(0,0,0,0.5)
   .tas10-icon-checkbox
     float: left
     margin: -1px 5px 0 10px
@@ -50,10 +53,14 @@ li.list-item, .tas10-list-h li
   a
     text-decoration: none
     font-weight: 500
+  &.selected-item
+    background-color: #fea
+    a
+      color: #333
 
 li.list-item
   .move-helper
-    background: #6db4ff
+    background: #adf
     width: 500px
     height: 16px
     padding: 0 5px

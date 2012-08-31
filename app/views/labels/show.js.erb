@@ -2,5 +2,7 @@ $('#tas10-main-container').tas10Container( 'append', {
   title: '<%= @doc.name %>', 
   id: '<%= @doc.id %>', 
   content: '<%= escape_javascript render('labels/show') %>'
-  }, function( container ){ }
+  }, function( container ){
+    $(container).find('.tas10-list').tas10List({ url: '<%= children_for_document_path(@doc) %>' });
+  }
 );
