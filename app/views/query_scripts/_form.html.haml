@@ -1,0 +1,24 @@
+- @query_script = @doc unless @query_script
+=form_for( @query_script, :remote => true, :class => 'tas10-form' ) do |f|
+  %p
+    %label.desc
+      =t('query_scripts.name')
+    %br
+    =f.text_field :name, :class => 'js-get-focus', :required => true
+  %p
+    %label.desc
+      =t('query_scripts.query')
+    %br
+    =f.text_field :query, :size => 50
+  %p
+    %label.desc
+      =t('query_scripts.columns')
+    %br
+    =f.text_field :columns
+  %p
+    %label.desc
+      =t('query_scripts.doc_types')
+    %br
+    = f.select( :doc_type, get_options_for_query_script_types, :class => "template tas10-select" )
+  %p
+    =f.submit t('create')

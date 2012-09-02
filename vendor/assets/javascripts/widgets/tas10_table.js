@@ -18,9 +18,9 @@ $(function(){
       $('#tas10-table-item-details').remove();
       var itemDetails = $('<div id="tas10-table-item-details"/>');
 
-      $(itemDetails).append('<a href="'+$(this).attr('data-url')+'" data-remote="true" original-title="'+$.i18n.t('show')+'"><span class="ui-icon ui-icon-arrow-1-e"></span></a>')
-              .append('<a href="'+$(this).attr('data-url')+'/edit" data-remote="true" original-title="'+$.i18n.t('edit')+'"><span class="ui-icon ui-icon-pencil"></span></a>')
-              .append('<a href="/document/'+$(this).attr('data-id')+'" data-remote="true" data-method="delete" data-confirm="'+$.i18n.t('really_delete', {name: $(this).attr('data-title')})+'" original-title="'+$.i18n.t('delete')+'"><span class="ui-icon ui-icon-trash"></span></a>');        
+      $(itemDetails).append('<a href="'+$(this).attr('data-url')+'" data-remote="true" original-title="'+I18n.t('show')+'"><span class="ui-icon ui-icon-arrow-1-e"></span></a>')
+              .append('<a href="'+$(this).attr('data-url')+'/edit" data-remote="true" original-title="'+I18n.t('edit')+'"><span class="ui-icon ui-icon-pencil"></span></a>')
+              .append('<a href="/documents/'+$(this).attr('data-id')+'" data-remote="true" data-method="delete" data-confirm="'+I18n.t('really_delete', {name: $(this).attr('data-title')})+'" original-title="'+I18n.t('delete')+'"><span class="ui-icon ui-icon-trash"></span></a>');        
       $('body').append(itemDetails);
       $(itemDetails).css({top: $(this).offset().top, left: $(this).offset().left - $(itemDetails).outerWidth() + 4});
       $(itemDetails).bind('mouseleave', function(){ 
@@ -44,15 +44,15 @@ $(function(){
       start: function( e, ui ){
         $(this).addClass('move');
         $(ui.helper).addClass('move-helper');
-        $(ui.helper).append('<div class="move-copy">'+$.i18n.t('move_to')+'</div>').css('z-index', 999);
+        $(ui.helper).append('<div class="move-copy">'+I18n.t('move_to')+'</div>').css('z-index', 999);
       },
       drag: function( e, ui ){
         if( e.ctrlKey ){
           $(this).removeClass('move').addClass('tag-with');
-          $(ui.helper).find('.move-copy').text($.i18n.t('tag_with'));
+          $(ui.helper).find('.move-copy').text(I18n.t('tag_with'));
         } else if( $(this).hasClass('tag-with') ){
           $(this).removeClass('move').removeClass('tag-with');
-          $(ui.helper).addClass('move').find('.move-copy').text($.i18n.t('move_to'));
+          $(ui.helper).addClass('move').find('.move-copy').text(I18n.t('move_to'));
         }
       },
       stop: function( e, ui ){
@@ -72,7 +72,11 @@ $(function(){
 
     $('#' + $(table).attr('id')).dragtable({ dataHeader: 'data-sort-key', change: function(e, ui){
       var options = $(table).data('options');
-      options.items = $(this).dragtable('order');
+      tmpItems = $(this).dragtable('order');
+      options.items = [];
+      for( var i in tmpItems )
+        if( options.items[i] !== '' )
+          options.items.push( tmpItems[i] );
       $(table).data('options', options);
       }
     });
@@ -92,7 +96,8 @@ $(function(){
           $(table).data('pages', data.pages);
           $(table).data('data', data.data);
           tas10TableMethods['fill'].call( table, data.data, callback );
-        }
+        },
+        dataType: 'json'
       });
     },
 
@@ -102,6 +107,7 @@ $(function(){
         , cc = $(table).closest('.action-container').find('.column-content');
       $(table).find('tbody tr').remove();
       $(cc).html(''); 
+
       for( var i in data ){
         var item = data[i];
         totalColumns = [];
@@ -110,6 +116,7 @@ $(function(){
             continue;
           totalColumns.push(j);
         }
+
       
         if( $(cc).html() === '' )
           for( var j in totalColumns ){
@@ -118,7 +125,7 @@ $(function(){
             for( var k in options.items )
               if( options.items[k] === totalColumns[j])
                 $(checkbox).addClass('checked');
-            $(li).append(checkbox).append('<span>'+$.i18n.t(options.i18nPrefix+totalColumns[j])+'</span>');
+            $(li).append(checkbox).append('<span>'+I18n.t(options.i18nPrefix+totalColumns[j])+'</span>');
             $(cc).append(li);
             tas10TableMethods['setupColumnAction'].call( this, li );
           }
@@ -135,12 +142,16 @@ $(function(){
     setupColumnAction: function( column ){
       var table = this;
       $(column).find(' .tas10-checkbox').on('click', function(e){
-        console.log('here');
-        var options = $(table).data('options');
+        var options = $(table).data('options')
+          , items = options.items;
         if( $(this).hasClass('checked') )
-          options.items.splice(options.items.indexOf($(this).closest('li').attr('data-column')),1);
+          items.splice(options.items.indexOf($(this).closest('li').attr('data-column')),1);
         else
-          options.items.push($(this).closest('li').attr('data-column'));
+          items.push($(this).closest('li').attr('data-column'));
+        options.items = [];
+        for( var i in items )
+          if( items[i] !== '' )
+            options.items.push( items[i] );
         $(table).data('options', options);
         tas10TableMethods['setupHeaders'].call( table, options );
         tas10TableMethods['fill'].call( table, $(table).data('data') );
@@ -148,7 +159,9 @@ $(function(){
 
     },
 
-    specialTags: ['_id', 'columns', 'privileges', 'acl', 'history', 'tags', 'public', 'taggable', 'className', 'position', 'starred'],
+    specialTags: ['_id', 'columns', 'privileges', 'color', 'labelable',
+    'acl', 'history', 'label_ids', 'public', 'taggable', 
+    '_type', 'deleted_at', 'pos', 'starred', 'log_entries', 'versions', 'version'],
 
     append: function( elem ){
       var options = $(this).data('options');
@@ -168,8 +181,7 @@ $(function(){
           if( options.items[i] in elem )
             elem.columns.push({ key: options.items[i], value: elem[options.items[i]]});
       }
-
-      $('#'+elem.className.toLowerCase()+'-table-item-template').tmpl( elem ).appendTo($(this).find('tbody'));
+      $(this).find('tbody').append( $('#default-table-item-template').render( elem ) );
     },
 
     setupSortSelect: function( options ){
@@ -178,7 +190,7 @@ $(function(){
       if( 'sortItems' in options ){
         for( var i in options.sortItems ){
           var option = $('<option />');
-          $(option).val(options.sortItems[i]).text($.i18n.t('sort_options.'+options.sortItems[i]));
+          $(option).val(options.sortItems[i]).text(I18n.t('sort_options.'+options.sortItems[i]));
           if( 'sort' in options && options.sort === options.sortItems[i] )
             $(option).attr('selected',true);
           $(sortSelect).each(function(){
@@ -252,7 +264,7 @@ $(function(){
         if( options.items[i] ){
           if( 'sort' in options && options.sort === options.items[i] )
             $(th).addClass('current-sort');
-          $(th).text($.i18n.t(options.i18nPrefix+options.items[i]));
+          $(th).text(I18n.t(options.i18nPrefix+options.items[i]));
         }
         $(tr).append(th);
       }
@@ -270,14 +282,12 @@ $(function(){
     loadTemplates: function( url ){
       var table = this
         , tblContainer = $(table).closest('.action-container').find('.available-scripts')
-        , scriptTmpl = "<li data-id=\"${_id}\" data-columns=\"${columns}\">${name}</li>";
+        , scriptTmpl = $.templates("tas10Path", "<li data-id=\"${_id}\" data-columns=\"${columns}\">${name}</li>");
       $.getJSON(url, function( data ){
-        $.tmpl( scriptTmpl, data ).appendTo( tblContainer );
+        $(tblContainer).append( $.render.tas10Find( path ) );
         $(tblContainer).find('li').on('click', function(){
           var options = $(table).data('options');
-          console.log(options.items);
           options.items = $(this).attr('data-columns').replace(/\n/i,'').split(',');
-          console.log(options.items);
           $(table).data('options', options);
           tas10TableMethods['setupHeaders'].call( table, options );
           tas10TableMethods['fill'].call( table, $(table).data('data') );
@@ -288,6 +298,7 @@ $(function(){
   }
 
   $.fn.tas10Table = function( options ) {
+
     if( $(this).length < 1 )
       return;
     

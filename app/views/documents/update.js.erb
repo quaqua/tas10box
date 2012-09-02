@@ -1,5 +1,8 @@
-<% @changes.each do |attr| %>
-  $('[data-attr-name=<%= attr %>-<%= @doc.id %>]').text( '<%= @doc.send(attr) %>' );
-  $('[data-attr-name=<%= attr %>-<%= @doc.id %>]').effect('highlight', { color: '#fc6' }, 2000 );
+<% @doc.log_entries.first.changed_fields.each do |attr| %>
+  $('[data-attr-name="<%= attr %>-<%= @doc.id %>"]').text( '<%= @doc.send(attr) %>' );
+  $('[data-attr-name="<%= attr %>-<%= @doc.id %>"]').effect('highlight', { color: '#fc6' }, 2000 );
+<% end %>
+<% if @close_dialog %>
+  tas10.dialog('close');
 <% end %>
 <%= render "common/process_flash" %>

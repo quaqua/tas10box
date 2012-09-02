@@ -1,6 +1,7 @@
 /*
  *= require 3rdparty/jquery-ui/jquery-ui
  *= require 3rdparty/tipsy
+ *= require 3rdparty/dragtable
  *= require user
  *= require left_navbar
  *= require icons
@@ -73,7 +74,7 @@ p
   &.h1
     margin-top: 0
 
-img.userpic
+.userpic
   opacity: 0.8
   border: 1px solid #ddd
   .x30
@@ -128,11 +129,6 @@ fieldset
       text-align: right
       font-weight: 900
       text-transform: uppercase
-    p.desc
-      margin: 0
-      color: #888
-    p.default-width
-      width: 400px
   &.title
     border: none
     border-top: 1px solid #ccc
@@ -302,10 +298,12 @@ fieldset
   .tas10-dialog-header
     color: #999
     font-weight: 900
-    margin: 3px 5px 10px 5px
+    margin: 10px
   .tas10-dialog-content
-    overflow: auto
-    padding: 10px
+    margin-top: 28px
+    margin-right: 5px
+    overflow-y: auto
+    padding: 10px 15px 10px 10px
   .border-top
     background-image: url("/assets/tas10-container-tabs-sprites.png")
     background-position: -10px -4px
@@ -351,6 +349,11 @@ fieldset
       font-weight: 900
   .continue-creating
     margin: 7px 10px 0 0
+  p.desc
+    margin: 0
+    color: #888
+  .default-width
+    width: 400px
 
 ul.tas10-tree
   margin: 0
@@ -478,6 +481,35 @@ ul.tas10-tree
         color: #fff
         cursor: pointer
 
+.results-overview
+  margin: 10px
+
+ul.query-scripts-list
+  margin: 0
+  padding: 0
+  list-style-type: none
+  li
+    margin: 5px
+    padding: 5px 10px
+    background: #fafafa
+    border: 1px solid #ddd
+    cursor: pointer
+    a
+      text-decoration: none
+    .ui-icon
+      opacity: 0
+      cursor: pointer
+      background-image: url("/assets/3rdparty/jquery-ui/images/ui-icons_ffffff_256x240.png")
+    &:hover
+      background-color: $button_color
+      a
+        color: #fff
+      .ui-icon
+        opacity: 0.2
+        &:hover
+          opacity: 0.7
+
+
 .tas10-inline-edit-form
   position: absolute
   z-index: 10000
@@ -538,3 +570,14 @@ button.ui-button.ui-widget
     background-image: url('/assets/3rdparty/jquery-ui/images/ui-icons_222222_256x240.png') !important
 .ui-widget-content
   background: #fff
+
+.history-item
+  font-size: 10px
+  min-height: 5em
+  .history-content
+    margin-left: 40px
+    a.user
+      text-decoration: none
+      font-weight: 900
+      &:hover
+        text-decoration: underline

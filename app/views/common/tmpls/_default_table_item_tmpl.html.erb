@@ -1,0 +1,13 @@
+<script id="default-table-item-template" type="text/x-jsrender">
+  <tr data-id="{{:_id}}" data-url="/documents/{{:_id}}" data-filter-type="{{:_type.toLowerCase()}}" class="table-item item-context-menu" data-title="{{:name}}">
+    <td class="checkbox">
+      <span class="tas10-icon16 tas10-icon-checkbox tas10-checkbox"></span>
+    </td>
+    <td class="star sort-star">
+      <span class="starred" data-id="{{:_id}}"><span class="tas10-icon16 black tas10-icon-star-{{:(starred ? 'full' : 'empty')}} star"></span></span>
+    </td>
+    {{for columns}}
+      <td class="sort-{{:#data.key}}"><span class="inl-edit">{{:#data.value}}</span></td>
+    {{/for}}
+  </tr>
+</script>

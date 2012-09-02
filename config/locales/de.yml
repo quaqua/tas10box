@@ -3,7 +3,7 @@ de:
   login: 
     title: "Anmelden"
     required: "Anmeldung erforderlich!"
-    name_or_email: "Name oder Email"
+    name_email: "Name oder Email"
     password: "Passwort"
     password_confirm: "Passwort wiederholen"
     failed: "Anmeldung fehlgeschlagen"
@@ -14,6 +14,8 @@ de:
     goto: "Zum Dashboard"
   home:
     title: "Meine Dokumente"
+  history:
+    title: "Letzte Änderungen"
 
   new: "Neu"
   cut: "Ausschneiden"
@@ -22,6 +24,7 @@ de:
   info: "Info"
   share: "Teilen"
   edit: "Bearbeiten"
+  save: "Speichern"
   delete: "Löschen"
   settings: "Einstellungen"
   continue_creating: "Weitere anlegen"
@@ -34,6 +37,18 @@ de:
 
   insufficient_rights: "Due besitzt nicht genügend Rechte auf '%{name}' um diese Aktion auszuführen"
   not_found: "Das angeforderte Dokument wurde nicht gefunden"
+
+  find: "Suchen"
+  results_for: "Ergebnisse für %{query}"
+  labeled_with: "gelabelt mit"
+  found: 
+    zero: "Keine Ergebnisse gefunden"
+    one: "Ein Ergebnis gefunden"
+    other: "%{count} Ergebnisse gefunden"
+
+  items_per_page: "Einträge pro Seite"
+  page: "Seite"
+  columns: "Spalten"
 
   by: "von"
   at: "am"
@@ -50,6 +65,8 @@ de:
   creation_failed: "'%{name}' konnte nicht erstellt werden (%{reaseon})"
   saved: "'%{name}' wurde erfolgreich gespeichert"
   saving_failed: "'%{name}' konnte nicht gespeichert werden (%{reason})"
+  deleted: "'%{name}' wurde gelöscht"
+  deletion_failed: "'%{name} konnte nicht gelöscht werden"
 
   document:
     star: "Favorit"
@@ -75,7 +92,8 @@ de:
     circular_labeling_not_allowed: "Zirkulierendes Labeln ist nicht zugelassen. '%{label}' ist bereits mit '%{name}'. Kann nicht '%{name}' mit '%{label}' labeln."
     already_labeled: "'%{name}' ist bereits mit '%{label}' gelabelt."
     created: "'%{name}' wurde mit '%{label}' gelabelt."
-    moved: "'%{name}' wurde von '%{from}' gelöst und mit '%{to}' gelabelt."
+    moved: "'%{name}' wurde von '%{from}' losgelöst und mit '%{to}' gelabelt."
+    edit: "'%{name}' bearbeiten"
   acl:
     title: "Zugriffsrechte"
     add: "Mit Person teilen"
@@ -105,7 +123,25 @@ de:
     click_to_edit_profile: "Dein Profil"
 
   audit:
-    created: "angelegt"
-    updated: "geändert"
-    deleted: "gelöscht"
-    labeled: "gelabeled"
+    created: "hat '%{name}' angelegt"
+    modified: "hat '%{name}' bearbeitet"
+    deleted: "hat '%{name}' gelöscht"
+    labeled: "hat '%{name}' gelabeled mit '%{label}'"
+    label_removed: "hat '%{name}' losgelöst von"
+    renamed: "hat '%{name}' umbenannt <br />(%{message})"
+    shared: "hat '%{name}' mit '%{message}' geteilt"
+    invited_and_shared: "hat '%{name}' mit '%{message}' geteilt und eingeladen"
+    unshared: "hat '%{user}' Zugriff auf '%{name}' wieder entzogen"
+    commented: "hat '%{name}' kommentiert: <br />%{message}"
+    comment_destroyed: "hat seinen Kommentar in '%{name}' wieder gelöscht"
+
+  query_scripts:
+    title: "Suchvorlage"
+    templates: "Suchvorlagen"
+    new: "Neue Suchvorlage"
+    name: "Name"
+    query: "Suche (nur für Experten)"
+    columns: "Angezeigte Spalten (Kommagetrennt, keine Leerzeichen)"
+    doc_types: "Gilt für Dokumente des Typs"
+    delete: "Suchvorlage löschen"
+    edit: "Suchvorlage bearbeiten"

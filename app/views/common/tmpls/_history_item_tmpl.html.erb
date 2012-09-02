@@ -1,0 +1,12 @@
+<script id="history-item-template" type="text/x-jsrender">
+  <li data-id="{{:id}}" class="history-item">
+
+    <a href="{{:user_url}}" data-remote="true" class="user live-tipsy float-left userpic x30" original-title="{{:user_name}}"><img src="{{:user_url}}/picture_of?size=30" class="float-left" /></a>
+
+    <div class="history-content">
+      {{:message}}<br />
+      <span class="desc last-update live-tipsy" original-title="{{:~formattedDate(created_at) }}">{{:ago}}</span>
+    </div>
+
+  </li>
+</script>

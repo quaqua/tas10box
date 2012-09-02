@@ -44,6 +44,7 @@ class Tas10::User
   before_create :generate_salt, :generate_password_if_none, :generate_confirmation_key, :setup_default_settings
 
   def update_request_log( ip, url )
+    self.user_log_entries.pop if self.user_log_entries.size > 50
     user_log_entries.where( :login => false ).all.delete
     user_log_entries.create( :ip => ip,
                               :url => url,
@@ -52,6 +53,7 @@ class Tas10::User
   end
 
   def update_login_log( ip, url )
+    self.user_log_entries.pop if self.user_log_entries.size > 50
     user_log_entries.create( :ip => ip,
                             :url => url,
                             :login => true,

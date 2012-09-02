@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   resources :documents do
     collection do
-      get :find
+      match :find
     end
     member do
       get :info
@@ -37,11 +37,22 @@ Rails.application.routes.draw do
   resources :tas10_comments, :controller => "Comments"
   resources :comments
 
+  # labels hierarchical organization
+  #
   resources :labels do
     member do
       get :children
     end
   end
+
+  # Access control
+  # used to share documents with other users
   resources :acl
+
+  # History (showing activity)
+  resources :history
+
+  # QueryScripts
+  resources :query_scripts
 
 end

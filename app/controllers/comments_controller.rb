@@ -6,6 +6,7 @@ class CommentsController < Tas10boxController
     @doc = get_doc_by_id
     @comment = @doc.comments.build( params[:tas10_comment].merge({:user => current_user}) )
     if @comment.save(:safe => true)
+      Tas10::AuditLog.create!( :user => current_user, :document => @doc, :additional_message => @comment.content, :action => 'audit.commented' )
       flash[:notice] = t('comments.created', :name => @doc.name)
     else
       flash[:error] = t('comments.creation_failed', :name => @doc.name)
@@ -15,9 +16,9 @@ class CommentsController < Tas10boxController
   def destroy
     @doc = get_doc_by_id
     @comment = @doc.comments.where(:id => params[:id]).first
-    puts "comment #{@comment.inspect} "
     if current_user.id == @comment.user_id || current_user.admin?
       if @comment.destroy
+        Tas10::AuditLog.create!( :user => current_user, :document => @doc, :action => 'audit.comment_destroyed' )
         flash[:notice] = t('comments.deleted', :name => @comment.content)
       else
         flash[:error] = t('comments.deletion_failed', :name => @comment.content)

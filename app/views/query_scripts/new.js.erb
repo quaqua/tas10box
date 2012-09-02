@@ -1,0 +1,6 @@
+tas10.dialog( 'new', 
+  <%= raw({:title => escape_javascript(t('query_scripts.new')), :content => render("form")}.to_json) %>,
+  function( dialog ){
+    $(dialog).find('.js-get-focus').focus();
+  }
+);

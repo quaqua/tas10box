@@ -42,9 +42,10 @@ module Tas10box
         end
     
         # checks for valid user and updates user's last_request attribute
-        def renew_authentication
+        def renew_authentication( skip_update=:false )
           #session[:came_from] = request.path_info
           if valid_session?
+            return true if skip_update
             return current_user.update_request_log( request.env['REMOTE_ADDR'], request.env['REQUEST_PATH'] )
           else
             flash[:error] = I18n.t 'login.session_expired', :limit => Tas10box.defaults[:session_timeout]
@@ -71,15 +72,21 @@ module Tas10box
         # @param [ Tas10::Document ] doc
         #
         def tas10_safe_create( doc )
-
           if doc.save( :safe => true )
             flash[:notice] = t( 'created', :name => doc.name )
           else
-            flash[:error] = t( 'creation_failed', :name => ( doc.name ? doc.name : '' ), :reason => doc.errors.messages )
+            flash[:error] = t( 'creation_failed', :name => ( doc.name ? doc.name : '' ), :reason => doc.errors.messages.inspect.to_s )
           end
-
         end
-        
+
+        def tas10_safe_update( doc, attrs )
+          if doc.with(:safe => true).update_attributes( attrs )
+            flash[:notice] = t( 'saved', :name => doc.name )
+          else
+            flash[:error] = t( 'saving_failed', :name => ( doc.name ? doc.name : '' ), :reason => doc.errors.messages.inspect.to_s )
+          end
+        end
+
         # HTTP Authentication. Can be used, if #authenticate is bypassed and
         # http authentication desired
         def basic_auth

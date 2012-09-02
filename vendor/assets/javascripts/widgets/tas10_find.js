@@ -2,13 +2,16 @@ tas10['appendFindFilter'] = function( sel ){
 
 	tas10.setPath({id: $(sel).attr('id'), name: $(sel).text()}, true);
 	$('#tas10-find .label-res').remove();
-	$('#tas10-find input[name=query]').val('');
 
 }
 
 tas10['tas10FindSettingsInit'] = false;
 
 $(function(){
+	
+	$('#tas10-find input[name=query]').val('');
+	$('#tas10-find input[name=label_ids]').val('');
+	$('#tas10-find input[name=conditions]').val('');
 
 	var tas10FindLabelResMarkup = "<li id=\"${_id}\">${name}</li>";
 
@@ -126,7 +129,7 @@ $(function(){
 	$('#tas10-find .settings').on('hover', function(){
 		if( !tas10.tas10FindSettingsInit ){
 
-			$.getJSON('/scripts.json?query=true', function( data ){
+			$.getJSON('/query_scripts.json?query=true', function( data ){
 				for( var i in data )
 					$('#tas10-find .available-scripts').append(
 						$('<li/>').attr('data-id', data[i]._id)

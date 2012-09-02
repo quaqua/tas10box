@@ -6,6 +6,7 @@
 //= require 3rdparty/jquery.tipsy
 //= require 3rdparty/jquery.timeago
 //= require 3rdparty/moment.min
+//= require 3rdparty/jquery.dragtable
 //= require tools/center
 //= require tas10
 //= require_self
@@ -13,6 +14,7 @@
 //= require jsrender_tags_helpers
 //= require widgets/tas10_container
 //= require widgets/tas10_find
+//= require widgets/tas10_script
 //= require widgets/tas10_inline_edit
 //= require widgets/tas10_navbar
 //= require widgets/tas10_new
@@ -92,22 +94,17 @@ $( function(){
   function setupAjaxHelpers(){
     
     $(document).bind("ajaxSend", function(e, req){
-      var elem = e.currentTarget.activeElement;
-      if( $('.tab.active').length )
-        $('.tab.active').find('.tab-close').addClass('loading');
-      tas10.loader(true);
-      $('.want-to-load-ajax').each(function(){
-        $(this).removeClass('want-to-load-ajax').attr('disabled',true).addClass('ajax-loading').data('orig',$(this).html()).html('<img src="/assets/loading-small.gif" />');
-      });
+      tas10.pushLoaderTimeout();
     }).bind("ajaxComplete", function(e, req){
-      hideAjaxLoader(e);
-      tas10.loader(false);
+      tas10.pullLoaderTimeout();
     }).bind("ajaxError", function(e, xhr){
       hideAjaxLoader(e);
       if( xhr.status === 0 )
-      tas10.notify('You are offline!!\n Please Check Your Network.', true);
-      else if( xhr.status in [401,403] )
-        location = '/login';
+        tas10.notify('You are offline!!\n Please Check Your Network.', true);
+      else if( xhr.status in [401,403] ){
+        console.log('we are having a 401')
+        window.location = '/login';
+      }
       //else if( xhr.status === 404 )
       //  tas10.notify('Destination target could not be found', true);
       else if( xhr.status === 500 )

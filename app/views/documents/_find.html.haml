@@ -1,0 +1,29 @@
+.tas10-list-wrapper.action-container
+  .browser-actions-bg
+
+    .tas10-selector.float-right
+      %span.ui-icon.ui-icon-disk.float-left.save-query-script{ :"data-query" => CGI::escape(@uri) }
+      %span.ui-icon.ui-icon-triangle-1-s.float-right
+      %label.desc.float-right
+        =t('query_scripts.templates')
+      %ul.available-scripts.columns.tas10-selector-content
+        -@query_scripts.each do |script|
+          %li.script-url{ :"data-url" => script.query, :"data-columns" => script.columns, :"data-id" => script.id }
+
+    = render :partial => "common/browser_actions"
+
+  .results-overview
+    %span.desc
+      =t('found', :count => @docs.size)
+    %strong.desc
+      ="(#{params[:query]} #{params[:conditions]} )"
+
+    -if @labels
+      %p.ui-helper-clearfix{:margin => "10px 50px 10px 10px"}
+        =t('labeled_with')
+      .tas10-tags{:style => "margin: 10px 50px 10px 10px"}
+        -@labels.each do |label|
+          %span.tas10-tag.float-left{ :style => (label.color.blank? ? '' : "color: #fff; background-color:#{label.color}") }
+            =label.name
+
+  %ul.tas10-list{ :class => "tas10-list-#{CGI::escape(@query).gsub('%','')}" }

@@ -57,10 +57,10 @@ class UsersController < Tas10boxController
   # ?size=50
   #
   def picture_of
-    user = get_user_by_id
-    filename = File::join Tas10box.defaults[:datastore], "users", user.id.to_s
+    #user = get_user_by_id
+    filename = File::join Tas10box.defaults[:datastore], "users", params[:id]
     size = params[:size] || "50"
-    use_filename = "picture_of_#{user.fullname_or_name.gsub(' ','_')}_#{size}x#{size}.png"
+    use_filename = "picture_of_#{params[:id]}_#{size}x#{size}.png"
     unless File::exists? filename
       filename = File::join( Tas10box::root, "/vendor/assets/images/nopic_#{size}x#{size}.png" )
       use_filename = "default_picture_#{size}x#{size}.png"

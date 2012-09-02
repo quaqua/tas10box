@@ -24,11 +24,25 @@ class LabelsController < Tas10boxController
   def create
     if params[:document_id]
       label_document_with_label
-      Tas10::AuditLog.create!( :user => current_user, :doc_name => @doc.name, :label_name => @label.name, :doc_type => @doc.class.name, :action => 'audit.labeled' )
+      Tas10::AuditLog.create!( :user => current_user, :document => @doc, :label => @label, :action => 'audit.labeled' )
     else
       create_label
-      Tas10::AuditLog.create!( :user => current_user, :doc_name => @doc.name, :doc_type => @doc.class.name, :action => 'audit.created' )
     end
+  end
+
+  # updates a label
+  #
+  def update
+    @doc = get_label_by_id
+    @close_dialog = true
+    tas10_safe_update( @doc, params[:label] )
+    render :template => "documents/update"
+  end
+
+  # edit a label
+  #
+  def edit
+    @label = get_label_by_id
   end
 
   # remove a label
@@ -39,6 +53,7 @@ class LabelsController < Tas10boxController
     if @doc && @label
       @doc.label_ids.delete( @label.id )
       if @doc.save(:safe => true)
+        Tas10::AuditLog.create!( :user => current_user, :document => @doc, :label => @label, :action => 'audit.label_removed' )
         flash[:notice] = t('labels.removed', :label => @label.name, :name => @doc.name)
       else
         flash[:error] = t('labels.removing_failed', :label => @label.name, :name => @doc.name) + @doc.errors.messages.inspect.to_s
@@ -51,7 +66,12 @@ class LabelsController < Tas10boxController
   # show the label
   #
   def show
-    respond_with @doc = get_label_by_id
+    @doc = get_label_by_id
+    if @doc.template.blank?
+      respond_with @doc
+    else
+      render :template => @doc.template
+    end
   end
 
   # get children of this label
@@ -99,6 +119,7 @@ class LabelsController < Tas10boxController
       if @from
         @doc.labels.pull( @from )
         flash[:notice] = t('labels.moved', :name => @doc.name, :from => @from.name, :to => @label.name)
+        Tas10::AuditLog.create!( :user => current_user, :document => @doc, :label => @from, :action => 'audit.label_removed' )
       else
         flash[:notice] = t('labels.created', :name => @doc.name, :label => @label.name)
       end

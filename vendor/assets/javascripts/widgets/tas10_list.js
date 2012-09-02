@@ -81,7 +81,7 @@ $(function(){
 
       $(itemDetails).append('<a href="'+$(this).attr('data-url')+'" data-remote="true" original-title="'+I18n.t('show')+'"><span class="ui-icon ui-icon-arrow-1-e"></span></a>')
               .append('<a href="'+$(this).attr('data-url')+'/edit" data-remote="true" original-title="'+I18n.t('edit')+'"><span class="ui-icon ui-icon-pencil"></span></a>')
-              .append('<a href="/document/'+$(this).attr('data-id')+'" data-remote="true" data-method="delete" data-confirm="'+I18n.t('really_delete', {name: $(this).attr('data-title')})+'" original-title="'+I18n.t('delete')+'"><span class="ui-icon ui-icon-trash"></span></a>');        
+              .append('<a href="/documents/'+$(this).attr('data-id')+'" data-remote="true" data-method="delete" data-confirm="'+I18n.t('really_delete', {name: $(this).attr('data-title')})+'" original-title="'+I18n.t('delete')+'"><span class="ui-icon ui-icon-trash"></span></a>');        
       $('body').append(itemDetails);
       $(itemDetails).css({top: $(this).offset().top, left: $(this).offset().left - $(itemDetails).outerWidth() + 4});
       $(itemDetails).bind('mouseleave', function(){ 
@@ -110,11 +110,10 @@ $(function(){
       init : function( options ) {
 
         if( $(this).hasClass('tas10-list-obj') || !$(this).is('ul') )
-          return;
+          throw new Error('not a ul element');
+
         if( $(this).data('id') && !options.id )
           options.id = $(this).data('id');
-
-        console.log( options.id )
 
         if( !($(this).attr('id')) ){
           if( 'id' in options )
@@ -123,7 +122,7 @@ $(function(){
             $(this).attr('id', 'tas10-list-' + $(document).find('.tas10-table').length );
         }
 
-        var settings = { url: ($(this).attr('data-url') || null), page: 1, pageCount: 30 };
+        var settings = { page: 1, limit: 30 };
         if ( typeof(options) != 'undefined' ) {
           $.extend( settings, options );
         }
@@ -136,9 +135,19 @@ $(function(){
 
       },
       reload : function() {
-        var self = this;
+        var self = this
+          , settings = $(self).data('settings');
         $(this).find('li').remove();
+
+        // in case of provided :data
+        if( settings.data ){
+          $(self).append( $( tas10.getListTemplate( settings.data[0] )).render( settings.data ) );
+          return;
+        }
+
         $(this).html('<li class="loading"><img src="/assets/loading_50x50.gif" /></li>');
+        
+        // in case of url
         $.getJSON( $(self).data('settings').url, function( data ){
           for( var i in data ){
             if( $(self).data('settings').short )

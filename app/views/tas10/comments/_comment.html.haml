@@ -6,7 +6,7 @@
       = image_tag( picture_of_user_path(current_user), :class => "userpic x50 float-right" )
   %td
     %p.date
-      -if current_user.id == comment.user.id || current.user.admin?
+      -if current_user.id == comment.user.id || current_user.admin?
         = link_to( raw("<span class=\"ui-icon ui-icon-trash\"></span>"), document_comment_path( @doc, comment ), :class => "delete-comment float-right tas10-button with-icon delete", :remote => true, :method => :delete, :confirm => t('really_delete', :name => comment.content) )
       %b
         = comment.user.fullname_or_name

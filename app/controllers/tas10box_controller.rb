@@ -4,8 +4,7 @@ class Tas10boxController < ActionController::Base
   protect_from_forgery
   layout 'tas10box'
 
-  before_filter :renew_authentication,
-                :set_locale,
+  before_filter :set_locale,
                 :detect_mobile_device
 
   def set_locale

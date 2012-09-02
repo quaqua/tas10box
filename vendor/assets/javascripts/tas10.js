@@ -73,13 +73,29 @@ var tas10 = {
     }
     var newContainer = $('#tab_content_'+labelId);
 
-    console.log('moving', elem);
     $.ajax({url: '/documents/' + $(elem).data('id') + '/labels',
             data: { from_id: $(elem).attr('data-move'), label_id: labelId },
             type: 'post',
             dataType: 'script'
     });
 
+  },
+
+  'pushLoaderTimeout': function pushLoaderTimeout(){
+    this.loaderWaiting || (this.loaderWaiting = []);
+    this.loaderWaiting.push( function(){ tas10.loader(true); } );
+    setTimeout( function runPendingLoaders(){ tas10.runWaitingLoaders( tas10.loaderWaiting.length-1 ); }, 1000 );
+  },
+
+  'pullLoaderTimeout': function pushLoaderTimeout(){
+    if( this.loaderWaiting )
+      this.loaderWaiting.pop();
+    this.loader(false);
+  },
+
+  'runWaitingLoaders': function runWaitingLoaders( pos ){
+    if( this.loaderWaiting && this.loaderWaiting.length > pos && this.loaderWaiting[ pos ] )
+      this.loaderWaiting[ pos ]();
   }
 
 
@@ -156,11 +172,21 @@ tas10['dialog'] = function tas10Dialog( action, text, callback ){
     return;
   }
 
+  if( typeof(text) === 'object' ){
+    title = text.title;
+    text = text.content;
+  }
+
   $('#tas10-overlay').show();
   $('#tas10-dialog').show().html('<img src="/assets/loading_50x50.gif" class="loading" />').center();
 
   $('#tas10-dialog').html('<div class="close-button float-right"><span class="ui-icon ui-icon-closethick float-right" onclick="$(\'#tas10-dialog\').hide(); $(\'#tas10-overlay\').hide();"></span></div>');
-  $('#tas10-dialog').append( text );
+  if( title ){
+    var title = $('<div class="tas10-dialog-header" />').html( title );
+    $('#tas10-dialog').append( title );
+  }
+  var content = $('<div class="tas10-dialog-content" />').append( text );
+  $('#tas10-dialog').append( content );
 
   if( typeof( action ) === 'object' ){
     var l = $(action).offset().left + ($(action).outerWidth() / 2 ) - ($('#tas10-dialog').outerWidth() / 2);
@@ -173,6 +199,8 @@ tas10['dialog'] = function tas10Dialog( action, text, callback ){
   } else{
     if( $('#tas10-dialog').height() > $(window).height() )
       $('#tas10-dialog .tas10-dialog-content').css('height', $(window).height() - 150 );
+    else
+      $('#tas10-dialog .tas10-dialog-content').css('max-height', $(window).height() - 150 );
     $('#tas10-dialog').center();
   }
 
@@ -182,7 +210,7 @@ tas10['dialog'] = function tas10Dialog( action, text, callback ){
   });
   
   if( typeof(callback) === 'function' )
-    callback();
+    callback( $('#tas10-dialog') );
 
 }
 
@@ -218,7 +246,7 @@ tas10['setPath'] = function tas10SetPath( path, append ){
 
   path || (path = []);
   for( var i in path )
-    if( typeof(path[i].id) === 'undefined' )
+    if( typeof(path[i].id) === 'undefined' || path[i].id.indexOf('_') === 0 )
       path.splice(i, 1);
 
   var tas10PathMarkup = "&nbsp;/&nbsp;<a href=\"/{{:_type ? _type.toLowerCase()+'s' : ''}}/{{:id}}\" data-remote=\"true\" class=\"item_{{:id}}_title\">{{:name}}</a>";

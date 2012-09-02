@@ -29,7 +29,7 @@ module Tas10
         before_save :remove_plain_entries, :update_log, :check_write_permission
         after_save :share_children_on_change, :unshare_children_on_change
         before_create :setup_creator
-        before_destroy :check_delete_permission
+        before_destroy :check_delete_permission, :update_destroy_log
 
         embeds_many :log_entries, order: :created_at.desc
 
@@ -83,6 +83,21 @@ module Tas10
         c.delete('label_ids')
         self.log_entries.pop if self.log_entries.size > 10
         self.log_entries.build :user => @user, :changed_fields => c
+        if new_record?
+          Tas10::AuditLog.create!( :user => @user, :document => self, :action => 'audit.created' )
+        else
+          keys = { :user => @user, :document => self, :changed_fields => c }
+          keys[:action] = 'audit.modified'
+          if c.include? "name"
+            keys[:action] = 'audit.renamed'
+            keys[:additional_message] = name_change.join(' -> ')
+          end
+          Tas10::AuditLog.create!( keys )
+        end
+      end
+
+      def update_destroy_log
+        Tas10::AuditLog.create!( :user => @user, :document => self, :action => 'audit.deleted' )
       end
 
       def setup_creator
@@ -97,14 +112,12 @@ module Tas10
       
       def remove_plain_entries
         self.template = nil if defined?(self.template) && self.template && self.template.match(/none|keine/)
+        self.label_ids = [] if label_ids == "[]"
         if self.label_ids.is_a?(String)
-          puts "LABEL HERE SPLITTING"
           self.label_ids = self.label_ids.split(',')
           self.label_ids.each_with_index do |label_id, i|
-            puts "CHECKING LABEL #{i} #{label_id} #{label_id.class.name} "
             self.label_ids[i] = Moped::BSON::ObjectId(label_id) if label_id.is_a?(String)
           end
-          puts "after work: #{self.label_ids.inspect}"
         end
       end
 

@@ -1,0 +1,7 @@
+<% if flash[:notice] %>
+  tas10.dialog('close');
+  $('#<%= @query_script.doc_type %>-query-scripts').append( 
+    $('#query-script-template').render( <%= raw(@query_script.to_json) %>) 
+  );
+<% end %>
+<%= render "common/process_flash" %>

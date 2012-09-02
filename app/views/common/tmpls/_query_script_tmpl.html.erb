@@ -1,0 +1,7 @@
+<script id="query-script-template" type="text/x-jsrender">
+  <li data-id="{{:_id}}" data-_type="{{:_type}}" data-title="{{:name}}">
+    <span class="ui-icon ui-icon-closethick delete-query-script float-right live-tipsy" original-title="<%= t('query_scripts.delete') %>"></span>
+    <span class="ui-icon ui-icon-disk edit-query-script float-right live-tipsy" original-title="<%= t('query_scripts.edit') %>"></span>
+    <a href="/query_scripts/{{:_id}}" data-remote="true" data-attr-name="name-{{:_id}}">{{:name}}</a>
+  </li>
+</script>

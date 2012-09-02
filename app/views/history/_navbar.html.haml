@@ -1,0 +1,40 @@
+.action-container{:style => "margin: 10px"}
+
+  %ul#tas10-history.tas10-list
+
+  :javascript
+    $(function(){
+
+      var latestHistory = moment().format('DD.MM.YYYYTHH:mm');
+
+      $.getJSON( '#{history_index_path}', function( data ){
+        if( data.length > 0 )
+          latestHistory = moment( data[0].created_at ).format('DD.MM.YYYYTHH:mm');
+        for( var i in data ){
+          $('ul#tas10-history').append( $('#history-item-template').render( data[i] ) );
+        }
+      });
+
+      setInterval( function updateHistoryLog(){
+        $.getJSON( '#{history_index_path}?latest='+latestHistory, function( data ){
+          if( data.length > 0 ){
+            var otherUser = false
+              , alert = $('#button_history .alert')
+              , size = ($(alert).length ? parseInt($(alert).text()) : 0) + data.length;
+            latestHistory = moment( data[0].created_at ).format('DD.MM.YYYYTHH:mm');
+            for( var i in data ){
+              $('ul#tas10-history').prepend( $('#history-item-template').render( data[i] ) );
+              if( data[i].user_id != $('#account-info').attr('data-id') )
+                otherUser = true;
+            }
+            if( otherUser )
+              $('#button_history').append('<span class="alert">' + size + '</span>');
+          }
+        });        
+      }, 30000);
+
+      $('#button_history').on('click', function(){
+        $(this).find('.alert').remove();
+      })
+
+    });

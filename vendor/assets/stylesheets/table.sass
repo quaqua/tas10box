@@ -10,10 +10,11 @@
   width: 100%
   padding: 0
   margin: 0
+  background-color: #f0f0f0
   tr
     background-color: #fff
-    .selected
-      background: #fea
+  &.selected
+    background: #fea
   thead 
     tr
       background: #fff
@@ -32,11 +33,11 @@
     .tas10-checkbox
       float: left
       margin-top: -5px
-    .star
-      width: 16px
-      .tas10-icon16
-        float: left
-        opacity: 0.5
+  .star
+    width: 16px
+    .tas10-icon16
+      float: left
+      opacity: 0.5
 
 #tas10-table-item-details
   position: absolute
@@ -55,3 +56,56 @@
     margin-top: 5px
     &:hover
       opacity: 1
+
+.tas10-selector
+  margin: 0 20px 0 0
+  padding: 1px
+  width: 140px
+  border: 1px solid rgba(0,0,0,0)
+  position: relative
+  z-index: 10
+  .ui-icon
+    margin: 2px 0 0
+    opacity: 0.5
+  .ui-icon-disk
+    display: none
+    cursor: pointer
+  &:hover
+    border: 1px solid #aaa
+    .ui-icon-disk
+      display: block
+    .tas10-selector-content
+      display: block
+  .desc
+    margin: 3px 0
+
+.tas10-selector-content
+  display: none
+  position: absolute
+  right: -1px
+  top: 21px
+  padding: 0
+  margin: 0
+  list-style-type: none
+  background: #fff
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2)
+  border: 1px solid #aaa
+  border-top: none
+  li
+    padding: 3px
+    margin: 0 5px 0 0
+    font-size: 8px
+    .tas10-checkbox
+      float: left
+      margin: -5px 5px 0 0
+  
+.tab-content .tas10-item-title, #tas10-top-panel .tas10-item-title
+  font-size: 20px
+  font-weight: 900
+  margin-left: 50px
+  padding: 5px
+  text-transform: uppercase
+  color: #fff
+  letter-spacing: 1px
+.page-selector, .limit-selector
+  margin: 4px 5px 0 5px

@@ -10,7 +10,7 @@ $(function(){
     	tas10.confirm(I18n.t('really_delete', {name: title}), function(){
 			$(actionContainer).find('.selected-item').each(function(){
 				var self = this;
-            	$.ajax({url: '/document/' + $(self).attr('data-id'),
+            	$.ajax({url: '/documents/' + $(self).attr('data-id'),
             			type: 'delete',
             			dataType: 'script',
 						success: function( data ){
@@ -30,7 +30,7 @@ $(function(){
 	$('.browser-actions .share').live('click', function(){
 		if( $(this).hasClass('disabled') )
 			return;
-		tas10.showAclMiniDialog( this, '/documents/'+$(this).closest('action-container').find('.selected-item').attr('data-id')+'/acl', true );
+		tas10.showAclMiniDialog( this, '/documents/'+$(this).closest('.action-container').find('.selected-item').attr('data-id')+'/acl', true );
 	});
 
 	$('.browser-actions .edit').live('click', function(){

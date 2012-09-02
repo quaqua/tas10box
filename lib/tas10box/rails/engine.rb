@@ -3,12 +3,12 @@ module Tas10box
   class Tas10boxEngine < ::Rails::Engine
 
     tas10js = %w( tas10.js tas10box.js )
-    tas10css = %w( tas10box.css )
+    #tas10css = %w( tas10box.css )
 
     if ENV['RAILS_ENV'] == 'production'
       initializer :assets do |config|
         ::Rails.application.config.assets.precompile += tas10js
-        ::Rails.application.config.assets.precompile += tas10css
+        #::Rails.application.config.assets.precompile += tas10css
       end
     end
 
@@ -23,7 +23,10 @@ module Tas10box
       Mime::Type.register_alias "text/html", :m # mobile devices
       Mime::Type.register_alias "text/html", :snippet # html snippets (usually rendered as partials but to have them in views available)
       
+      Tas10box::try_load_tas10box_config
+
       Tas10box.register_plugin ::Tas10box::NavBarPlugin.new( :name => 'home' )
+      Tas10box.register_plugin ::Tas10box::NavBarPlugin.new( :name => 'history' )
       Tas10box.register_plugin ::Tas10box::Plugin.new( :name => 'labels', :creates => true )
     end
 

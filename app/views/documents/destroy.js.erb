@@ -1,4 +1,4 @@
 <% if flash[:notice] %>
-  $('[data-id=<%= @document.id %>]').remove();
+  $('[data-id=<%= @doc.id %>]').remove();
 <% end %>
 tas10.notify( '<%= escape_javascript( flash[:error] || flash[:notice] ) %>' );

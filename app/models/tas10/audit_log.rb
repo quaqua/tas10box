@@ -3,11 +3,34 @@ class Tas10::AuditLog
 
   field :action, type: String
   field :created_at, type: DateTime, default: ->{ Time.now }
-  field :doc_name, type: String
-  field :doc_type, type: String
+  field :additional_message, type: String
+  field :document_name, type: String
+  field :document_type, type: String
+  field :label_name, type: String
+  field :label_type, type: String
   field :changed_fields, type: Array
+  field :user_name, type: String
 
-  belongs_to :document, :class_name => "Tas10::Document"
   belongs_to :user, :class_name => "Tas10::User"
+  belongs_to :document, :class_name => "Tas10::Document"
+  belongs_to :label
+
+  before_create :setup_doc_label_name
+
+  private
+
+  def setup_doc_label_name
+    if document
+      self.document_type = document.class.name
+      self.document_name = document.name
+    end
+    if label
+      self.label_type = label.class.name
+      self.label_name = label.name
+    end
+    if user
+      self.user_name = user.fullname_or_name
+    end
+  end
 
 end

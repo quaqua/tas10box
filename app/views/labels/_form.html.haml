@@ -1,5 +1,7 @@
-= form_for( @docs["label"], :remote => true, :html => {:class => 'tas10-form'} ) do |f|
-  = f.hidden_field( :label_ids, :class => "tas10-current-label" )
+-label = @label || @docs["label"]
+= form_for( label, :remote => true, :html => {:class => 'tas10-form'} ) do |f|
+  -if label.new_record?
+    = f.hidden_field( :label_ids, :class => "tas10-current-label" )
 
   %p.desc.default-width= t( 'labels.desc' )
 
@@ -13,10 +15,10 @@
     %br
     %span.desc.default-width= t( 'labels.template_desc' )
     %br
-    = f.select( :template, get_tas10box_plugin_options( :labelTemplates ), :class => "template tas10-select" )
+    = f.select( :template, get_tas10box_plugin_options( :label_templates ), :class => "template tas10-select" )
 
   %p
-    %input.tas10-button.float-right{ :type => 'submit', :value => t( 'create' ) }
+    %input.tas10-button.float-right{ :type => 'submit', :value => (label.new_record? ? t( 'create' ) : t('save') ) }
     %span.float-right.continue-creating.desc
       %input.continue-editing.tas10-checkbox{ :type => 'checkbox', :name => 'continue-creating' }
       =t( 'continue_creating' )

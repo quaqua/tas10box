@@ -8,6 +8,7 @@ require 'tas10/log_entry'
 require 'tas10/user_setting'
 require 'tas10/user_log_entry'
 require 'tas10/comment'
+require 'tas10/defaults'
 require 'tas10/access_control'
 require 'tas10/document_array'
 require 'tas10/labeling'
@@ -26,18 +27,7 @@ module Tas10box
   end
 
   def self.defaults( options=nil )
-    @defaults ||= { :locales => ["de", "en"], 
-      :site => { :name => 'My Company' },
-      :session_timeout => 20,
-      :datastore => File::join( ::Rails.root, 'datastore' ),
-      :mail_system => {
-        :sender => "noreply@tastenwerk.com"
-      },
-      :colors => [ '#aa9d73', '#6d87d6', '#22884f', '#bf4e30', '#85a000' ] }
-    if options
-      @defaults.merge( options )
-    end
-    @defaults
+    options ? Tas10::Defaults::write( options ) : Tas10::Defaults::read
   end
 
   def self.root
@@ -50,6 +40,16 @@ module Tas10box
       @default_user_settings.merge( options )
     end
     @default_user_settings
+  end
+
+  def self.try_load_tas10box_config
+    filename = File::join( ::Rails::root, "config", "tas10box.yml" )
+    if File::exists? filename
+      site_options = HashWithIndifferentAccess.new(YAML.load(File.read( filename )))
+      Tas10box::defaults( site_options )
+    else
+      puts "no site options file found at #{filename}"
+    end
   end
 
   module Rails
