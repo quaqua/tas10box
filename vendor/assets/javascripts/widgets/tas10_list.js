@@ -79,8 +79,8 @@ $(function(){
       $('#tas10-table-item-details').remove();
       var itemDetails = $('<div id="tas10-table-item-details"/>');
 
-      $(itemDetails).append('<a href="'+$(this).attr('data-url')+'" data-remote="true" original-title="'+I18n.t('show')+'"><span class="ui-icon ui-icon-arrow-1-e"></span></a>')
-              .append('<a href="'+$(this).attr('data-url')+'/edit" data-remote="true" original-title="'+I18n.t('edit')+'"><span class="ui-icon ui-icon-pencil"></span></a>')
+      $(itemDetails).append('<a href="/documents/'+$(this).attr('data-id')+'" data-remote="true" original-title="'+I18n.t('show')+'"><span class="ui-icon ui-icon-arrow-1-e"></span></a>')
+              .append('<a href="/documents/'+$(this).attr('data-id')+'/edit" data-remote="true" original-title="'+I18n.t('edit')+'"><span class="ui-icon ui-icon-pencil"></span></a>')
               .append('<a href="/documents/'+$(this).attr('data-id')+'" data-remote="true" data-method="delete" data-confirm="'+I18n.t('really_delete', {name: $(this).attr('data-title')})+'" original-title="'+I18n.t('delete')+'"><span class="ui-icon ui-icon-trash"></span></a>');        
       $('body').append(itemDetails);
       $(itemDetails).css({top: $(this).offset().top, left: $(this).offset().left - $(itemDetails).outerWidth() + 4});

@@ -1,18 +1,16 @@
-.tas10-dialog-header= t( 'new')
-
 %fieldset.tas10-steps
   %legend= t( 'type' )
   %select#tas10-select-type-to-create
     - Tas10box.plugins.each do |plugin|
       - if plugin.creates
-        %option{ :value => plugin.name }
+        %option{ :value => plugin.name.singularize }
           = t( "#{plugin.name}.title" )
 
 %fieldset.tas10-steps
   %legend= t( 'details' )
   - Tas10box.plugins.each do |plugin|
     - if plugin.creates
-      .create-form{ :id => "#{plugin.name}-form" }
+      .create-form{ :id => "#{plugin.name.singularize}-form" }
         = render "#{plugin.name}/form"
 
 %fieldset.tas10-steps

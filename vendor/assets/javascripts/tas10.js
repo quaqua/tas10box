@@ -58,9 +58,11 @@ var tas10 = {
   },
 
   'appendToList': function( data ){
-    if( typeof( data.labels ) !== 'undefined' && data.labels.length > 0 && $('#tab_'+data.labels[0]).length )
-      $('#tab_content_'+data.labels[0]+' .tas10-list').prepend( $( tas10.getListTemplate( data.labels[0] )).render( data.labels[0] ) );
-    else
+    for( var i in data.label_ids)
+      $('#tab_content_'+data.label_ids[i]+' .tas10-list').prepend( 
+        $( tas10.getListTemplate( data )).render( data ) 
+      );
+    if( data.label_ids.length < 1 )
       $('#tab_content_home .tas10-list').prepend( $( tas10.getListTemplate( data )).render( data ) );
     $('li.list-item[data-id='+data._id+']').effect('highlight', { duration: 3000, color: '#fc6' })
   },
@@ -114,8 +116,8 @@ tas10['notify'] = function tas10Notify( msg, error ){
 }
 
 tas10['flash'] = function tas10Flash( flash ){
-  if( flash.info.length > 0 )
-    tas10.notify(flash.info[flash.info.length-1]);
+  if( flash.notice.length > 0 )
+    tas10.notify(flash.notice[flash.notice.length-1]);
   if( flash.error.length > 0 )
     tas10.notify(flash.error[flash.error.length-1],true);
 }

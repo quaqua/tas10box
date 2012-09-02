@@ -14,6 +14,7 @@ require 'tas10/document_array'
 require 'tas10/labeling'
 require 'tas10/content_repository'
 require 'tas10box/plugin'
+require 'tas10box/post_process_image'
 
 module Tas10box
 

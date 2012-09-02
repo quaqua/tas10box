@@ -55,4 +55,11 @@ Rails.application.routes.draw do
   # QueryScripts
   resources :query_scripts
 
+  # DataFiles file storages
+  resources :data_files do
+    member do
+      get :thumb
+    end
+  end
+
 end

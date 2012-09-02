@@ -1,6 +1,6 @@
 tas10['setupNewDialog'] = function( options ){
 
-	tas10.dialog( 'new', $('#tas10-new-item-dialog-data').html(), function(){
+	tas10.dialog( 'new', {title: I18n.t('new'), content: $('#tas10-new-item-dialog-data').html()}, function(){
 
 		$('#tas10-dialog .create-form').hide();
 		if( options.dataType ){
@@ -13,11 +13,12 @@ tas10['setupNewDialog'] = function( options ){
 			$('#tas10-dialog #tas10-select-type-to-create option[value=label]').attr('selected', true);
 		}
 		$('#tas10-dialog .js-get-focus:visible:first').focus();
+		$('#tas10-dialog').find('.tas10-settings-tabs').tas10SettingsTabs();
 
 		var dtype = options.dataType;
 		if( options.dataTypeTemplate ){
-			$('#tas10-dialog #'+dtype+'-form [name='+dtype+'\\[template\\]] option[value='+options.dataTypeTemplate+']').attr('selected', true);	
-			$('#tas10-dialog #'+dtype+'-form [name='+dtype+'\\[template\\]] option[data-v='+options.dataTypeTemplate+']').attr('selected', true);
+			$('#tas10-dialog #'+dtype+'-form [name='+dtype+'\\[template\\]] option[value="'+options.dataTypeTemplate+'"]').attr('selected', true);	
+			$('#tas10-dialog #'+dtype+'-form [name='+dtype+'\\[template\\]] option[data-v="'+options.dataTypeTemplate+'"]').attr('selected', true);
 		}
 
 		$('#tas10-dialog #tas10-select-type-to-create').bind('change', function(){

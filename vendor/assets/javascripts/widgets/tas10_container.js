@@ -10,24 +10,30 @@
 			var options = $(this).data('options');
 			if( $(e.target).hasClass('ui-sortable-placeholder') )
 				return;
-	    	$(containerItem).find('.tab').removeClass('active');
-	    	$(containerItem).find('.tab-content').hide();
-	    	$(this).addClass('active');
-	    	var id = $(this).attr('id').replace('tab_','');
-	    	$(containerItem).find('#tab_content_'+id).show();
-	    	//$('.tas10-item-title').text( $(this).attr('original-title') || $(this).text() );
+			if( $(e.target).hasClass('tab-close') )
+				return;
+    	$(containerItem).find('.tab').removeClass('active');
+    	$(containerItem).find('.tab-content').hide();
+    	$(this).addClass('active');
+    	var id = $(this).attr('id').replace('tab_','');
+    	$(containerItem).find('#tab_content_'+id).show();
+    	//$('.tas10-item-title').text( $(this).attr('original-title') || $(this).text() );
 
-	    	if( id.substring(0,1) === '_' )
-	    		path = [];
-	    	if( !options || !options.path )
-	    		path = [{name: $(this).find('.tab-title').text(), id: id, className: null}];
-	    	else
-	    		path = options.path;
-	    	if( id === 'home' )
-	    		path = [];
+    	if( id.substring(0,1) === '_' )
+    		path = [];
+    	if( !options || !options.path )
+    		path = [{name: $(this).find('.tab-title').text(), id: id, className: null}];
+    	else
+    		path = options.path;
+    	if( id === 'home' )
+    		path = [];
 
-	    	tas10.setPath(path);
-	    	$('.tas10-tree').tas10Tree( 'select', id );
+    	tas10.setPath(path);
+    	$('.tas10-tree').tas10Tree( 'select', id );
+		});
+
+		$(containerItem).find('.tab-close').live('click', function(){
+			$(this).closest('.tas10-container-obj').tas10Container( 'remove', $(this).closest('.tab').attr('id').replace('tab_','') );
 		});
 
 	};
@@ -49,11 +55,13 @@
 	      		 .append('<div class="tas10-container-tabs-wrapper"><div class="tas10-container-tabs-line"></div><ul class="tas10-container-tabs"></ul></div>')
 	      		 .append('<div class="tas10-containers"/>');
 
+	      
 	      $(this).find('.tas10-container-tabs').sortable({ beforeStop: function( e, ui ){
 	      		if( !$(e.toElement).closest('#tas10-tab-container').length )
 	      			$(ui.item).closest('.tas10-container-obj').tas10Container( 'remove', $(ui.item).attr('id').replace('tab_','') );
 	      	} 
 	      });
+				
 	      setupTas10ContainerEvents(this, options);
 
 	    },
@@ -85,12 +93,13 @@
 	    	var centerTab = $('<span class="center" />');
 	    	//$(centerTab).append('<span class="tab-sprite tab-close"></span>');
 	    	if( options.title.length > 15 )
-	    		$(centerTab).append('<span class="tab-title item_'+options.id+'_title">'+options.title.substring(0,15)+'</span>');
+	    		$(centerTab).append('<span data-attr-name="name" data-id="'+options.id+'" class="tab-title item_'+options.id+'_title">'+options.title.substring(0,15)+'</span>');
 	    	else
-	    		$(centerTab).append('<span class="tab-title item_'+options.id+'_title">'+options.title+'</span>');
+	    		$(centerTab).append('<span data-attr-name="name" data-id="'+options.id+'" class="tab-title item_'+options.id+'_title">'+options.title+'</span>');
 	    	var shortOpts = options;
 	    	delete shortOpts['content'];
 	    	var tab = $('<li class="tab active" id="tab_'+options.id+'" />').data('options', shortOpts);
+	    	$(tab).append('<span class="ui-icon ui-icon-closethick tab-close"></span>');
 	    	$(tab).append(centerTab);
 	    	$(tab)
 	    	if( options.title.length > 15 )

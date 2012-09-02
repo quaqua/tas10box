@@ -7,6 +7,7 @@
 //= require 3rdparty/jquery.timeago
 //= require 3rdparty/moment.min
 //= require 3rdparty/jquery.dragtable
+//= require 3rdparty/fileuploader
 //= require tools/center
 //= require tas10
 //= require_self
@@ -24,6 +25,7 @@
 //= require widgets/tas10_list
 //= require widgets/tas10_tree
 //= require widgets/tas10_table
+//= require widgets/tas10_settings_tabs
 //= require i18n
 //= require i18n/translations
 
