@@ -2,13 +2,13 @@ module Tas10box
 
   class Tas10boxEngine < ::Rails::Engine
 
-    tas10js = %w( tas10.js tas10box.js )
-    #tas10css = %w( tas10box.css )
+    tas10js = %w( tas10box.js )
+    tas10css = %w( tas10box.css )
 
     if ENV['RAILS_ENV'] == 'production'
       initializer :assets do |config|
         ::Rails.application.config.assets.precompile += tas10js
-        #::Rails.application.config.assets.precompile += tas10css
+        ::Rails.application.config.assets.precompile += tas10css
       end
     end
 
