@@ -16,6 +16,8 @@ require 'tas10/content_repository'
 require 'tas10box/plugin'
 require 'tas10box/post_process_image'
 
+class Error404 < StandardError; end
+
 module Tas10box
 
   def self.plugins

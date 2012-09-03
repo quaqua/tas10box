@@ -7,22 +7,16 @@ tas10['setupCurrentLabelForNewForm'] = function(){
 
 tas10['loadNewForm'] = function( newForm, options ){
 
-	if( $(newForm).html().length < 10 )
-		$.getScript( $(newForm).attr('data-url'), function(){
-			if( options && options.dataTypeTemplate ){
-				var dtype = options.dataType;
-				$('#tas10-dialog #'+dtype+'-form [name='+dtype+'\\[template\\]] option[value="'+options.dataTypeTemplate+'"]').attr('selected', true);	
-				$('#tas10-dialog #'+dtype+'-form [name='+dtype+'\\[template\\]] option[data-v="'+options.dataTypeTemplate+'"]').attr('selected', true);
-			}
-			$(newForm).show().find('.js-get-focus').focus();
-			$('#tas10-dialog').center();
-			tas10.setupCurrentLabelForNewForm();
-		});
-	else{
+	$.getScript( $(newForm).attr('data-url'), function(){
+		if( options && options.dataTypeTemplate ){
+			var dtype = options.dataType;
+			$('#tas10-dialog #'+dtype+'-form [name='+dtype+'\\[template\\]] option[value="'+options.dataTypeTemplate+'"]').attr('selected', true);	
+			$('#tas10-dialog #'+dtype+'-form [name='+dtype+'\\[template\\]] option[data-v="'+options.dataTypeTemplate+'"]').attr('selected', true);
+		}
 		$(newForm).show().find('.js-get-focus').focus();
 		$('#tas10-dialog').center();
 		tas10.setupCurrentLabelForNewForm();
-	}
+	});
 
 }
 

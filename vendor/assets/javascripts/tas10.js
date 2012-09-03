@@ -247,9 +247,10 @@ tas10['getPath'] = function tas10GetPath( elem ){
 tas10['setPath'] = function tas10SetPath( path, append ){
 
   path || (path = []);
-  for( var i in path )
-    if( typeof(path[i].id) === 'undefined' || path[i].id.indexOf('_') === 0 )
-      path.splice(i, 1);
+  if( path && path instanceof Array )
+    for( var i in path )
+      if( typeof(path[i].id) === 'undefined' || path[i].id.indexOf('_') === 0 )
+        path.splice(i, 1);
 
   var tas10PathMarkup = "&nbsp;/&nbsp;<a href=\"/{{:_type ? _type.toLowerCase()+'s' : ''}}/{{:id}}\" data-remote=\"true\" class=\"item_{{:id}}_title\">{{:name}}</a>";
   var tas10FindMarkup = "<span class=\"path-item item_{{:id}}_title\" data-id=\"{{:id}}\">{{:name}}</span>";
@@ -257,7 +258,7 @@ tas10['setPath'] = function tas10SetPath( path, append ){
   $.templates("tas10Find", tas10FindMarkup);
 
   if( append && typeof(path) === 'object' ){
-    $('#tas10-find .path').append( $.render.tas10FindMarkup( path ) );
+    $('#tas10-find .path').append( $.render.tas10Find( path ) );
     $('.tas10-current-label').val(path.id);
     var labelVal = $('#tas10-find [name=label_ids]');
     $(labelVal).val( $(labelVal).val() + ($(labelVal).val().length > 0 ? ',' : '') + path.id );

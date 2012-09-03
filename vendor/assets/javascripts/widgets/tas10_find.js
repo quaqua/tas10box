@@ -1,7 +1,8 @@
 tas10['appendFindFilter'] = function( sel ){
 
-	tas10.setPath({id: $(sel).attr('id'), name: $(sel).text()}, true);
+	tas10.setPath({id: $(sel).attr('data-id'), name: $(sel).text()}, true);
 	$('#tas10-find .label-res').remove();
+	$('#tas10-find input[name=query]').val('');
 
 }
 
@@ -13,7 +14,7 @@ $(function(){
 	$('#tas10-find input[name=label_ids]').val('');
 	$('#tas10-find input[name=conditions]').val('');
 
-	$.templates('tas10FindLabelResMarkup', "<li id=\"{{:_id}}\">{{:name}}</li>");
+	$.templates('tas10FindLabelResMarkup', "<li data-id=\"{{:_id}}\">{{:name}}</li>");
 
 	// reset hidden field (possibly stored in firefox cache
 	$('#tas10-find [name=label_ids]').val('');

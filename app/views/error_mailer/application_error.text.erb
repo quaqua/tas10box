@@ -1,0 +1,18 @@
+An Error occured at <%= Tas10box::defaults[:site][:name] %>
+
+USER: <%= @user.name if @user %>
+PATH: <%= @request.url.html_safe %>
+IP:   <%= @request.env["REMOTE_ADDR"] %>
+
+PARAMS: <%= @request.parameters.inspect.html_safe %>
+METHOD: <%= @request.request_method.html_safe %>
+
+USER_AGENT: <%= @request.env["HTTP_USER_AGENT"] %>
+HTTP_REFERER: <%= @request.env["HTTP_REFERER"] %>
+
+The error was: <%= @e.message.html_safe %>
+
+Backtrace:
+<% @e.backtrace.each do |l| %><%= l %>
+<% end %>
+

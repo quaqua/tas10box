@@ -1,3 +1,4 @@
+<% if flash[:notice] %>
 var doc = <%= raw @doc.to_json %>;
 $('.create-form:visible input[type=text]').val('');
 if( $('#tas10-dialog .create-form:visible .continue-editing').hasClass('checked') )
@@ -8,4 +9,5 @@ else {
 }
 tas10.appendToList( doc );
 $('[data-id=' + doc._id + ']').effect('highlight', { color: '#fc6' }, 2000 );
+<% end %>
 <%= render "common/process_flash" %>

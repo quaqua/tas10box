@@ -91,6 +91,12 @@ module Tas10
           if c.include? "name"
             keys[:action] = 'audit.renamed'
             keys[:additional_message] = name_change.join(' -> ')
+          elsif c.include? "published"
+            if published?
+              keys[:action] = 'audit.published'
+            else
+              keys[:action] = 'audit.locked'
+            end
           end
           Tas10::AuditLog.create!( keys )
         end

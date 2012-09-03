@@ -24,18 +24,23 @@ class Tas10boxController < ActionController::Base
     end
   end
   
+  rescue_from Error404, :with => :render_404
   rescue_from Exception, :with => :render_500 if Rails.env == 'production' && !defined?(JRUBY_VERSION)
  
+ def render_404
+    respond_to do |type| 
+      type.html { render :template => "errors/error_404", :status => 404, :layout => 'application' } 
+      type.all  { render :nothing => true, :status => 404 } 
+    end
+    true
+  end
+
   def render_500(e)
     ErrorMailer.application_error(e,current_user,request).deliver
     logger.error(e.inspect)
     logger.error(e.backtrace)
     @e = e
     render :template => 'dashboard/500', :status => 500
-  end
-
-  def not_found
-    raise ActionController::RoutingError.new('Not Found')
   end
 
   private
