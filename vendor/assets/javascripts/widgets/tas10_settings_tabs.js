@@ -28,8 +28,9 @@
         $(this).find('.tabs').addClass('ui-helper-clearfix');
 
         setupTas10TabsEvents(this);
-        $(this).find('.tabs a:first').click();
 
+        $(this).find('.tabs a:first').addClass('current');
+        $(this).find('.tab-content:first').show();
 
       }
     };

@@ -13,7 +13,7 @@ $(function(){
 	$('#tas10-find input[name=label_ids]').val('');
 	$('#tas10-find input[name=conditions]').val('');
 
-	var tas10FindLabelResMarkup = "<li id=\"${_id}\">${name}</li>";
+	$.templates('tas10FindLabelResMarkup', "<li id=\"{{:_id}}\">{{:name}}</li>");
 
 	// reset hidden field (possibly stored in firefox cache
 	$('#tas10-find [name=label_ids]').val('');
@@ -78,8 +78,8 @@ $(function(){
 
 		if( $(this).val().length > 2 && $(this).val().substring(0,1) === ':' ){
 			var labelName = $(this).val().substring(1,$(this).val().length-1);
-			$.ajax({url: '/documents/find.json', data: { 
-						query: labelName, _csrf: $('#_csrf').val(), taggable: true
+			$.ajax({url: '/documents/find', data: { 
+						query: labelName, labelable: true, findCombo: true
 					}, type: 'post',
 					dataType: 'json',
 					success: function( data ){
@@ -88,8 +88,7 @@ $(function(){
 							var ul = $('<ul class="label-res" />');
 							$(ul).css({ left: ($(self).offset().left - $('#tas10-find').offset().left) });
 							$('#tas10-find').append(ul);
-							$('#tas10-find .label-res').tmpl()
-							$.tmpl( tas10FindLabelResMarkup, data ).appendTo( '#tas10-find .label-res' );
+							$( '#tas10-find .label-res' ).append( $.render.tas10FindLabelResMarkup( data ) );
 						}
 					}
 			});

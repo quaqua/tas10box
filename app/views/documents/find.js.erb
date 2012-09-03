@@ -3,6 +3,6 @@ $('#tas10-main-container').tas10Container( 'append', {
   id: '_query_<%= CGI::escape(@query).gsub('%','') %>', 
   content: '<%= escape_javascript render("find") %>'
   }, function( container ){
-    $(container).find('.tas10-list').tas10List({ data: <%= raw @docs.to_json %> });
+    $(container).find('.tas10-list').tas10List({ data: <%= raw @docs.to_json %>, labels: <%= raw @labels.to_json %> });
   }
 );

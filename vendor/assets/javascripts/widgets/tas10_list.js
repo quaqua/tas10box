@@ -20,7 +20,6 @@ $(function(){
   $('.tas10-list .tas10-checkbox').live('click', function(e){
     $(this).closest('li').toggleClass('selected').toggleClass('selected-item');
     $(this).closest('.tas10-list-wrapper').find('.browser-actions a').addClass('disabled');
-    console.log('checking length ', $(this).closest('.tas10-list').find('.tas10-checkbox.checked').length );
     if( $(this).closest('.tas10-list').find('.tas10-checkbox.checked').length > 1 )
       $(this).closest('.tas10-list-wrapper').find('.browser-actions a.multi').removeClass('disabled');
     else if( $(this).closest('.tas10-list').find('.tas10-checkbox.checked').length === 1 )
@@ -138,6 +137,19 @@ $(function(){
         var self = this
           , settings = $(self).data('settings');
         $(this).find('li').remove();
+
+        if( settings.labels && settings.data ){
+          for( var i in settings.data ){
+            settings.data[i].labels = [];
+            if( settings.data[i].label_ids && settings.data[i].label_ids.length > 0 ){
+              for( var j in settings.data[i].label_ids ){
+                for( var k in settings.labels )
+                  if( settings.labels[k]._id === settings.data[i].label_ids[j] )
+                    settings.data[i].labels.push( settings.labels[k] );
+              }
+            }
+          }
+        }
 
         // in case of provided :data
         if( settings.data ){

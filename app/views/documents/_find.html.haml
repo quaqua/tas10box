@@ -21,9 +21,9 @@
     -if @labels
       %p.ui-helper-clearfix{:margin => "10px 50px 10px 10px"}
         =t('labeled_with')
-      .tas10-tags{:style => "margin: 10px 50px 10px 10px"}
+      .tas10-labels{:style => "margin: 10px 50px 10px 10px"}
         -@labels.each do |label|
-          %span.tas10-tag.float-left{ :style => (label.color.blank? ? '' : "color: #fff; background-color:#{label.color}") }
+          %span.tas10-label.float-left{ :style => (label.color.blank? ? '' : "color: #fff; background-color:#{label.color}") }
             =label.name
 
   %ul.tas10-list{ :class => "tas10-list-#{CGI::escape(@query).gsub('%','')}" }

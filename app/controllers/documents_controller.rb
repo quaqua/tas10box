@@ -47,7 +47,8 @@ class DocumentsController < Tas10boxController
 
   def edit
     @doc = get_doc_by_id
-    render :template => "#{@doc.class.name.underscore.pluralize}/edit"
+    redirect_to :controller => :webpages, :action => :edit, :id => params[:id]
+    #render :template => "#{@doc.class.name.underscore.pluralize}/edit"
   end
 
   # get the document's info
@@ -99,9 +100,14 @@ class DocumentsController < Tas10boxController
     @docs = @conditions
     if params[:page] && params[:limit]
       render :json => get_prepared_json_for_table
+    elsif params[:findCombo]
+      @docs = @docs.all_with_user( current_user )
+      render :json => @docs.to_json
     else
       @docs = @docs.all_with_user( current_user )
+      @label_ids = @docs.inject([]){ |arr,doc| arr += doc.label_ids ; arr }
       @query_scripts = QueryScript.all_with_user( current_user )
+      @labels = Tas10::Document.in(:id => @label_ids ).all_with_user( current_user )
     end
   end
 
@@ -144,17 +150,17 @@ class DocumentsController < Tas10boxController
         if cond.include? '='
           key, value = cond.split('=')
           @query << (@query.size > 0 ? "|" : "") << cond
-          value = value.to_i if key == 'age'
+          value = value.to_i if ['age','zip'].include?(key)
           @conditions = @conditions.where(:"#{key}" => value)
         elsif cond.include? '>'
           key, value = cond.split('>')
           @query << (@query.size > 0 ? "|" : "") << cond
-          value = value.to_i if key == 'age'
+          value = value.to_i if ['age','zip'].include?(key)
           @conditions = @conditions.where(:"#{key}" => { :$gt => value })
         elsif cond.include? '<'
           key, value = cond.split('<')
           @query << (@query.size > 0 ? "|" : "") << cond
-          value = value.to_i if key == 'age'
+          value = value.to_i if ['age','zip'].include?(key)
           @conditions = @conditions.where(:"#{key}" => { :$lt => value })
         end
       end

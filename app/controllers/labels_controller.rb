@@ -3,6 +3,10 @@ class LabelsController < Tas10boxController
   before_filter :authenticate
   respond_to :json, :xml, :js
 
+  def new
+    @label = Label.new
+  end
+  
   # returns all labelables either with params given or not
   #
   # valid params are:
@@ -67,9 +71,10 @@ class LabelsController < Tas10boxController
   #
   def show
     @doc = get_label_by_id
-    if @doc.template.blank?
-      respond_with @doc
-    else
+    @docs = Tas10::Document.where(:label_ids => Moped::BSON::ObjectId(params[:id]))
+    @label_ids = @docs.inject([]){ |arr,doc| arr += doc.label_ids ; arr }
+    @labels = Tas10::Document.in(:id => @label_ids ).all_with_user( current_user )
+    unless @doc.template.blank?
       render :template => @doc.template
     end
   end

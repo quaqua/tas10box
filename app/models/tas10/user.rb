@@ -48,7 +48,7 @@ class Tas10::User
     user_log_entries.where( :login => false ).all.delete
     user_log_entries.create( :ip => ip,
                               :url => url,
-                              :at => Time.now )
+                              :created_at => Time.now )
     save(:safe => true)
   end
 
@@ -57,7 +57,7 @@ class Tas10::User
     user_log_entries.create( :ip => ip,
                             :url => url,
                             :login => true,
-                            :at => Time.now )
+                            :created_at => Time.now )
   end
 
   def match_password( pass )

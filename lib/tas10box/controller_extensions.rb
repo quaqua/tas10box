@@ -45,7 +45,7 @@ module Tas10box
         def renew_authentication( skip_update=:false )
           #session[:came_from] = request.path_info
           if valid_session?
-            return true if skip_update
+            return true if skip_update == :false
             return current_user.update_request_log( request.env['REMOTE_ADDR'], request.env['REQUEST_PATH'] )
           else
             flash[:error] = I18n.t 'login.session_expired', :limit => Tas10box.defaults[:session_timeout]
@@ -151,7 +151,7 @@ module Tas10box
           @current_user = Tas10::User.where(:id => session[:tas10box][:user_id]).first
           return false unless @current_user
           timeout = ( Tas10box::defaults[:session_timeout].to_i ).minutes.ago
-          if @current_user.user_log_entries.last.at && @current_user.user_log_entries.last.at < timeout
+          if @current_user.user_log_entries.last.created_at && @current_user.user_log_entries.last.created_at < timeout
             came_from = session[:came_from]
             reset_session
             session[:came_from] = came_from

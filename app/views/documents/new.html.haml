@@ -8,10 +8,10 @@
 
 %fieldset.tas10-steps
   %legend= t( 'details' )
-  - Tas10box.plugins.each do |plugin|
-    - if plugin.creates
-      .create-form{ :id => "#{plugin.name.singularize}-form" }
-        = render "#{plugin.name}/form"
+- Tas10box.plugins.each do |plugin|
+  - if plugin.creates
+    .create-form{ :id => "#{plugin.name.singularize}-form", :"data-url" => "#{plugin.name}/new" }
+    //= render "#{plugin.name}/form"
 
 %fieldset.tas10-steps
   %legend= t( 'labels.title_pl' )

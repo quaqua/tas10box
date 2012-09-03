@@ -2,7 +2,7 @@
   .login-error-container
     %span= flash[:error]
 
-.login-logo
+.login-logo{ :style => "background-image: url('/assets/#{Tas10box::defaults[:login][:logo]}'); border: #{Tas10box::defaults[:login][:logo_border]};"}
 
 .login-container
 

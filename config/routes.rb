@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root :to => "Dashboard#index"
+  #root :to => "Dashboard#index"
   
   get "/dashboard" => "Dashboard#index"
   match "/login" => "Users#login"
