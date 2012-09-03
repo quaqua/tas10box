@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "tas10box is a visual framework"
   s.description = "visual framework for mongodb as a content repository"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE-GPL-3", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.8"
