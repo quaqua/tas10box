@@ -5,6 +5,7 @@ class DataFile < Tas10::Document
   field :copyright
   field :description
   field :img_crop_pos
+  field :published, :type => Boolean, :default => false
 
   before_save :determine_file_size
   after_save :save_to_datastore

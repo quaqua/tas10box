@@ -4,7 +4,7 @@ module Tas10box
   module PostProcessImage
     def self.run(blob)
       if blob.content_type.downcase.match(/png|jpg|jpeg|gif/)
-        thumb_sizes = ['16x16','50x50','100x100'] + (Tas10box::defaults[:post_processor][:default_thumb_sizes] || ['100x100'])
+        thumb_sizes = ['16x16','50x50','100x100'] + (Tas10box::defaults[:post_processor][:default_thumb_sizes] || [])
         thumb_sizes.each do |thumbsize|
           create_thumb(blob, thumbsize)
         end

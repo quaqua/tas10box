@@ -22,9 +22,19 @@ class DataFilesController < Tas10boxController
                     }.to_json
   end
 
+  def show
+    if @data_file = get_user_or_id_data_file
+      send_file(@data_file.filename,
+                :type => "image/#{Tas10box::defaults[:post_processor][:image_format] || 'png'}",
+                :filename => @data_file.name,
+                :disposition => 'inline')
+    else
+      raise Error404
+    end
+  end
+
   def thumb
-    @data_file = DataFile.where(:id => params[:id]).first_with_user( current_user )
-    if @data_file
+    if @data_file = get_user_or_id_data_file
       size = "#{params[:size]}x#{params[:size]}" || "16x16"
       filename = "#{@data_file.filepath}/thumb_#{size}.#{Tas10box::defaults[:post_processor][:image_format] || 'png'}"
       puts "filename #{filename}"
@@ -38,7 +48,17 @@ class DataFilesController < Tas10boxController
       #  render :text => ""
       #end
     else
-      render :text => t('insufficient_rights')
+      raise Error404
+    end
+  end
+
+  private
+
+  def get_user_or_id_data_file
+    if authenticated?
+      DataFile.where(:id => params[:id]).first_with_user( current_user )
+    else
+      DataFile.where(:id => params[:id], :published => true).first
     end
   end
 

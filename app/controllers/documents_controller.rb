@@ -42,7 +42,7 @@ class DocumentsController < Tas10boxController
 
   def show
     @doc = get_doc_by_id
-    render :template => "#{@doc.class.name.underscore.pluralize}/show"
+    redirect_to :controller => @doc.class.name.demodulize.underscore.pluralize, :action => :show, :id => params[:id]
   end
 
   def edit

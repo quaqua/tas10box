@@ -62,5 +62,10 @@ Rails.application.routes.draw do
       get :thumb
     end
   end
+  resources :images, :controller => "DataFiles" do
+    member do
+      get :thumb
+    end
+  end
 
 end
