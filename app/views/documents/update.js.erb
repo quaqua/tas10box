@@ -1,4 +1,4 @@
-<% if flash[:notice] %>
+<% if flash[:notice] && @doc %>
   <% @doc.log_entries.last.changed_fields.each do |attr| %>
     <% next if attr == 'name' %>
     $('[data-attr-name="<%= attr %>-<%= @doc.id %>"]').text( '<%= @doc.send(attr) %>' );

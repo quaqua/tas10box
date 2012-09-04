@@ -29,7 +29,7 @@ tas10['setupNewDialog'] = function( options ){
 			tas10.loadNewForm( $('#tas10-dialog #'+options.dataType+'-form'), options );
 			$('#tas10-dialog #tas10-select-type-to-create option[value='+options.dataType+']').attr('selected',true);
 		} else {
-			tas10.loadNewForm( $('#tas10-dialog #labels-form'), options );
+			tas10.loadNewForm( $('#tas10-dialog #label-form'), options );
 			$('#tas10-dialog #tas10-select-type-to-create option[value=label]').attr('selected', true);
 		}
 

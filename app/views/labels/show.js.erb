@@ -3,6 +3,6 @@ $('#tas10-main-container').tas10Container( 'append', {
   id: '<%= @doc.id %>', 
   content: '<%= escape_javascript render('labels/show') %>'
   }, function( container ){
-    $(container).find('.tas10-list').tas10List({ data: <%= raw @docs.to_json %>, labels: <%= raw @labels.to_json %> });
+    $(container).find('.tas10-list').tas10List({ url: '<%= children_for_document_path(@doc) %>' });
   }
 );

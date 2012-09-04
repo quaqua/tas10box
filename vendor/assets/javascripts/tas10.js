@@ -116,9 +116,9 @@ tas10['notify'] = function tas10Notify( msg, error ){
 }
 
 tas10['flash'] = function tas10Flash( flash ){
-  if( flash.notice.length > 0 )
+  if( flash.notice && flash.notice.length > 0 )
     tas10.notify(flash.notice[flash.notice.length-1]);
-  if( flash.error.length > 0 )
+  if( flash.error && flash.error.length > 0 )
     tas10.notify(flash.error[flash.error.length-1],true);
 }
 

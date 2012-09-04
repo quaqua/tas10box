@@ -10,18 +10,14 @@ class DataFilesController < Tas10boxController
       @data_file = DataFile.new(:name => name, :label_ids => params[:label_ids],
         :file => request.body, :content_type => ext).with_user( current_user )
       if @data_file.save
-        flash[:notice] = t('data_file.uploaded', :name => @data_file.name, :to => (@data_file.parent ? @data_file.parent.name : '/'))
+        flash[:notice] = t('data_files.uploaded', :name => @data_file.name, :label => (@data_file.parent ? @data_file.parent.name : '/'))
       else
-        flash[:error] = t('data_file.uploading_failed', :name => @data_file.name)
+        flash[:error] = t('data_files.uploading_failed', :name => @data_file.name)
       end
     else
       flash[:error] = 'something terribly went wrong!'
     end
-    render :json => {:name => @data_file.name, 
-                    :size => @data_file.file_size, 
-                    :url => data_file_path(@data_file), 
-                    :delete_url => data_file_path(@data_file),
-                    :id => @data_file.id,
+    render :json => {:pic => @data_file,
                     :flash => { :notice => flash[:notice], :error => flash[:error] },
                     }.to_json
   end

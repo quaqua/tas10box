@@ -47,7 +47,7 @@ class DocumentsController < Tas10boxController
 
   def edit
     @doc = get_doc_by_id
-    redirect_to :controller => :webpages, :action => :edit, :id => params[:id]
+    redirect_to :controller => @doc.class.name.demodulize.underscore.pluralize, :action => :edit, :id => params[:id]
     #render :template => "#{@doc.class.name.underscore.pluralize}/edit"
   end
 
@@ -55,6 +55,24 @@ class DocumentsController < Tas10boxController
   def info
     @doc = get_doc_by_id
     respond_with @doc
+  end
+
+  def sort
+    succeeded = 0
+    params[:item].each_with_index do |id,i|
+      item = Tas10::Document.where(:id => id).first_with_user( current_user )
+      item.versionless do
+        if item.update_attributes( :pos => i )
+          succeeded += 1
+        end
+      end
+    end
+    if succeeded == params[:item].size
+      flash[:notice] = t('document.order_saved')
+    else
+      flash[:error] = t('document.ordering_failed')
+    end
+    render :template => "documents/update"
   end
 
   # removes a document
@@ -79,7 +97,7 @@ class DocumentsController < Tas10boxController
   #
   def children_for
     @docs = Tas10::Document
-    @docs = @docs.where(:label_ids => Moped::BSON::ObjectId(params[:id]))
+    @docs = @docs.where(:label_ids => Moped::BSON::ObjectId(params[:id])).order_by(:name.asc)
     if params[:page] && params[:limit]
       render :json => get_prepared_json_for_table
     else
@@ -97,7 +115,7 @@ class DocumentsController < Tas10boxController
     get_label_ids_query
     get_conditions
     get_class_type
-    @docs = @conditions
+    @docs = @conditions.order_by(:name.asc)
     if params[:page] && params[:limit]
       render :json => get_prepared_json_for_table
     elsif params[:findCombo]

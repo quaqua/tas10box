@@ -10,20 +10,11 @@ $(function(){
     	tas10.confirm(I18n.t('really_delete', {name: title}), function(){
 			$(actionContainer).find('.selected-item').each(function(){
 				var self = this;
-            	$.ajax({url: '/documents/' + $(self).attr('data-id'),
-            			type: 'delete',
-            			dataType: 'script',
-						success: function( data ){
-            				if('ok' in data && data.ok){
-            					tas10.notify(I18n.t('deleted', {name: title}));
-            					$('[data-id='+data.doc._id+']').remove();
-            					tas10.setPath([]);
-            					$('#tab_'+data.doc._id+' .tab-close').click();
-            				} else
-            					tas10.notify(I18n.t('deletion_failed', {name: title}));
-            			}
-            	});
-	        });
+      	$.ajax({url: '/documents/' + $(self).attr('data-id'),
+      			type: 'delete',
+      			dataType: 'script'
+      	});
+	    });
 		});
 	});
 

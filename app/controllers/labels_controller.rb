@@ -15,7 +15,7 @@ class LabelsController < Tas10boxController
   #   * template [ String ] the template this document is expected to be associated with
   #
   def index
-    @labels = get_labelables_query.all_with_user( current_user )
+    @labels = get_labelables_query.order_by(:name.asc).all_with_user( current_user )
     if params[:term]
       respond_with @labels.map{ |l| {:id => l.id, :name => l.name, :label => l.name} }
     else

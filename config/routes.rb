@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     member do
       get :info
       get :children_for
+      post :sort
     end
     resources :comments
     resources :labels

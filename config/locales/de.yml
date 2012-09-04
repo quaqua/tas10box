@@ -59,6 +59,7 @@ de:
   never: "nie"
 
   really_delete: "Möchtest du '%{name}' wirklich löschen?"
+  really_delete_item: "Möchtest du dieses Element wirklich löschen?"
 
   none: "keine"
   type: "Typ"
@@ -76,6 +77,8 @@ de:
     created: "Angelegt"
     modified: "Geändert"
     saved_with_changes: "'%{name}' wurde gespeichert. Änderungen: %{changes}"
+    order_saved: "Neue Anordnung gespeichert"
+    ordering_failed: "Neue Anordnung konnte nicht gespeichert werden"
 
     log:
       title: "Logdatei"
@@ -156,3 +159,7 @@ de:
     doc_types: "Gilt für Dokumente des Typs"
     delete: "Suchvorlage löschen"
     edit: "Suchvorlage bearbeiten"
+
+  data_files:
+    uploaded: "'%{name}' wurde erfolgreich auf den Server hochgeladen und mit '%{label}' verknüpft"
+    uploading_failed: "'%{name}' konnte nicht auf den Server hochgeladen werden"

@@ -8,6 +8,7 @@ class DataFile < Tas10::Document
 
   before_save :determine_file_size
   after_save :save_to_datastore
+  after_destroy :delete_file
 
   attr_accessor :file
 
@@ -44,9 +45,12 @@ class DataFile < Tas10::Document
 
   def permanently_remove_from_datastore
     require 'fileutils'
-    FileUtils::rm_f(filename)
-    if Dir.glob(File::dirname(filename)+'/*').size == 0
-      FileUtils::rm_rf(File::dirname(filename))
+    FileUtils::rm_rf(File::dirname(filename))
+  end
+
+  def delete_file
+    if !destroyed?
+      permanently_remove_from_datastore
     end
   end
 
