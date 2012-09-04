@@ -1,8 +1,13 @@
-<% @doc.log_entries.first.changed_fields.each do |attr| %>
-  $('[data-attr-name="<%= attr %>-<%= @doc.id %>"]').text( '<%= @doc.send(attr) %>' );
-  $('[data-attr-name="<%= attr %>-<%= @doc.id %>"]').effect('highlight', { color: '#fc6' }, 2000 );
-<% end %>
-<% if @close_dialog %>
-  tas10.dialog('close');
+<% if flash[:notice] %>
+  <% @doc.log_entries.last.changed_fields.each do |attr| %>
+    <% next if attr == 'name' %>
+    $('[data-attr-name="<%= attr %>-<%= @doc.id %>"]').text( '<%= @doc.send(attr) %>' );
+    $('[data-attr-name="<%= attr %>-<%= @doc.id %>"]').effect('highlight', { color: '#fc6' }, 2000 );
+  <% end %>
+  $('[data-attr-name="name-<%= @doc.id %>"]').text( '<%= @doc.name %>' );
+  $('[data-attr-name="name-<%= @doc.id %>"]').effect('highlight', { color: '#fc6' }, 2000 );
+  <% if @close_dialog %>
+    tas10.dialog('close');
+  <% end %>
 <% end %>
 <%= render "common/process_flash" %>

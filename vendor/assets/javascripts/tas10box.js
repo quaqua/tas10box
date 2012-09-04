@@ -8,6 +8,7 @@
 //= require 3rdparty/moment.min
 //= require 3rdparty/jquery.dragtable
 //= require 3rdparty/fileuploader
+//= require tinymce
 //= require tools/center
 //= require tas10
 //= require_self
