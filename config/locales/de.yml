@@ -34,6 +34,8 @@ de:
   close: "Schließen"
   cancel: "Abbrechen"
   post: "Speichern"
+  back: "Zurück"
+  cancel: "Abbrechen"
   refresh: "Aktualisieren"
 
   insufficient_rights: "Due besitzt nicht genügend Rechte auf '%{name}' um diese Aktion auszuführen"
@@ -118,10 +120,16 @@ de:
   user:
     invite: "Emailadresse erstellen und Einladung schicken"
     invitation_failed: "'%{name}' konnte nicht ins System eingeladen werden"
-    welcome_activate: "Bitte gib ein Passwort mit <span class='length-error'>mind. 6 Zeichen</span> ein. Das Passwort muss aus <span class='digit-error'>mind. einer Zahl, einem Klein- und einem Großbuchstaben bestehen.</span>"
+    password_desc: "Bitte gib ein Passwort mit <span class='length-error'>mind. 6 Zeichen</span> ein. Das Passwort muss aus <span class='digit-error'>mind. einer Zahl, einem Klein- und einem Großbuchstaben bestehen.</span>"
     activate: "Aktivieren und Anmelden"
     saving_failed: "Konnte '%{name}' nicht speichern (%{reason})"
     click_to_edit_profile: "Dein Profil"
+    profile_of: "Profil von %{name}"
+    your_profile: "%{name} (Dein Profil)"
+    last_login: "Letztes mal Online"
+    email: "Email"
+    name: "Benutzername"
+    fullname: "Voller Name"
 
   audit:
     created: "hat '%{name}' angelegt"

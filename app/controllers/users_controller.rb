@@ -24,28 +24,31 @@ class UsersController < Tas10boxController
     end
   end
 
+  def show
+    @user = get_user_by_id
+  end
+
+  def edit
+    @user = get_user_by_id
+  end
+
   # updates user's attributes
   #
   def update
-    if current_user
+    if authenticated? && current_user
       @user = get_user_by_id
-    else
-      @user = Tas10::User.where(:email => params[:tas10_user][:email], :confirmation_key => params[:tas10_user][:confirmation_key]).first
-      if @user
-        @user.password = params[:tas10_user][:password]
-        @user.password_confirmation = params[:tas10_user][:password_confirmation]
-        @user.save( :safe => true )
-        puts "LOG: #{@user.errors.messages.inspect}"
-        if authenticate( params[:tas10_user][:email], params[:tas10_user][:password] )
-          redirect_to dashboard_path
-          return
-        else
-          flash[:error] = t('user.saving_failed', :name => @user.fullname_or_name, :reason => ' authentication failed ')
+      if @user.id != current_user.id || @user.admin?
+        unless params[:tas10_user][:password].blank?
+          @user.password = params[:tas10_user][:password]
+          @user.password_confirmation = params[:tas10_user][:password_confirmation]
         end
+        tas10_safe_update( @user, params[:tas10_user] )
       else
-        flash[:error] = t('user.saving_failed', :name => @user.fullname_or_name, :reason => 'not found')
+        flash[:error] = t('insufficient_rights', :name => @user.fullname_or_name)
       end
-      render :template => "users/confirm"
+      render :template => "users/show"
+    else
+      update_after_confirmation
     end
   end
 
@@ -102,4 +105,22 @@ class UsersController < Tas10boxController
     Tas10::User.where(:id => params[:id]).first
   end
 
+  def update_after_confirmation
+    @user = Tas10::User.where(:email => params[:tas10_user][:email], :confirmation_key => params[:tas10_user][:confirmation_key]).first
+    if @user
+      @user.password = params[:tas10_user][:password]
+      @user.password_confirmation = params[:tas10_user][:password_confirmation]
+      @user.save( :safe => true )
+      puts "LOG: #{@user.errors.messages.inspect}"
+      if authenticate( params[:tas10_user][:email], params[:tas10_user][:password] )
+        redirect_to dashboard_path
+        return
+      else
+        flash[:error] = t('user.saving_failed', :name => @user.fullname_or_name, :reason => ' authentication failed ')
+      end
+    else
+      flash[:error] = t('user.saving_failed', :name => @user.fullname_or_name, :reason => 'not found')
+    end
+    render :template => "users/confirm"
+  end
 end

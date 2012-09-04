@@ -1,0 +1,29 @@
+.container-padding.user-container
+  %a.tas10-button.float-right{ :href => edit_user_path(@user), :"data-remote" => true }
+    =t('edit')
+
+  %img.userpic.float-left.x_100{ :src => "#{picture_of_user_path(@user)}/?size=100" }
+
+  .next-to-picture
+    %h1
+      -if current_user.id == @user.id
+        =t('user.your_profile', :name => @user.fullname_or_name)
+      -else
+        =t('user.profile_of', :name => @user.fullname_or_name)
+
+    %table.fill-width
+      %tr
+        %td
+          %label.desc
+            =t('user.email')
+        %td
+          %label.desc
+            =t('user.last_login')
+      %tr
+        %td
+          =@user.email
+        %td
+          -if @user.user_log_entries.size > 0
+            = l_time_ago_in_words( @user.user_log_entries.last.created_at )
+          -else
+            =t('never')

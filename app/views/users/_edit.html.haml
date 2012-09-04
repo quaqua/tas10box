@@ -1,0 +1,12 @@
+.container-padding.user-container
+
+  %img.userpic.float-left.x_100{ :src => "#{picture_of_user_path(@user)}/?size=100" }
+
+  .next-to-picture
+    %h1
+      -if current_user.id == @user.id
+        =t('user.your_profile', :name => @user.fullname_or_name)
+      -else
+        =t('user.profile_of', :name => @user.fullname_or_name)
+
+    =render "form"
