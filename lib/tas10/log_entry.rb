@@ -7,4 +7,6 @@ class LogEntry
   belongs_to :user, :class_name => "Tas10::User"
   field :changed_fields, type: Array
 
+  embedded_in :tas10_document
+
 end

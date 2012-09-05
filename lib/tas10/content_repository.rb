@@ -81,7 +81,7 @@ module Tas10
         c = changed
         c.delete('version')
         c.delete('label_ids')
-        self.log_entries.pop if self.log_entries.size > 10
+        self.log_entries.order_by(:created_at.asc)[1].destroy if self.log_entries.size > 10
         self.log_entries.build :user => @user, :changed_fields => c
         if new_record?
           Tas10::AuditLog.create!( :user => @user, :document => self, :action => 'audit.created' )

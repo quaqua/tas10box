@@ -99,6 +99,7 @@ tas10.getTreeTemplate = function getTreeTemplate( doc ){
 	        return;
 
 	      var settings = { url: ($(this).attr('data-url') || null), page: 1, pageCount: 30 };
+	      console.log('got url', settings.url)
 	      if ( typeof(options) != 'undefined' ) {
 	        $.extend( settings, options );
 	      }

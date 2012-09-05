@@ -32,7 +32,7 @@ module Tas10
       #
       def children(reload=:no)
         return @children_cache if @children_cache && reload != :reload
-        query = self.class.with_user( @user ).where( :label_ids => id )
+        query = Tas10::Document.where( :label_ids => id )
         @children_cache = DocumentArray.new( self, @user, query )
       end
 
@@ -44,7 +44,7 @@ module Tas10
       #
       def labels(reload=:no)
         return @labels_cache if @labels_cache && reload != :reload
-        query = self.class.with_user( @user ).in( :id => label_ids )
+        query = Tas10::Document.with_user( @user ).in( :id => label_ids )
         @labels_cache = DocumentArray.new( self, @user, query, true )
       end
 
@@ -52,7 +52,8 @@ module Tas10
       # document. This label is associated as the document's
       # parent
       def parent
-        self.class.with_user( @user ).where( :label_ids => id ).first
+        return unless label_ids.size > 0
+        Tas10::Document.where( :id => label_ids.first ).first_with_user( @user )
       end
 
       def nullify_children
