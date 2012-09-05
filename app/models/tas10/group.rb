@@ -10,5 +10,9 @@ class Tas10::Group
 
   has_and_belongs_to_many :users, :class_name => "Tas10::User"
 
+  def fullname_or_name
+    name
+  end
+
 end
 

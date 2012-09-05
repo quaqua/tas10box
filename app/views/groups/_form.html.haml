@@ -1,0 +1,12 @@
+=form_for @group, :remote => true, :html => {:class => 'user-form tas10-form' } do |f|
+  %p
+    %label.desc
+      =t('group.name')
+    %br
+    =f.text_field :name
+
+  %p{ :style => "text-align:right" }
+    %a{ :href => group_path(@group), :"data-remote" => true }
+      =t('cancel')
+    &nbsp;
+    =f.submit t('save')

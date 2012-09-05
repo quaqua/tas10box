@@ -27,3 +27,18 @@
             = l_time_ago_in_words( @user.user_log_entries.last.created_at )
           -else
             =t('never')
+
+    %p
+      %label.desc
+        =t('user.groups')
+      %br
+      - get_known_groups(@user).each do |group|
+        = link_to( group.name, group, :remote => true )
+
+    %p
+      %label.desc
+        =t('user.known')
+      %br
+      - get_known_users(@user).each do |user|
+        -if user.id != current_user.id && user.id != Tas10::User.anybody_id
+          %a{ :href => user_path(user), :"data-remote" => true }= image_tag( picture_of_user_path( user ), :class => "userpic x50 live-tipsy", :"original-title" => user.fullname_or_name)

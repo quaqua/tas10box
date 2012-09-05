@@ -77,9 +77,18 @@ class UsersController < Tas10boxController
   # returns all known users for this
   # user
   def known
-    @known = Tas10::User.in( :id => current_user.known_user_ids ).all
+    @known = Tas10::User
+    @known = @known.in( :id => (current_user.known_user_ids+[Tas10::User.anybody_id]) ) unless current_user.admin?
+    @known = @known.or([ {:name => /#{params[:term]}/i}, {:fullname => /#{params[:term]}/i}, {:email => /#{params[:term]}/i}]) unless params[:term].blank?
+    @users_and_groups = @known.all
+
+    @known = Tas10::Group
+    @known = @known.in( :id => current_user.group_ids ) unless current_user.admin?
+    @known = @known.where(:name =>  /#{params[:term]}/i) unless params[:term].blank?
+    @users_and_groups += @known.all
+
     respond_to do |format|
-      format.json{ render :json => @known.map{ |u| {:id => u.id, :name => u.fullname_or_name, :label => u.fullname_or_name } }.to_json }
+      format.json{ render :json => @users_and_groups.map{ |u| {:id => u.id, :name => u.fullname_or_name, :label => u.fullname_or_name } }.to_json }
     end
   end
 
@@ -111,7 +120,6 @@ class UsersController < Tas10boxController
       @user.password = params[:tas10_user][:password]
       @user.password_confirmation = params[:tas10_user][:password_confirmation]
       @user.save( :safe => true )
-      puts "LOG: #{@user.errors.messages.inspect}"
       if authenticate( params[:tas10_user][:email], params[:tas10_user][:password] )
         redirect_to dashboard_path
         return

@@ -1,4 +1,4 @@
-%span.tas10-acl-entry{ :"data-id" => user.id }
+%span.tas10-acl-entry{ :"data-id" => user.id, :class => (user.is_a?(Tas10::Group) ? "group" : nil) }
   = user.fullname_or_name
   = acl["privileges"]
   -if user.id != current_user.id && @doc.privileges.index(/s/)

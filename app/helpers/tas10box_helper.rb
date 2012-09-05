@@ -21,4 +21,20 @@ module Tas10boxHelper
     options
   end
 
+  def get_user_or_group_by_id( user_id )
+    u = Tas10::User.where(:id => user_id).first
+    u = Tas10::Group.where(:id => user_id).first unless u
+    u
+  end
+
+  def get_known_users( user )
+    return Tas10::User.order_by(:name.asc).all if user.id == current_user.id && user.admin?
+    user.known_users
+  end
+
+  def get_known_groups( user )
+    return Tas10::Group.all if user.id == current_user.id && user.admin?
+    user.groups
+  end
+
 end

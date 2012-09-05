@@ -21,6 +21,14 @@ Rails.application.routes.draw do
       post :remove_group_to
     end
   end
+  resources :groups do
+    member do
+      post :add_user_to
+      delete :remove_user_from
+    end
+  end
+
+  resources :tas10_groups, :controller => "Groups"
 
   resources :documents do
     collection do

@@ -1,0 +1,4 @@
+<% if flash[:notice] %>
+  $('.user-<%= @user.id %>-in-group-<%= @group.id %>').remove();
+<% end %>
+<%= render "common/process_flash" %>

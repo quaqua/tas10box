@@ -1,7 +1,11 @@
+<% if flash[:error] %>
+  <%= render "common/process_flash" %>
+<% else %>
 $('#tas10-main-container').tas10Container( 'append', {
   replace: true,
-  title: '<%= @user.name %>', 
-  id: '_<%= @user.id %>', 
+  title: '<%= @group.name %>', 
+  id: '_<%= @group.id %>', 
   content: '<%= escape_javascript render('edit') %>'
   }, function( container ){  }
 );
+<% end %>

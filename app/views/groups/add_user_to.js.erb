@@ -1,0 +1,7 @@
+<% if flash[:notice] %>
+  $('.group-<%= @group.id %>-users').append('<li class="user-<%= @user.id %>-in-group-<%= @group.id %>"><%= escape_javascript(
+    link_to( @user.fullname_or_name, @user ) + 
+    link_to( raw("<span class=\"ui-icon float-right ui-icon-close\"></span>"), "#{remove_user_from_group_path(@group)}?user_id=#{@user.id}", :remote => true, :method => :delete, :confirm => t('user.remove_from_group', :name => @user.fullname_or_name) )
+    ) %></li>');
+<% end %>
+<%= render "common/process_flash" %>

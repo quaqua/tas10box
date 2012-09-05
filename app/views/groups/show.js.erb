@@ -1,8 +1,8 @@
 <% if !flash[:error] %>
 $('#tas10-main-container').tas10Container( 'append', {
   replace: true,
-  title: '<%= @user.name %>', 
-  id: '_<%= @user.id %>', 
+  title: '<%= @group.name %>', 
+  id: '_<%= @group.id %>', 
   content: '<%= escape_javascript render('show') %>'
   }, function( container ){  }
 );

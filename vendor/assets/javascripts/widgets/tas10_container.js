@@ -99,7 +99,7 @@
 	    	var shortOpts = options;
 	    	delete shortOpts['content'];
 	    	var tab = $('<li class="tab active" id="tab_'+options.id+'" />').data('options', shortOpts);
-	    	$(tab).append('<span class="ui-icon ui-icon-closethick tab-close"></span>');
+	    	$(tab).append('<span class="ui-icon ui-icon-close tab-close"></span>');
 	    	$(tab).append(centerTab);
 	    	$(tab)
 	    	if( options.title.length > 15 )

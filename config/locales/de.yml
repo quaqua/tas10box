@@ -40,6 +40,7 @@ de:
 
   insufficient_rights: "Due besitzt nicht genügend Rechte auf '%{name}' um diese Aktion auszuführen"
   not_found: "Das angeforderte Dokument wurde nicht gefunden"
+  only_admin: "Nur Administratoren dürfen diese Aktion ausführen"
 
   find: "Suchen"
   results_for: "Ergebnisse für %{query}"
@@ -133,6 +134,15 @@ de:
     email: "Email"
     name: "Benutzername"
     fullname: "Voller Name"
+    groups: "Gruppen"
+    known: "Bekannte BenutzerInnen"
+    add_to_group: "BenutzerInnen hinzufügen"
+    added_to_group: "'%{name}' wurde zur Gruppe '%{group}' hinzugefügt"
+    remove_from_group: "'%{name}' wirklich von Gruppe entfernen?"
+    removed_from_group: "'%{name}' erfolgreich von Gruppe '%{group}' entfernt"
+
+  group:
+    name: "Gruppenname"
 
   audit:
     created: "hat '%{name}' angelegt"

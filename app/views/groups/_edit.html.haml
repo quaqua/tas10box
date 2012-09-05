@@ -1,0 +1,9 @@
+.container-padding.user-container
+
+  %img.userpic.float-left.x_100{ :src => "#{picture_of_user_path(@group)}/?size=100" }
+
+  .next-to-picture
+    %h1
+      = @group.name
+
+    =render "form"
