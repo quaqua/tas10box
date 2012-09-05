@@ -1,3 +1,2 @@
-class PlainDoc
-  include Tas10::ContentRepository
+class PlainDoc < Tas10::Document
 end

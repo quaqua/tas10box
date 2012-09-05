@@ -18,8 +18,7 @@ describe "Labeling" do
   end
 
   it "doc2 finds its labels" do
-    @doc2 = @doc2.reload
-    @doc2.labels.size.should == 1
+    @doc2.labels(:reload).size.should == 1
     @doc2.labels.first.id.should == @doc1.id
   end
 

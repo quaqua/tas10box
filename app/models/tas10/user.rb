@@ -43,6 +43,16 @@ class Tas10::User
   before_save :encrypt_password
   before_create :generate_salt, :generate_password_if_none, :generate_confirmation_key, :setup_default_settings
 
+  def self.anybody_id
+    Moped::BSON::ObjectId(24.times.inject(""){ |str,i| str << "0" })
+  end
+
+  def self.anybody
+    anybody = new( :name => 'Anybody' )
+    anybody._id = anybody_id
+    anybody
+  end
+
   def update_request_log( ip, url )
     self.user_log_entries.pop if self.user_log_entries.size > 50
     user_log_entries.where( :login => false ).all.delete
@@ -66,6 +76,10 @@ class Tas10::User
 
   def fullname_or_name
     fullname.blank? ? ( name.blank? ? email : name ) : fullname
+  end
+
+  def anybody?
+    id == self.class.anybody_id
   end
   
   private

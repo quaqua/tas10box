@@ -113,7 +113,7 @@ module Tas10
       end
 
       def reload
-        return self.class.with_user( @user ).where( :id => id ).first
+        return self.class.where( :id => id ).first_with_user( @user )
       end
       
       def remove_plain_entries

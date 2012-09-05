@@ -16,6 +16,7 @@ module Tas10
         raise InvalidUserError if @user.nil? || !valid_user_or_group?( @user )
         return false unless can_share?
       end
+      raise SecurityTransgressionError if user.is_a?(Tas10::User) && user.anybody? && privileges != "r"
       self.acl["#{user.id}"] = { "privileges" => privileges, "inherited" => {}, "invited" => (new_record? ? nil : @user.id), "at" => Time.now }
     end
 
