@@ -5,7 +5,7 @@
     .icon-container
       %span.tas10-icon16.float-left.white{ :class => "tas10-icon-#{@doc.class.name.downcase}"}
     %h1{ :"data-name" => "name", :"data-url" => document_path( @doc ) }
-      %span.text.title{ :"data-attr-name" => "name-#{@doc.id}"}= @doc.name
+      %span.text.title{ :"data-attr-name" => "name-#{@doc.id}" }= @doc.name.blank? ? "NO NAME" : @doc.name
 
   .tas10-dialog-content
     %table

@@ -35,6 +35,10 @@ module Tas10box
           @current_user
         end
 
+        def anybody
+          Tas10::User.anybody
+        end
+
         # returns the current_user object, if authenticated,
         # the anybody object if not
         def current_user_or_anybody

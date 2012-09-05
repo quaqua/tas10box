@@ -116,10 +116,10 @@ tas10['notify'] = function tas10Notify( msg, error ){
 }
 
 tas10['flash'] = function tas10Flash( flash ){
-  if( flash.notice && flash.notice.length > 0 )
-    tas10.notify(flash.notice[flash.notice.length-1]);
-  if( flash.error && flash.error.length > 0 )
-    tas10.notify(flash.error[flash.error.length-1],true);
+  if( flash.notice && (flash.notice instanceof Array) && flash.notice.length > 0 && flash.notice[0].length > 0 )
+    tas10.notify(flash.notice[flash.notice.length-1].replace(/\'/,"\'"));
+  if( flash.error && (flash.error instanceof Array) && flash.error.length > 0 && flash.error[0].length > 0 )
+    tas10.notify(flash.error[flash.error.length-1].replace(/\'/,"\'"),true);
 }
 
 tas10['loader'] = function tas10Loader( show ){
@@ -210,6 +210,9 @@ tas10['dialog'] = function tas10Dialog( action, text, callback ){
     firstDay: 1,
     dateFormat: 'yy-mm-dd'
   });
+
+  if( !($('#tas10-dialog').hasClass('ui-draggable') ) )
+    $('#tas10-dialog').draggable({handle: '.tas10-dialog-header'});
   
   if( typeof(callback) === 'function' )
     callback( $('#tas10-dialog') );

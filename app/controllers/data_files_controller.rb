@@ -18,7 +18,7 @@ class DataFilesController < Tas10boxController
       flash[:error] = 'something terribly went wrong!'
     end
     render :json => {:pic => @data_file,
-                    :flash => { :notice => flash[:notice], :error => flash[:error] },
+                    :flash => { :notice => [flash[:notice]], :error => [flash[:error]] },
                     }.to_json
   end
 
