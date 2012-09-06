@@ -118,7 +118,10 @@
           var selectedOption = $(select).find('option:selected');
           if( ( selectedOption.length && $(selectedOption).val().length > 22 ) || 
             select.closest('form').find('.create-button').is(':visible') )
-            return true;
+            if( self.options.onSubmit && typeof(self.options.onSubmit) === 'function' )
+              self.options.onSubmit();
+            else
+              return true;
           return false;
         }
       })

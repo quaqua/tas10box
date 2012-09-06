@@ -17,10 +17,11 @@ tas10['showAclMiniDialog'] = function showAclMiniDialog( elem, action, showTitle
           var form = $(select).closest('.tas10-acl-form');
           $(form).find('input[name=email]').val( $(form).find('.ui-autocomplete-input').val() );
           console.log('setting data', (form).find('.ui-autocomplete-input').val())
-        }
+        } else
+          $(select).closest('.tas10-acl-form').find('.create-button').hide();
       },
       hasDataCallback: function(select){
-        $(select).closest('.tas10-acl-form').find('.create-button').show();
+        $(select).closest('.tas10-acl-form').find('.create-button').hide();
       }
     });
     $(form).find('.ui-autocomplete-input').on()

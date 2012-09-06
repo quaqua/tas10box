@@ -7,6 +7,7 @@ class Tas10::AuditLog
   field :document_name, type: String
   field :document_type, type: String
   field :label_name, type: String
+  field :group_name, type: String
   field :label_type, type: String
   field :changed_fields, type: Array
   field :user_name, type: String
@@ -14,6 +15,7 @@ class Tas10::AuditLog
   belongs_to :user, :class_name => "Tas10::User"
   belongs_to :document, :class_name => "Tas10::Document"
   belongs_to :label
+  belongs_to :group, :class_name => "Tas10::Group"
 
   before_create :setup_doc_label_name
 
@@ -30,6 +32,9 @@ class Tas10::AuditLog
     end
     if user
       self.user_name = user.fullname_or_name
+    end
+    if group
+      self.group_name = group.name
     end
   end
 

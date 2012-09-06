@@ -35,8 +35,13 @@ class GroupsController < Tas10boxController
     if current_user.admin?
       @group = get_group_by_id
       @user = get_user_by_user_id
+      if @user
+        Tas10::AuditLog.create!( :user => current_user, :group => @group, :additional_message => @user.fullname_or_name, :action => 'audit.added_to_group' )
+        flash[:notice] = t('user.added_to_group', :name => @user.fullname_or_name, :group => @group.name)
+      else
+        create_user_and_invite
+      end
       @user.groups.push( @group ) unless @user.group_ids.include?( @group.id )
-      flash[:notice] = t('user.added_to_group', :name => @user.fullname_or_name, :group => @group.name)
     else
       flash[:error] = t('only_admin')
     end

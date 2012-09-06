@@ -1,7 +1,7 @@
 <% if flash[:notice] %>
 var doc = <%= raw @doc.to_json %>;
 $('.create-form:visible input[type=text]').val('');
-if( $('#tas10-dialog .create-form:visible .continue-editing').hasClass('checked') )
+if( <%= params.has_key?(:keep_open) %> || $('#tas10-dialog .create-form:visible .continue-editing').hasClass('checked') )
   $('#tas10-dialog .create-form:visible .js-get-focus').focus();
 else {
   tas10.dialog('close');

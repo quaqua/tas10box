@@ -70,6 +70,30 @@ module Tas10box
           try_authentication(name,password)
         end
 
+
+        def create_user_and_invite
+          @user = Tas10::User.new( :email => params[:email], :invited_by => current_user.id )
+          if @user.save( :safe => true )
+            current_user.known_users.push( @user ) unless current_user.known_user_ids.include?(@user.id) && @user.id == Tas10::User.anybody_id
+            @user.known_users.push( current_user )
+            if @doc
+              if @doc.share( @user, params[:privileges] ) && @doc.update( :acl => @doc.acl )
+                Tas10::AuditLog.create!( :user => current_user, :document => @doc, :additional_message => @user.fullname_or_name, :action => 'audit.invited_and_shared' )
+                UserMailer.welcome_email(current_user, @user, user_url(@user), @doc, document_url(@doc)).deliver
+                flash[:notice] = t('acl.invited_and_shared', :user_name => @user.fullname_or_name, :doc_name => @doc.name, :privileges => params[:privileges])
+              else
+                flash[:error] = t('acl.invited_but_sharing_failed', :user_name => @user.fullname_or_name, :doc_name => @doc.name, :reason => @doc.errors.messages.inspect )
+              end
+            else
+              Tas10::AuditLog.create!( :user => current_user, :group => @group, :additional_message => @user.fullname_or_name, :action => 'audit.invited_to_group' )
+              flash[:notice] = t('user.added_to_group_and_invited', :name => @user.fullname_or_name, :group => @group.name)
+              UserMailer.welcome_email(current_user, @user, user_url(@user), nil, nil).deliver
+            end
+          else
+            flash[:error] = t('user.invitation_failed', :name => @user.fullname_or_name)
+          end
+        end
+
         # safefully creates the passed document and
         # creates according flash messages
         #

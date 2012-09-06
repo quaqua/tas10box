@@ -41,23 +41,6 @@ class AclController < Tas10boxController
 
   private
 
-  def create_user_and_invite
-    @user = Tas10::User.new( :email => params[:email], :invited_by => current_user.id )
-    if @user.save( :safe => true )
-      if @doc.share( @user, params[:privileges] ) && @doc.update( :acl => @doc.acl )
-        current_user.known_users.push( @user ) unless current_user.known_user_ids.include?(@user.id) && @user.id == Tas10::User.anybody_id
-        @user.known_users.push( current_user )
-        Tas10::AuditLog.create!( :user => current_user, :document => @doc, :additional_message => @user.fullname_or_name, :action => 'audit.invited_and_shared' )
-        UserMailer.welcome_email(current_user, @user, user_url(@user), @doc, document_url(@doc)).deliver
-        flash[:notice] = t('acl.invited_and_shared', :user_name => @user.fullname_or_name, :doc_name => @doc.name, :privileges => params[:privileges])
-      else
-        flash[:error] = t('acl.invited_but_sharing_failed', :user_name => @user.fullname_or_name, :doc_name => @doc.name, :reason => @doc.errors.messages.inspect )
-      end
-    else
-      flash[:error] = t('user.invitation_failed', :name => @user.fullname_or_name)
-    end
-  end
-
   def get_doc_by_id
     @doc = Tas10::Document.where( :id => params[:document_id] ).first_with_user( current_user )
     @doc

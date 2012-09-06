@@ -33,7 +33,10 @@ class HistoryController < Tas10boxController
         :message => (l.additional_message ? l.additional_message : nil),
         :label => (l.label_name ? 
           "<a href='#{document_path(l.label_id)}' data-remote='true'>#{l.label_name}</a>" : 
-          nil) 
+          nil),
+        :group => (l.group_name && l.group_id ? 
+          "<a href='#{group_path(l.group_id)}' data-remote='true'>#{l.group_name}</a>" : 
+          nil)
         )
     }
   end
