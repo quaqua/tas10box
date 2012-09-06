@@ -35,9 +35,15 @@ class DataFilesController < Tas10boxController
 
   def thumb
     if @data_file = get_user_or_id_data_file
-      size = "#{params[:size]}x#{params[:size]}" || "16x16"
+      size = "16x16"
+      if params[:size]
+        if params[:size].include? 'x'
+          size = params[:size]
+        else
+          size = "#{params[:size]}x#{params[:size]}"
+        end
+      end
       filename = "#{@data_file.filepath}/thumb_#{size}.#{Tas10box::defaults[:post_processor][:image_format] || 'png'}"
-      puts "filename #{filename}"
       #begin
         send_file(filename,
                   :type => "image/#{Tas10box::defaults[:post_processor][:image_format] || 'png'}",
@@ -58,7 +64,7 @@ class DataFilesController < Tas10boxController
     if authenticated?
       DataFile.where(:id => params[:id]).first_with_user( current_user )
     else
-      DataFile.where(:id => params[:id], :published => true).first
+      DataFile.where(:id => params[:id]).first_with_user( anybody )
     end
   end
 

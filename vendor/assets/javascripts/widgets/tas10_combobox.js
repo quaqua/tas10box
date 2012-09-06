@@ -67,10 +67,10 @@
             self.options.onSelectCallback.call( this, select, ui );
             return;
           }
-          if( $(select).find('option[value='+ui.item.id+']').length )
-            $(select).find('option[value='+ui.item.id+']').attr('selected', true);
-          else
+          if( !$(select).find('option[value='+ui.item.id+']').length )
             $(select).append('<option value="'+ui.item.id+'">'+ui.item.name+'</option>');
+          $(select).find('option').attr('selected',false);
+          $(select).find('option[value='+ui.item.id+']').attr('selected', true);
           var form = $(select).closest('form')
             , formData = $(select).closest('form').serializeArray();
           formData['doc_ids'] = [];
@@ -79,9 +79,7 @@
               formData['doc_ids'].push($(this).attr('data-id'));
           })
           if( self.options.submitOnSelect ){
-            console.log(input.val());
             $(input).val('');
-            console.log(input.val());
             $(select).find('option').remove();
             $.ajax({ url: $(form).attr('action'), data: formData, dataType: 'script', type: 'post', success: self.options.successCallback });
           }
@@ -118,7 +116,7 @@
           var selectedOption = $(select).find('option:selected');
           if( ( selectedOption.length && $(selectedOption).val().length > 22 ) || 
             select.closest('form').find('.create-button').is(':visible') )
-            if( self.options.onSubmit && typeof(self.options.onSubmit) === 'function' )
+            if( self.options.onSubmit && typeof(self.options.onSubmit) === 'function' && !$('.ui-autocomplete.ui-menu li').length )
               self.options.onSubmit();
             else
               return true;
