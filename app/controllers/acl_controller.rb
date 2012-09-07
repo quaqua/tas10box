@@ -6,7 +6,7 @@ class AclController < Tas10boxController
     @doc = get_doc_by_id
     if @doc.can_share?
       if @user = get_user_by_id || @user = get_group_by_id
-        if @doc.share( @user, params[:privileges] ) && @doc.update( :acl => @doc.acl )
+        if @doc.share( @user, params[:privileges] ) && @doc.update_attribute( :acl, @doc.acl )
           current_user.known_users.push( @user ) unless current_user.known_user_ids.include?(@user.id) && @user.id == Tas10::User.anybody_id
           Tas10::AuditLog.create!( :user => current_user, :document => @doc, :additional_message => @user.fullname_or_name, :action => 'audit.shared' )
           privileges = params[:privileges]
@@ -43,7 +43,6 @@ class AclController < Tas10boxController
 
   def get_doc_by_id
     @doc = Tas10::Document.where( :id => params[:document_id] ).first_with_user( current_user )
-    @doc
   end
 
   def get_user_by_id

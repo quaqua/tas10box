@@ -14,7 +14,7 @@
       %label.desc
         =t('name')
       %br
-      =text_field_tag :name, '', :class => "js-get-focus", :required => true
+      =text_field_tag :name, '', :class => "js-get-focus fill-width", :required => true
 
     - Tas10box.plugins.each do |plugin|
       - if plugin.creates
@@ -25,7 +25,7 @@
           =select_tag :"#{plugin.name.singularize}[template]", options_for_select( get_templates_for(plugin.name) ), :class => "tas10-select select-template-select"
           =hidden_field_tag :"#{plugin.name.singularize}[name]", ''
           =hidden_field_tag :"#{plugin.name.singularize}[label_ids]", '', :class => 'tas10-current-label'
-          %span{ :style => "display:none", :class => "plugin-pluralize-#{plugin.name.singularize}", :"data-name" => plugin.name}
+          %span{ :style => "display:none", :class => "plugin-pluralize-#{plugin.name.singularize}", :"data-name" => plugin.name.pluralize}
 
 
     %p{ :style => "text-align: right"}

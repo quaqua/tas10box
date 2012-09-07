@@ -6,6 +6,8 @@ module Tas10box
         def setup_tas10box
           helper_method :authenticated?
           helper_method :current_user
+          helper_method :anybody
+          helper_method :current_user_or_anybody
           helper_method :l_time_ago_in_words
           helper_method :current_user_or_anybody
           helper_method :known_users_and_groups

@@ -1,10 +1,11 @@
 <% if flash[:notice] && @doc %>
   <% @doc.log_entries.last.changed_fields.each do |attr| %>
     <% next if attr == 'name' %>
-    $('[data-attr-name="<%= attr %>-<%= @doc.id %>"]').text( '<%= @doc.send(attr) %>' );
+    <% next if @doc.send(attr).nil? || !@doc.send(attr).is_a?(String) %>
+    $('[data-attr-name="<%= attr %>-<%= @doc.id %>"]').text( '<%= escape_javascript(@doc.send(attr)) %>' );
     $('[data-attr-name="<%= attr %>-<%= @doc.id %>"]').effect('highlight', { color: '#fc6' }, 2000 );
   <% end %>
-  $('[data-attr-name="name-<%= @doc.id %>"]').text( '<%= @doc.name %>' );
+  $('[data-attr-name="name-<%= @doc.id %>"]').text( '<%= escape_javascript(@doc.name) %>' );
   $('[data-attr-name="name-<%= @doc.id %>"]').effect('highlight', { color: '#fc6' }, 2000 );
   <% if @close_dialog %>
     tas10.dialog('close');

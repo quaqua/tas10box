@@ -85,7 +85,12 @@ module Tas10
             child.acl[u_id] = acl
           end
         end
-        child.save
+        puts "SHARING CHILD: "
+        puts child.name
+        puts "END SH"
+        child.versionless do
+          child.save(:safe => true)
+        end
       end
     end
 
@@ -101,7 +106,9 @@ module Tas10
             end
           end
         end
-        child.save
+        child.versionless do
+          child.save(:safe => true)
+        end
       end
     end
 

@@ -2,6 +2,10 @@ de:
   welcome_on_tas10box: "Willkommen auf der tas10box von %{name}"
   requested_resource_was_not_found: "Die angeforderte Seite konnte nicht gefunden werden"
   session_expired: "Deine Sitzung ist abgelaufen (Limit: %{limit} Minuten)"
+
+  continue_creating: "Weitere anlegen"
+  keep_open: "offen halten"
+  
   login: 
     title: "Anmelden"
     required: "Anmeldung erforderlich!"
@@ -29,7 +33,6 @@ de:
   save: "Speichern"
   delete: "Löschen"
   settings: "Einstellungen"
-  continue_creating: "Weitere anlegen"
   create: "Anlegen"
   add: "Hinzufügen"
   show: "Anzeigen"

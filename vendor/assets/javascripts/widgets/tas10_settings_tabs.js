@@ -15,6 +15,8 @@
       var id = $(this).attr('href');
       $(tabsContainer).find('.tab-content').hide();
       $(tabsContainer).find(id).show();
+      //if( $(tabsContainer).closest('#tas10-dialog').length )
+      //  $('#tas10-dialog').center();
     })
   };
 

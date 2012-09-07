@@ -65,12 +65,13 @@ tas10['fireNewDialog'] = function( options ){
 
 */
 
+
 tas10['setupNewDialog'] = function setupNewDialog( options ){
 
 	var form = $('#tas10-dialog .tas10-form');
 	$('#tas10-select-type-to-create').on('change', function(){
 		var controllerName = $(this).find('option:selected').val();
-		$(form).attr("action", "/"+controllerName);
+		$(form).attr("action", "/"+$('.plugin-pluralize-'+controllerName).attr('data-name'));
 		$(form).find('.select-template').hide();
 		$(form).find('.select-template-'+controllerName).show();
 	})
