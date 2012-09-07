@@ -8,10 +8,32 @@
 
 %fieldset.tas10-steps
   %legend= t( 'details' )
-- Tas10box.plugins.each do |plugin|
-  - if plugin.creates
-    .create-form{ :id => "#{plugin.name.singularize}-form", :"data-url" => "#{plugin.name}/new" }
-    //= render "#{plugin.name}/form"
+  = form_tag "/labels", :remote => true, :class => "tas10-form create-form" do
+
+    %p
+      %label.desc
+        =t('name')
+      %br
+      =text_field_tag :name, '', :class => "js-get-focus", :required => true
+
+    - Tas10box.plugins.each do |plugin|
+      - if plugin.creates
+        %p.select-template{:class => "select-template-#{plugin.name.singularize}", :style => "display:none"}
+          %label.desc
+            =t('template')
+          %br
+          =select_tag :"#{plugin.name.singularize}[template]", options_for_select( get_templates_for(plugin.name) ), :class => "tas10-select select-template-select"
+          =hidden_field_tag :"#{plugin.name.singularize}[name]", ''
+          =hidden_field_tag :"#{plugin.name.singularize}[label_ids]", '', :class => 'tas10-current-label'
+          %span{ :style => "display:none", :class => "plugin-pluralize-#{plugin.name.singularize}", :"data-name" => plugin.name}
+
+
+    %p{ :style => "text-align: right"}
+      %span.continue-creating.desc
+        %input.continue-editing.tas10-checkbox{ :type => 'checkbox', :name => 'continue-creating' }
+        =t( 'continue_creating' )
+      %input.tas10-button{ :type => 'submit', :value => t( 'create' ) }
+
 
 %fieldset.tas10-steps
   %legend= t( 'labels.title_pl' )

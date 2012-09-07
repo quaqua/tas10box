@@ -13,6 +13,17 @@ module Tas10boxHelper
     options
   end
 
+  def get_templates_for( plugin_name )
+    if plugin_name == 'labels'
+      return get_tas10box_plugin_options( :label_templates )
+    end
+    if Tas10box::defaults[:"#{plugin_name}"] && Tas10box::defaults[:"#{plugin_name}"][:templates]
+      Tas10box::defaults[:"#{plugin_name}"][:templates]
+    else
+      []
+    end
+  end
+
   def get_options_for_query_script_types
     options = []
     Tas10box.plugins.each do |plugin|

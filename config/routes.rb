@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     resources :labels
     resources :acl
   end
+  resources :tas10_documents, :controller => "Documents"
   resources :tas10_comments, :controller => "Comments"
   resources :comments
 

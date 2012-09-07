@@ -8,17 +8,9 @@ class DocumentsController < Tas10boxController
   # by javascripts
   #
   def new
-
-    @docs = {}
-    Tas10box.plugins.each do |plugin|
-      klass = plugin.name.singularize
-      @docs[klass] = klass.classify.constantize.new if plugin.creates
-    end
-
-    respond_with @docs do |format|
+    respond_to do |format|
       format.html{ render :layout => false }
     end
-
   end
 
   # get a document only as jason

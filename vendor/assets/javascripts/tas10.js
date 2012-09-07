@@ -174,6 +174,12 @@ tas10['dialog'] = function tas10Dialog( action, text, callback ){
     return;
   }
 
+  if( action === 'load' ){
+    $('#tas10-dialog').load( text, function( htmldata ){
+      tas10.dialog( 'new', htmldata, callback );
+    });
+  }
+
   if( typeof(text) === 'object' ){
     title = text.title;
     text = text.content;
@@ -213,6 +219,8 @@ tas10['dialog'] = function tas10Dialog( action, text, callback ){
 
   if( !($('#tas10-dialog').hasClass('ui-draggable') ) )
     $('#tas10-dialog').draggable({handle: '.tas10-dialog-header'});
+  
+  $('#tas10-dialog .js-get-focus:visible:first').focus();
   
   if( typeof(callback) === 'function' )
     callback( $('#tas10-dialog') );
