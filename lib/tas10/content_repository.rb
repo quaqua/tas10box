@@ -55,7 +55,7 @@ module Tas10
       end
 
       def all_with_user( user )
-        docs = with_user( user ).all
+        docs = with_user( user ).all.to_a
         return unless docs
         docs.each do |doc|
           doc.user = user
