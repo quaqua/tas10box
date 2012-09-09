@@ -16,7 +16,17 @@ class DocumentsController < Tas10boxController
   # get a document only as jason
   #
   def show
-    respond_with @doc = get_doc_by_id
+    respond_to do |format|
+      format.json{ render :json => get_doc_by_id.to_json }
+      format.html{ redirect_to "#{dashboard_path}?_type=#{self.class.name.underscore.gsub('_controller','')}&id=#{params[:id]}" }
+    end
+  end
+
+  def favorite
+    @docs = Tas10::Document.where(:starred => true).asc(:name).all_with_user( current_user )
+    respond_to do |format|
+      format.json{ render :json => @docs.to_json }
+    end
   end
 
   # update the document or only a single attribute
@@ -24,12 +34,30 @@ class DocumentsController < Tas10boxController
   def update
     @doc = get_doc_by_id
     @doc.attributes = params[:tas10_document]
-    if @doc.save(:safe => true)
-      flash[:notice] = t('document.saved_with_changes', :name => @doc.name, :changes => @doc.changed.join(', '))
-    else
-      flash[:error] = t('saving_failed', :name => @doc.name, :reason => @doc.errors.messages.inspect)
+    @doc.skip_audit
+    @doc.versionless do
+      if @doc.update_attributes( params[:tas10_document] )
+        if params[:tas10_document].size == 1 && params[:tas10_document][:starred]
+          if @doc.starred?
+            Tas10::AuditLog.create!( :user => current_user, :document => @doc, :action => 'audit.marked_favorit' )
+            flash[:notice] = t('dmarked_favorit', :name => @doc.name)
+          else
+            Tas10::AuditLog.create!( :user => current_user, :document => @doc, :action => 'audit.unmarked_favorit' )
+            flash[:notice] = t('unmarked_favorit', :name => @doc.name)
+          end
+        else
+          @doc.skip_audit = nil
+          @doc.update_log
+          flash[:notice] = t('document.saved_with_changes', :name => @doc.name, :changes => @doc.changed.join(', '))
+        end
+      else
+        flash[:error] = t('saving_failed', :name => @doc.name, :reason => @doc.errors.messages.inspect)
+      end
     end
-    respond_with @doc
+    respond_to do |format|
+      format.js{ @doc }
+      format.json{ render :json => @doc.to_json }
+    end
   end
 
   def show

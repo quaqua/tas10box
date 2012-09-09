@@ -22,6 +22,8 @@ de:
     title: "Meine Dokumente"
   history:
     title: "Letzte Änderungen"
+  favorites:
+    title: "Meine Favoriten"
 
   new: "Neu"
   cut: "Ausschneiden"
@@ -76,6 +78,8 @@ de:
   saving_failed: "'%{name}' konnte nicht gespeichert werden (%{reason})"
   deleted: "'%{name}' wurde gelöscht"
   deletion_failed: "'%{name} konnte nicht gelöscht werden"
+  marked_favorit: "'%{name}' wurde zu Favoriten hinzugefügt"
+  unmarked_favorit: "'%{name}' wurde von Favoriten entfernt"
 
   document:
     star: "Favorit"
@@ -165,6 +169,8 @@ de:
     comment_destroyed: "hat seinen Kommentar in '%{name}' wieder gelöscht"
     published: "hat '%{name}' veröffentlicht"
     locked: "hat '%{name}' für die Öffentlichkeit gesperrt"
+    marked_favorite: "hat '%{name}' zu Favoriten hinzugefügt"
+    unmarked_favorite: "hat '%{name}' von Favoriten entfernt"
 
   query_scripts:
     title: "Suchvorlage"

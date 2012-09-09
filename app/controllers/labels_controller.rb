@@ -70,12 +70,17 @@ class LabelsController < Tas10boxController
   # show the label
   #
   def show
-    @doc = get_label_by_id
-    @docs = Tas10::Document.where(:label_ids => Moped::BSON::ObjectId(params[:id]))
-    @label_ids = @docs.inject([]){ |arr,doc| arr += doc.label_ids ; arr }
-    @labels = Tas10::Document.in(:id => @label_ids ).all_with_user( current_user )
-    unless @doc.template.blank?
-      render :template => @doc.template
+    respond_to do |format|
+      format.html{ redirect_to "#{dashboard_path}?_type=#{self.class.name.underscore.gsub('_controller','')}&id=#{params[:id]}" }
+      format.js do
+        @doc = get_label_by_id
+        @docs = Tas10::Document.where(:label_ids => Moped::BSON::ObjectId(params[:id]))
+        @label_ids = @docs.inject([]){ |arr,doc| arr += doc.label_ids ; arr }
+        @labels = Tas10::Document.in(:id => @label_ids ).all_with_user( current_user )
+        unless @doc.template.blank?
+          render :template => @doc.template
+        end
+      end
     end
   end
 

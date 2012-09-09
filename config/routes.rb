@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   resources :documents do
     collection do
       match :find
+      get :favorite
     end
     member do
       get :info

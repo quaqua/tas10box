@@ -103,6 +103,12 @@ var tas10 = {
 
 };
 
+tas10['getURIParam'] = function getURIParam( name ){
+  return decodeURI(
+    (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+  );
+};
+
 tas10['notify'] = function tas10Notify( msg, error ){
   var notifier = '#tas10-notifier';
   if( error )

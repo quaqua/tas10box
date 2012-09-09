@@ -60,22 +60,23 @@ $( function(){
   
   $('.starred').live('click', function(){
     var self = this
-    $.ajax({ url: '/document/'+$(self).data('id'),
+    $.ajax({ url: '/documents/'+$(self).data('id'),
          type: 'put',
          dataType: 'json',
-         data: { _csrf: $('#_csrf').val(), document: {
+         data: { "tas10_document": {
           starred: $(this).find('.tas10-icon16').hasClass('tas10-icon-star-empty') 
          } },
          success: function( data ){
-          if( data.flash.info.length > 0 )
-            if( data.doc.starred ){
+          if( data )
+            if( data.starred ){
               $('.starred[data-id='+$(self).data('id')+']').find('.tas10-icon16').addClass('tas10-icon-star-full').removeClass('tas10-icon-star-empty');
-              $('#tas10-favourits-list').tastenboxList('append', data.doc, {short: true});
+              $('#tas10-favorites-list').tas10List('append', data, {short: true});
+              tas10.notify( I18n.t('marked_favorite', {name: data.name}) )
             } else{
               $('.starred[data-id='+$(self).data('id')+']').find('.tas10-icon16').addClass('tas10-icon-star-empty').removeClass('tas10-icon-star-full');
-              $('#tas10-favourits-list').find('[data-id='+data.doc._id+']').remove(); 
+              $('#tas10-favorites-list').find('[data-id='+data._id+']').remove(); 
+              tas10.notify( I18n.t('unmarked_favorite', {name: data.name}) )
             }
-          tas10.flash(data.flash);
          }})
   })
 
@@ -151,5 +152,8 @@ $( function(){
         }
       }
   });
+
+  if( tas10.getURIParam('_type').length && tas10.getURIParam('id' ).length )
+    $.getScript( tas10.getURIParam('_type') + '/' + tas10.getURIParam('id') );
 
 });

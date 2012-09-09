@@ -35,7 +35,7 @@ module Tas10
 
         validates_presence_of :name
 
-        attr_accessor :user
+        attr_accessor :user, :skip_audit
 
       end
 
@@ -78,6 +78,7 @@ module Tas10
     module InstanceMethods
 
       def update_log
+        return if skip_audit
         c = changed
         c.delete('version')
         c.delete('label_ids')

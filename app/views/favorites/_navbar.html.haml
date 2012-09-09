@@ -1,0 +1,11 @@
+.action-container{:style => "margin: 10px"}
+
+  %h1
+    =t('favorites.title')
+    
+  %ul#tas10-favorites-list.tas10-list
+
+  :javascript
+    $(function(){
+      $('ul#tas10-favorites-list').tas10List({ url: '#{favorite_documents_path}', short: true });
+    });

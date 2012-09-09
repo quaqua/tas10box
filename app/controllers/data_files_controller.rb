@@ -1,6 +1,6 @@
 class DataFilesController < Tas10boxController
 
-  before_filter :authenticate
+  before_filter :authenticate, :except => [:show, :thumb]
 
   def create
     if params[:qqfile]
