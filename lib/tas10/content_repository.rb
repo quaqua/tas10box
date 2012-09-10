@@ -28,7 +28,7 @@ module Tas10
 
         before_save :remove_plain_entries, :update_log, :check_write_permission
         after_save :share_children_on_change, :unshare_children_on_change
-        before_create :setup_creator
+        before_create :setup_creator, :check_label_ids
         before_destroy :check_delete_permission, :update_destroy_log
 
         embeds_many :log_entries, order: :created_at.desc

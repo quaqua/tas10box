@@ -94,6 +94,16 @@ module Tas10
       end
     end
 
+    def check_label_ids
+      label_ids.each do |label_id|
+        if label = Tas10::Document.where(:id => label_id).first
+          label.acl.each_pair do |aid,a|
+            self.acl[aid] = a
+          end
+        end
+      end
+    end
+
     def unshare_children
       children.each do |child|
         collect_negative_changes.each do |u_id|

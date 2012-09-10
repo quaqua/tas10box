@@ -2,6 +2,7 @@ de:
   welcome_on_tas10box: "Willkommen auf der tas10box von %{name}"
   requested_resource_was_not_found: "Die angeforderte Seite konnte nicht gefunden werden"
   session_expired: "Deine Sitzung ist abgelaufen (Limit: %{limit} Minuten)"
+  hit_save_to_save_changes: "Klicken Sie 'speichern' um die Änderungen in die Datenbank zu schreiben"
 
   continue_creating: "Weitere anlegen"
   keep_open: "offen halten"
@@ -56,6 +57,7 @@ de:
     one: "Ein Ergebnis gefunden"
     other: "%{count} Ergebnisse gefunden"
 
+  items: "Elemente"
   items_per_page: "Einträge pro Seite"
   page: "Seite"
   columns: "Spalten"
