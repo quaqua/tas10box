@@ -102,12 +102,10 @@ $( function(){
     }).bind("ajaxComplete", function(e, req){
       tas10.pullLoaderTimeout();
     }).bind("ajaxError", function(e, xhr){
-      console.log('having status: ', xhr.status);
       hideAjaxLoader(e);
       if( xhr.status === 0 )
         tas10.notify('You are offline!!\n Please Check Your Network.', true);
       else if( xhr.status === 401 ){
-        console.log('we are having a 401')
         window.location.replace('/login');
       }
       //else if( xhr.status === 404 )
