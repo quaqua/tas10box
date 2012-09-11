@@ -151,7 +151,7 @@ $( function(){
       }
   });
 
-  if( tas10.getURIParam('_type').length && tas10.getURIParam('id' ).length )
+  if( tas10.getURIParam('_type') !== "null" && tas10.getURIParam('id' ) !== "null" )
     $.getScript( tas10.getURIParam('_type') + '/' + tas10.getURIParam('id') );
 
 });

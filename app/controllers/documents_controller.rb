@@ -158,7 +158,7 @@ class DocumentsController < Tas10boxController
     @docs = @docs.all_with_user( current_user )
     { :total => @count, 
       :page => params[:page].to_i, 
-      :page => @pages, 
+      :pages => @pages, 
       :limit => params[:limit].to_i, 
       :data => @docs}.to_json
   end
