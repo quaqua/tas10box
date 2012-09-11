@@ -5,6 +5,7 @@ class DataFile < Tas10::Document
   field :copyright
   field :description
   field :img_crop_pos
+  field :extension
   field :published, :type => Boolean, :default => false
 
   before_save :determine_file_size
@@ -40,6 +41,7 @@ class DataFile < Tas10::Document
     require 'fileutils'
     @file.rewind
     FileUtils::mkdir_p(File::dirname(filename)) unless File::exists?(File::dirname(filename))
+    self.extension = File::extname(filename)
     File::open(filename, "w+b") { |f| f.write(@file.read) }
     post_process_image
   end

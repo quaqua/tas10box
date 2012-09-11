@@ -3,7 +3,7 @@
 		<div class="item-container">
 			<span class="ui-icon ui-icon-triangle-1-e float-left opener"></span>
 			<span class="tb-icon16 black tb-icon-{{:_type.toLowerCase()}} float-left"></span>
-			<a href="/{{:_type.toLowerCase()}}s/{{:_id}}" data-remote="true" class="title item_{{:_id}}_title{{if color && color.length > 0}} item-color" style="background-color: {{:color}}{{/if}}" data-attr-name="name-{{:_id}}">{{:name}}</a>
+			<a href="/{{:_type.toLowerCase()}}s/{{:_id}}?browser=true" data-remote="true" class="title item_{{:_id}}_title{{if color && color.length > 0}} item-color" style="background-color: {{:color}}{{/if}}" data-attr-name="name-{{:_id}}">{{:name}}</a>
 		</div>
 	</li>
 </script>

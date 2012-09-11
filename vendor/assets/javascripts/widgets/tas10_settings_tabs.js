@@ -5,19 +5,19 @@
 (function( jQuery ){
 
   var setupTas10TabsEvents = function(tabsContainer){
+    $(tabsContainer).find('.settings-tabs > a').each( function(){
+      $(this).die().live('click', function(e){
+        e.preventDefault();
+        if( $(this).hasClass('disabled') )
+          return;
+        $(tabsContainer).find('.current').removeClass('current');
+        $(this).addClass('current');
+        var id = $(this).attr('href');
 
-    $(tabsContainer).find('.tabs > a').live('click', function(e){
-      e.preventDefault();
-      if( $(this).hasClass('disabled') )
-        return;
-      $(tabsContainer).find('.current').removeClass('current');
-      $(this).addClass('current');
-      var id = $(this).attr('href');
-      $(tabsContainer).find('.tab-content').hide();
-      $(tabsContainer).find(id).show();
-      //if( $(tabsContainer).closest('#tas10-dialog').length )
-      //  $('#tas10-dialog').center();
-    })
+        $(tabsContainer).find('.settings-tab-content').hide();
+        $(tabsContainer).find(id).show();
+      });
+    });
   };
 
   var tas10TabMethods = {
@@ -27,12 +27,14 @@
           return;
 
         $(this).addClass('tas10-tab-obj');
-        $(this).find('.tabs').addClass('ui-helper-clearfix');
+        $(this).find('.settings-tabs').addClass('ui-helper-clearfix');
 
         setupTas10TabsEvents(this);
 
-        $(this).find('.tabs a:first').addClass('current');
-        $(this).find('.tab-content:first').show();
+        $(this).find('.settings-tabs a:first').addClass('current');
+        $(this).find('.settings-tab-content:first').show();
+
+        $(this).find('.settings-tab-content').css({ height: ($(window).height() - 200)});
 
       }
     };
