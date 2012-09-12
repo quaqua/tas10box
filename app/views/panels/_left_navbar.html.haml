@@ -7,7 +7,7 @@
     - Tas10box.plugins.each do |plugin|
       - if plugin.class.name == 'Tas10box::NavBarPlugin'
 
-        %span.navbar-button.tas10-icon24.live-tipsy-w.float-left{ :id => "button_#{ plugin.name }", :class => "tas10-icon-#{plugin.name.singularize}", :"original-title" => t( "#{plugin.name}.title"), :"data-dblclk-url" => (plugin.double_click_action ? plugin.double_click_action : nil) }
+        %span.navbar-button.tas10-icon24.live-tipsy-w.float-left{ :id => "button_#{ plugin.name }", :class => "tas10-icon-#{plugin.name.singularize}", :"original-title" => t( "#{plugin.name}.title"), :"data-click-url" => (plugin.click_action ? plugin.click_action : nil), :"data-dblclk-url" => (plugin.double_click_action ? plugin.double_click_action : nil) }
 
     %span.separator.navbar-button
 
@@ -15,7 +15,8 @@
 
       - if plugin.class.name == 'Tas10box::ApplicationPlugin'
 
-        %a.navbar-button.tas10-icon24.float-left{ :id => "button_#{ plugin.name }", :class => "tas10-icon-#{plugin.name.singularize}", :"original-title" => t("#{plugin.name}.title"), :"data-dblclk-url" => (plugin.double_click_action ? plugin.double_click_action : nil) }
+        %a.navbar-button.tas10-icon24.float-left{ :id => "button_#{ plugin.name }", :class => "tas10-icon-#{plugin.name.singularize}", :"original-title" => t("#{plugin.name}.title"), :"data-click-url" => (plugin.click_action ? plugin.click_action : nil), :"data-dblclk-url" => (plugin.double_click_action ? plugin.double_click_action : nil) }
+          = raw(plugin.button_callback.call) if plugin.button_callback && plugin.button_callback.lambda?
     
     .tas10-left-panel-button-content
 

@@ -100,6 +100,9 @@ tas10['setupNewDialog'] = function setupNewDialog( options ){
 		$('#tas10-dialog .tas10-path').addClass('path-item').html( $('#tas10-find .path-item:last').html() );
 	$('#tas10-dialog .tas10-current-label').val( $('#tas10-current-label').val() );
 
+	if( options.completed && typeof(options.completed) === 'function' )
+		options.completed($('#tas10-dialog').find('form'));
+
 }
 
 $(function(){
@@ -112,7 +115,7 @@ $(function(){
 		}
 		tas10.dialog( 'load', '/documents/new', function(){
 			tas10.setupNewDialog( options );
-		});;
+		});
 	});
 
 });

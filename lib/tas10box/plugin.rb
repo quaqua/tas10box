@@ -2,7 +2,7 @@ module Tas10box
 
   class Plugin
 
-    attr_accessor :name, :creates, :label_templates, :query_script_type
+    attr_accessor :name, :creates, :label_templates, :query_script_type, :button_callback
 
     def initialize( attrs )
       if attrs.is_a?( Hash )
@@ -15,11 +15,11 @@ module Tas10box
   end
 
   class ApplicationPlugin < Plugin
-    attr_accessor :double_click_action
+    attr_accessor :double_click_action, :click_action
   end
 
   class NavBarPlugin < Plugin
-    attr_accessor :double_click_action
+    attr_accessor :double_click_action, :click_action
   end
 
 end

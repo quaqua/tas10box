@@ -45,6 +45,10 @@ $( function(){
 			return;
 		}
 
+		if( $(this).attr('data-click-url') ){
+			$.getScript( $(this).attr('data-click-url') );
+		}
+
 		if( $(this).hasClass('current') )
 			return;
 
