@@ -80,8 +80,8 @@ de:
   saving_failed: "'%{name}' konnte nicht gespeichert werden (%{reason})"
   deleted: "'%{name}' wurde gelöscht"
   deletion_failed: "'%{name} konnte nicht gelöscht werden"
-  marked_favorit: "'%{name}' wurde zu Favoriten hinzugefügt"
-  unmarked_favorit: "'%{name}' wurde von Favoriten entfernt"
+  marked_favorite: "'%{name}' wurde zu Favoriten hinzugefügt"
+  unmarked_favorite: "'%{name}' wurde von Favoriten entfernt"
 
   document:
     star: "Favorit"
@@ -184,6 +184,9 @@ de:
     doc_types: "Gilt für Dokumente des Typs"
     delete: "Suchvorlage löschen"
     edit: "Suchvorlage bearbeiten"
+
+  mailer:
+    welcome: "Willkommen auf tas10box"
 
   data_files:
     uploaded: "'%{name}' wurde erfolgreich auf den Server hochgeladen und mit '%{label}' verknüpft"
