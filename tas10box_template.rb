@@ -35,8 +35,6 @@ run 'bundle install'
 remove_file 'public/javascripts/rails.js' # jquery-rails replaces this
 generate 'jquery:install --ui'
 generate 'rspec:install'
-generate 'mongoid:config'
-
 
 #inject_into_file 'spec/spec_helper.rb', "\nrequire 'factory_girl'", :after => "require 'rspec/rails'"
 inject_into_file 'config/application.rb', :after => "config.filter_parameters += [:password]" do
@@ -69,6 +67,58 @@ create_file 'config/initializers/tas10_plugin_setup.rb' do
   eos
 end
 
+create_file 'config/mongoid.yml' do
+  <<-eos
+development:
+  sessions:
+    default:
+      database: #{app_name}_development
+      hosts:
+        - localhost:27017
+      options:
+        safe: false
+        consistency: :strong
+  options:
+    allow_dynamic_fields: false
+    include_type_for_serialization: true
+    scope_overwrite_exception: true
+test:
+  sessions:
+    default:
+      database: #{app_name}_test
+      hosts:
+        - localhost:27017
+      options:
+        consistency: :strong
+production:
+  sessions:
+    default:
+      database: #{app_name}_production
+      hosts:
+        - localhost:27017
+      options:
+        safe: false
+        consistency: :strong
+  options:
+    allow_dynamic_fields: false
+    identity_map_enabled: true
+    include_root_in_json: false
+    include_type_for_serialization: true
+    scope_overwrite_exception: true
+    raise_not_found_error: false
+  eos
+end
+
+create_file 'config/tas10box.yml' do
+  <<-eos
+
+site:
+  name: '#{app_name}'
+  domain: 'localhost.loc'
+  
+  eos
+end
+
 create_file 'config/i18n-js.yml' do
   <<-eos
   
@@ -88,7 +138,7 @@ append_file 'config/initializers/backtrace_silencers.rb' do
   eos
 end
 
-route "map.root :controller => :dashboard"
+route "root :to => 'Dashboard#index'"
 
 # clean up rails defaults
 remove_file 'public/index.html'
@@ -101,6 +151,8 @@ run "echo 'datastore' >> .gitignore"
 git :init
 git :add => "."
 git :commit => "-a -m 'create initial application'"
+
+run 'rake tas10box:setup'
 
 say <<-eos
   ============================================================================
