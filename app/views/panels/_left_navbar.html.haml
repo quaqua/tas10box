@@ -7,7 +7,7 @@
     - Tas10box.plugins.each do |plugin|
       - if plugin.class.name == 'Tas10box::NavBarPlugin'
 
-        %span.navbar-button.tas10-icon24.live-tipsy-w.float-left{ :id => "button_#{ plugin.name }", :class => "tas10-icon-#{plugin.name.singularize}", :"original-title" => t( "#{plugin.name}.title"), :"data-click-url" => (plugin.click_action ? plugin.click_action : nil), :"data-dblclk-url" => (plugin.double_click_action ? plugin.double_click_action : nil) }
+        %span.navbar-button.tas10-icon24.live-tipsy-w.float-left{ :id => "button_#{ plugin.name }", :class => "tas10-icon-#{plugin.name.singularize}", :"original-title" => t( "#{plugin.name}.title"), :"data-click-url" => (plugin.click_action ? plugin.click_action : nil), :"data-dblclk-url" => (plugin.double_click_action ? plugin.double_click_action : nil), :"data-skip-navbar" => (plugin.skip_navbar ? "true" : nil) }
 
     %span.separator.navbar-button
 
@@ -25,6 +25,7 @@
         - Tas10box.plugins.each do |plugin|
 
           - if plugin.class.name.match(/NavBarPlugin|Application/)
+            - next if plugin.skip_navbar
 
             .navtab{ :id => "tab_#{ plugin.name }" }
 

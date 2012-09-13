@@ -1,7 +1,4 @@
 .browser-actions.ui-helper-clearfix
-  %a.multi.single.default.new-item.live-tipsy{ :"original-title" => t( 'new' ), :"data-type" => (defined?(type) ? type : 'label' ), :"data-type-template" => (defined?(template) ? template : nil) }
-    %span.ui-icon.ui-icon-plusthick
-  %span.spacer
   %a.disabled.multi.single.default.cut.live-tipsy{ :"original-title" => t( 'cut' )}
     %span.ui-icon.ui-icon-scissors
   %a.disabled.multi.single.default.copy.live-tipsy{ :"original-title" => t( 'copy' )}
@@ -44,3 +41,5 @@
         %h3= t( 'sort' )
 
         %select.tas10-select{ :name => 'sort' }
+
+  %input.new-item{ :type => "hidden", :"data-type" => (defined?(type) ? type : 'label' ), :"data-type-template" => (defined?(template) ? template : nil) }

@@ -4,8 +4,7 @@ class Tas10boxController < ActionController::Base
   protect_from_forgery
   layout 'tas10box'
 
-  before_filter :set_locale,
-                :detect_mobile_device
+  before_filter :set_locale
 
   def set_locale
     return if session[:locale] and !params.has_key?(:locale)

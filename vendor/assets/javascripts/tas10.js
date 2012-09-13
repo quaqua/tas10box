@@ -174,6 +174,11 @@ tas10['shareDialog'] = function tas10ShareDialog(id){
 
 tas10['dialog'] = function tas10Dialog( action, text, callback ){
 
+  if( typeof(text) === 'object' ){
+    title = text.title;
+    text = text.content || text.url;
+  }
+
   if( action === 'close' ){
     $('#tas10-overlay').hide();
     $('#tas10-dialog').hide().html('');
@@ -182,13 +187,8 @@ tas10['dialog'] = function tas10Dialog( action, text, callback ){
 
   if( action === 'load' ){
     $('#tas10-dialog').load( text, function( htmldata ){
-      tas10.dialog( 'new', htmldata, callback );
+      tas10.dialog( 'new', { title: title, content: htmldata }, callback );
     });
-  }
-
-  if( typeof(text) === 'object' ){
-    title = text.title;
-    text = text.content;
   }
 
   $('#tas10-overlay').show();

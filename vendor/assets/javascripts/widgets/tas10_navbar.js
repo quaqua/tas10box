@@ -40,13 +40,16 @@ $( function(){
 
 	$('#tas10-navbar > .navbar-button').live('click', function clickButtonbarButton(){
 
+		if( $(this).attr('data-click-url') ){
+			$.getScript( $(this).attr('data-click-url') );
+		}
+		
+		if( $(this).attr('data-skip-navbar') )
+			return;
+
 		if( $(this).hasClass('current') && $(this).attr('data-dblclk-url') ){
 			$.getScript( $(this).attr('data-dblclk-url') );
 			return;
-		}
-
-		if( $(this).attr('data-click-url') ){
-			$.getScript( $(this).attr('data-click-url') );
 		}
 
 		if( $(this).hasClass('current') )
@@ -65,6 +68,6 @@ $( function(){
 	})
 
 	if( $('#tas10-navbar').length )
-		tas10.navbar( 'update', $('#tas10-navbar > .navbar-button:first') );
+		tas10.navbar( 'update', $($('#tas10-navbar > .navbar-button')[1]) );
 
 });

@@ -122,6 +122,8 @@ de:
     invited_and_shared: "'Person '%{user_name}' wurde ins System eingeladen und '%{doc_name}' mit Rechten '%{privileges}' geteilt."
     invited_but_sharing_failed: "'Person '%{user_name}' wurde ins System eingeladen, aber beim teilen des Dokuments '%{doc_name}' ist leider ein Fehler aufgetreten (%{reason})"
     sharing_failed: "'%{name}' konnte nicht mit Person '%{user}' geteilt werden (%{reason})"
+  new_dialog:
+    title: "Neues Dokument..."
 
   comments:
     title: "Kommentare"

@@ -2,7 +2,7 @@ module Tas10box
 
   class Plugin
 
-    attr_accessor :name, :creates, :label_templates, :query_script_type, :button_callback
+    attr_accessor :name, :creates, :label_templates, :query_script_type, :button_callback, :skip_navbar
 
     def initialize( attrs )
       if attrs.is_a?( Hash )
