@@ -40,11 +40,11 @@ class DocumentsController < Tas10boxController
       if @doc.update_attributes( params[:tas10_document] )
         if params[:tas10_document].size == 1 && params[:tas10_document][:starred]
           if @doc.starred?
-            Tas10::AuditLog.create!( :user => current_user, :document => @doc, :action => 'audit.marked_favorit' )
-            flash[:notice] = t('dmarked_favorit', :name => @doc.name)
+            Tas10::AuditLog.create!( :user => current_user, :document => @doc, :action => 'audit.marked_favorite' )
+            flash[:notice] = t('dmarked_favorite', :name => @doc.name)
           else
-            Tas10::AuditLog.create!( :user => current_user, :document => @doc, :action => 'audit.unmarked_favorit' )
-            flash[:notice] = t('unmarked_favorit', :name => @doc.name)
+            Tas10::AuditLog.create!( :user => current_user, :document => @doc, :action => 'audit.unmarked_favorite' )
+            flash[:notice] = t('unmarked_favorite', :name => @doc.name)
           end
         else
           @doc.skip_audit = nil

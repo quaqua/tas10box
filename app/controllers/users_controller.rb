@@ -62,10 +62,10 @@ class UsersController < Tas10boxController
   # ?size=50
   #
   def picture_of
-    #user = get_user_by_id
-    filename = File::join Tas10box.defaults[:datastore], "users", params[:id]
     size = params[:size] || "50"
-    use_filename = "picture_of_#{params[:id]}_#{size}x#{size}.png"
+    filename = File::join( Tas10box::defaults[:datastore], 'userpics', params[:id], "thumb_#{size}x#{size}.png" )
+    use_filename = "userpic_#{params[:id]}_#{size}x#{size}.png"
+    puts "looking up #{filename}"
     unless File::exists? filename
       filename = File::join( Tas10box::root, "/vendor/assets/images/nopic_#{size}x#{size}.png" )
       use_filename = "default_picture_#{size}x#{size}.png"
@@ -74,6 +74,33 @@ class UsersController < Tas10boxController
               :type => "image/png",
               :filename => use_filename,
               :disposition => 'inline' )
+  end
+
+  # upload a new picture
+  #
+  # [POST]
+  #
+  # via ajax qq uploader
+  def picture
+    @user = get_user_by_id
+    if params[:qqfile]
+      require 'fileutils'
+      ext = File::extname params[:qqfile]
+      name = File::basename params[:qqfile]
+      if @user.save_picture_to_datastore( request.body )
+        if @user.id == current_user.id
+          Tas10::AuditLog.create!( :user => current_user, :action => 'audit.changed_profile_pic' )
+          flash[:notice] = t('user.mypic_uploaded')
+        else
+          flash[:notice] = t('user.pic_uploaded', :name => @user.fullname_or_name)
+        end
+      else
+        flash[:error] = t('user.pic_upload_failed')
+      end
+    else
+      flash[:error] = 'something terribly went wrong!'
+    end
+    render :json => { :flash => { :notice => [flash[:notice]], :error => [flash[:error]] } }.to_json
   end
 
   # returns all known users for this

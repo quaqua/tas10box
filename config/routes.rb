@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get :groups
     end
     member do
+      post :picture
       get :picture_of
       get :known
       get :confirm

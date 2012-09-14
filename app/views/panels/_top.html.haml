@@ -1,7 +1,8 @@
 #tas10-top-panel
 
   #account-info{ :"data-id" => current_user.id }
-    %img.userpic.x30.float-right{ :class => "user_#{current_user.id}_pic32.userpic", :src => "#{picture_of_user_path( current_user )}?size=30" }
+    %a.userpic.x30.float-right{ :href => user_path(current_user), :"data-remote" => true }
+      %img.userpic.x30.float-right{ :class => "userpic-#{current_user.id}", :src => "#{picture_of_user_path( current_user )}?size=30" }
     %a.live-tipsy.logout{ :href => logout_path, :"original-title" => t('logout') }
       %span.ui-icon.ui-icon-power.float-right
     %a.live-tipsy.username{ :href => user_path(current_user), :"data-remote" => true, :"original-title" => t('user.click_to_edit_profile') }

@@ -77,6 +77,26 @@ body
 .user-container
   .userpic
     margin: 10px
+    position: relative
+    .overlay
+      position: absolute
+      top: 0
+      left: 0
+    &.x100
+      .overlay
+        width: 100px
+        height: 100px
+        background-color: rgba(0,0,0,0.8)
+        opacity: 0
+    &:hover
+      .overlay
+        opacity: 1
+    .upload-picture
+      position: absolute
+      top: 5px
+      right: 5px
+      cursor: pointer
+
   .next-to-picture
     margin-left: 140px
 

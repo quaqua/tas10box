@@ -2,7 +2,11 @@
   %a.tas10-button.float-right{ :href => edit_user_path(@user), :"data-remote" => true }
     =t('edit')
 
-  %img.userpic.float-left.x_100{ :src => "#{picture_of_user_path(@user)}/?size=100" }
+  .userpic.float-left.x100
+    %img.x100{ :src => "#{picture_of_user_path(@user)}/?size=100", :class => "userpic-#{@user.id}" }
+    .overlay
+      .upload-picture{ :id => "upload-picture-#{@user.id}" }
+        .tas10-icon24.white.tas10-icon-upload.float-right
 
   .next-to-picture
     %h1
@@ -41,4 +45,4 @@
       %br
       - get_known_users(@user).each do |user|
         -if user.id != current_user.id && user.id != Tas10::User.anybody_id
-          %a{ :href => user_path(user), :"data-remote" => true }= image_tag( picture_of_user_path( user ), :class => "userpic x50 live-tipsy", :"original-title" => user.fullname_or_name)
+          %a{ :href => user_path(user), :"data-remote" => true }= image_tag( picture_of_user_path( user ), :class => "userpic x50 live-tipsy userpic-#{user.id}", :"original-title" => user.fullname_or_name)

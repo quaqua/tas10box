@@ -1,7 +1,7 @@
 <script id="history-item-template" type="text/x-jsrender">
   <li data-id="{{:id}}" class="history-item">
 
-    <a href="{{:user_url}}" data-remote="true" class="user live-tipsy float-left userpic x30" original-title="{{:user_name}}"><img src="{{:user_url}}/picture_of?size=30" class="float-left" /></a>
+    <a href="{{:user_url}}" data-remote="true" class="user live-tipsy float-left userpic x30" original-title="{{:user_name}}"><img src="{{:user_url}}/picture_of?size=30" class="float-left x30 userpic-{{:user_id}}" /></a>
 
     <div class="history-content">
       {{:message}}<br />

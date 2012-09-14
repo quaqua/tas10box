@@ -1,7 +1,10 @@
-tas10.dialog( 'load', {title: I18n.t('new'), url: '/documents/new'}, function(){
-  var options = {
-    dataType: $('.tab-content:visible .new-item').attr('data-type') || 'Label',
-    dataTypeTemplate: $('.tab-content:visible .new-item').attr('data-type-template') || null
-  };
-  tas10.setupNewDialog( options );
-});
+if( $('.tab-content:visible .new-item').attr('data-url') )
+  $.getScript( $('.tab-content:visible .new-item').attr('data-url') )
+else
+  tas10.dialog( 'load', {title: I18n.t('new'), url: '/documents/new'}, function(){
+    var options = {
+      dataType: $('.tab-content:visible .new-item').attr('data-type') || 'Label',
+      dataTypeTemplate: $('.tab-content:visible .new-item').attr('data-type-template') || null
+    };
+    tas10.setupNewDialog( options );
+  });

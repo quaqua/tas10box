@@ -6,20 +6,27 @@ module Tas10box
       if blob.content_type.downcase.match(/png|jpg|jpeg|gif/)
         thumb_sizes = ['16x16','50x50','100x100'] + (Tas10box::defaults[:post_processor][:default_thumb_sizes] || [])
         thumb_sizes.each do |thumbsize|
-          create_thumb(blob, thumbsize)
+          create_thumb(blob.filename, thumbsize)
         end
+      end
+    end
+
+    def self.userpic( filename )
+      thumb_sizes = ['16x16','30x30', '50x50','100x100']
+      thumb_sizes.each do |thumbsize|
+        create_thumb(filename, thumbsize)
       end
     end
 
     private
 
-    def self.create_thumb(blob, thumbsize)
+    def self.create_thumb(filename, thumbsize)
       x, y = thumbsize.split('x').map{ |ts| ts.to_i }
-      return unless File::exists?( blob.filename )
-      img = Magick::Image.read( blob.filename ).first
+      return unless File::exists?( filename )
+      img = Magick::Image.read( filename ).first
       img.format = Tas10box::defaults[:post_processor][:image_format] || "PNG"
       img.crop_resized!(x, y, Magick::CenterGravity)
-      thumbname = "#{File::dirname(blob.filename)}/thumb_#{thumbsize}.#{Tas10box::defaults[:post_processor][:image_format] || 'png'}" #{File::extname(blob.name)}"
+      thumbname = "#{File::dirname(filename)}/thumb_#{thumbsize}.#{Tas10box::defaults[:post_processor][:image_format] || 'png'}"
       img.write(thumbname)
     end
 

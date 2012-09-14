@@ -122,9 +122,9 @@ tas10['notify'] = function tas10Notify( msg, error ){
 }
 
 tas10['flash'] = function tas10Flash( flash ){
-  if( flash.notice && (flash.notice instanceof Array) && flash.notice.length > 0 && flash.notice[0].length > 0 )
+  if( flash.notice && (flash.notice instanceof Array) && flash.notice[0] )
     tas10.notify(flash.notice[flash.notice.length-1].replace(/\'/,"\'"));
-  if( flash.error && (flash.error instanceof Array) && flash.error.length > 0 && flash.error[0].length > 0 )
+  if( flash.error && (flash.error instanceof Array) && flash.error[0] )
     tas10.notify(flash.error[flash.error.length-1].replace(/\'/,"\'"),true);
 }
 

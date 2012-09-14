@@ -154,6 +154,9 @@ de:
     added_to_group_and_invited: "'%{name}' wurde zur Gruppe '%{group}' hinzugefügt und ins System eingeladen"
     remove_from_group: "'%{name}' wirklich von Gruppe entfernen?"
     removed_from_group: "'%{name}' erfolgreich von Gruppe '%{group}' entfernt"
+    pic_uploaded: "Bild für %{name} wurde erfolgreich geändert"
+    mypic_uploaded: "Du hast dein Profilbild aktualisiert!"
+    pic_upload_failed: "Dein Bild konnte nicht gespeichert und verarbeitet werden"
 
   group:
     name: "Gruppenname"
@@ -176,6 +179,7 @@ de:
     locked: "hat '%{name}' für die Öffentlichkeit gesperrt"
     marked_favorite: "hat '%{name}' zu Favoriten hinzugefügt"
     unmarked_favorite: "hat '%{name}' von Favoriten entfernt"
+    changed_profile_pic: "hat sein Profilbild geändert"
 
   query_scripts:
     title: "Suchvorlage"

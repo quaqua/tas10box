@@ -24,10 +24,20 @@ class DataFilesController < Tas10boxController
 
   def show
     if @data_file = get_user_or_id_data_file
-      send_file(@data_file.filename,
-                :type => "image/#{Tas10box::defaults[:post_processor][:image_format] || 'png'}",
-                :filename => @data_file.name,
-                :disposition => 'inline')
+      puts 'HAVING'
+      puts @data_file.content_type
+      if ['.jpg','.jpeg','.png','.gif'].include?( @data_file.content_type.downcase )
+        puts ""
+        puts "IMAGE!!!!!!!!!"
+        puts @data_file.content_type.inspect
+        send_file(@data_file.filename,
+                  :filename => @data_file.name,
+                  :disposition => 'inline')
+      else
+        send_file(@data_file.filename,
+                  :filename => @data_file.name,
+                  :disposition => 'attachment')
+      end
     else
       raise Error404
     end

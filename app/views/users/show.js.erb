@@ -4,7 +4,34 @@ $('#tas10-main-container').tas10Container( 'append', {
   title: '<%= @user.name %>', 
   id: '_<%= @user.id %>', 
   content: '<%= escape_javascript render('show') %>'
-  }, function( container ){  }
-);
+  }, function( container ){ 
+
+    var fileUploader = new qq.FileUploader({
+      // pass the dom node (ex. $(selector)[0] for jQuery users)
+      element: $('#upload-picture-<%= @user.id %>')[0],
+      // path to server-side upload script
+      action: '/users/<%= @user.id %>/picture',
+      allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'JPG', 'JPEG', 'PNG', 'GIF'],
+      messages: {
+        typeError: I18n.t('data_files.msg.invalid_ext') + ' ( ' + I18n.t('data_files.msg.allowed') + ': {extensions})',
+        sizeError: I18n.t('data_files.msg.size_error') + ' ({sizeLimit})',
+        minSizeError: I18n.t('data_files.msg.min_size_error') + '({minSizeLimit})',
+        emptyError: I18n.t('data_files.msg.empty_error') + '({file})',
+        onLeave: I18n.t('data_files.msg.upload_still_in_progress')
+      },
+      onSubmit: function(id, fileName){
+        var p = { "authenticity_token": $('input[name=authenticity_token]:first').val() };
+        fileUploader.setParams(p);
+      },
+      onComplete: function(id, fileName, data){
+        $('.qq-upload-list').hide();
+        $('.userpic-<%= @user.id %>.x30').attr('src', '/users/<%= @user.id %>/picture_of?size=30&<%= Time.now.to_f %>');
+        $('.userpic-<%= @user.id %>.x50').attr('src','/users/<%= @user.id %>/picture_of?size=50&<%= Time.now.to_f %>');
+        $('.userpic-<%= @user.id %>.x100').attr('src','/users/<%= @user.id %>/picture_of?size=100&<%= Time.now.to_f %>');
+        tas10.flash( data.flash );
+      }
+    });
+
+});
 <% end %>
 <%= render "common/process_flash" %>

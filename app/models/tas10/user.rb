@@ -81,7 +81,25 @@ class Tas10::User
   def anybody?
     id == self.class.anybody_id
   end
-  
+
+  def photo_datastore_path
+    ::File::join( Tas10box::defaults[:datastore], 'userpics', id.to_s )
+  end
+
+  # returns full filename
+  def photo_datastore_filename
+    ::File::join( photo_datastore_path, id.to_s )
+  end
+
+  def save_picture_to_datastore( file )
+    require 'fileutils'
+    file.rewind
+    FileUtils::mkdir_p(photo_datastore_path) unless File::exists?(photo_datastore_path)
+    File::open(photo_datastore_filename, "w+b") { |f| f.write(file.read) }
+    Tas10box::PostProcessImage.userpic( photo_datastore_filename )
+    true
+  end
+
   private
 
   def encrypt( pass, salt )

@@ -78,7 +78,6 @@ p
     margin-top: 0
 
 .userpic
-  opacity: 0.8
   border: 1px solid #ddd
   .x30
     width: 30px
@@ -86,7 +85,7 @@ p
   .x50
     width: 50px
     height: 50px
-  .x10
+  .x100
     width: 100px
     height: 100px
 
@@ -152,7 +151,7 @@ fieldset
   #account-info
     float: right
     min-width: 300px
-    a
+    a.username
       color: #333
       font-size: 12px
       text-decoration: none
@@ -168,6 +167,8 @@ fieldset
       opacity: 0.4
       padding: 6px
       margin: 1px 5px 0 0
+    .userpic
+      margin-top: -1px
 
 #tas10-logo
   cursor: pointer
@@ -601,3 +602,6 @@ button.ui-button.ui-widget
       font-weight: 900
       &:hover
         text-decoration: underline
+
+#tas10-history
+  overflow: auto
