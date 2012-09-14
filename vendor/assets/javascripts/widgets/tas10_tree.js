@@ -10,6 +10,24 @@ tas10.getTreeTemplate = function getTreeTemplate( doc ){
 		return '#default-tree-item-template';
 };
 
+tas10.updateTreeSelection = function updateTreeSelection( actionContainer ){
+
+	if( $(actionContainer).find('.selected-item').length > 1 ){
+		$(actionContainer).find('.browser-actions .single').addClass('disabled');
+		$(actionContainer).find('.browser-actions .multi').removeClass('disabled');
+	} else if( $(actionContainer).find('.selected-item').length === 1 ){
+		$(actionContainer).find('.browser-actions .single').removeClass('disabled');
+		$(actionContainer).find('.browser-actions .multi').each(function(){
+			if( !$(this).hasClass('single') )
+				$(this).addClass('disabled');
+		})
+	} else
+		$(actionContainer).find('.browser-actions a.single, .browser-actions a.multi').addClass('disabled');
+	if( typeof(tas10.clipboardStore) === 'undefined' || tas10.clipboardStore.length == 0 )
+		$(actionContainer).find('.paste').addClass('disabled');
+
+};
+
 (function( jQuery ){
 
 	var loadTreeItemChildren = function loadTreeItemChildren( handle, li, id, callback ){
@@ -50,7 +68,7 @@ tas10.getTreeTemplate = function getTreeTemplate( doc ){
 		})
 
 		// item functions
-		$(treeItem).find('li').live('click', function(e){
+		$(treeItem).find('li').die('click').live('click', function(e){
 
 			var self = this;
 			var actionContainer = $(this).closest('.action-container');
@@ -70,25 +88,24 @@ tas10.getTreeTemplate = function getTreeTemplate( doc ){
 				$(this).addClass('selected-item');
 				tas10.setPath(tas10.getPath(this));
 			}
-
-			if( $(actionContainer).find('.selected-item').length > 1 ){
-				$(actionContainer).find('.browser-actions .single').addClass('disabled');
-				$(actionContainer).find('.browser-actions .multi').removeClass('disabled');
-			} else if( $(actionContainer).find('.selected-item').length === 1 ){
-				$(actionContainer).find('.browser-actions .single').removeClass('disabled');
-				$(actionContainer).find('.browser-actions .multi').each(function(){
-					if( !$(this).hasClass('single') )
-						$(this).addClass('disabled');
-				})
-			} else
-				$(actionContainer).find('.browser-actions a.single, .browser-actions a.multi').addClass('disabled');
-			if( typeof(tas10.clipboardStore) === 'undefined' || tas10.clipboardStore.length == 0 )
-				$(actionContainer).find('.paste').addClass('disabled');
+			tas10.updateTreeSelection( actionContainer );
 
 			if( e.target.nodeName !== 'A' )
 				e.stopPropagation();
 
-		});
+		}).find('a').die('click').live('click', function(e){
+      var li = $(this).closest('li')
+        , actionContainer = $(this).closest('.action-container');
+      if( $(li).hasClass('selected-item') ){
+        $(li).removeClass('selected-item')
+        tas10.setPath();
+        tas10.updateTreeSelection( actionContainer );
+        return false;
+      }
+      $(li).addClass('selected-item');
+      tas10.setPath(tas10.getPath(li));
+      tas10.updateTreeSelection( actionContainer );
+    });
 
 	};
 

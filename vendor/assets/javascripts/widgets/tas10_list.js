@@ -6,26 +6,22 @@ tas10.getListTemplate = function getListTemplate( doc ){
     return '#default-list-item-template';
 };
 
+tas10.updateListSelection = function updateListSelection( actionContainer ){
+    $(actionContainer).find('.browser-actions a.disableable').addClass('disabled');
+    if( $(actionContainer).find('.tas10-list').find('.tas10-checkbox.checked').length > 1 )
+      $(actionContainer).find('.browser-actions a.multi').removeClass('disabled');
+    else if( $(actionContainer).find('.tas10-list').find('.tas10-checkbox.checked').length === 1 )
+      $(actionContainer).find('.browser-actions a.single').removeClass('disabled');
+    if( typeof(tas10.clipboardStore) === 'undefined' || (tas10.clipboardStore && tas10.clipboardStore.length == 0 ) )
+      $(actionContainer).find('.browser-actions a.paste').addClass('disabled');
+}
+
 
 $(function(){
 
-  $('.tas10-list-h .tas10-checkbox').live('click', function(e){
-    var items = $(this).closest('.tas10-list-wrapper').find('li.list-item');
-    if( $(this).hasClass('checked') )
-      $(items).addClass('selected').find('.tas10-checkbox').addClass('checked');
-    else
-      $(items).removeClass('selected').find('.tas10-checkbox').removeClass('checked');
-  });
-
   $('.tas10-list .tas10-checkbox').live('click', function(e){
     $(this).closest('li').toggleClass('selected').toggleClass('selected-item');
-    $(this).closest('.tas10-list-wrapper').find('.browser-actions a').addClass('disabled');
-    if( $(this).closest('.tas10-list').find('.tas10-checkbox.checked').length > 1 )
-      $(this).closest('.tas10-list-wrapper').find('.browser-actions a.multi').removeClass('disabled');
-    else if( $(this).closest('.tas10-list').find('.tas10-checkbox.checked').length === 1 )
-      $(this).closest('.tas10-list-wrapper').find('.browser-actions a.single').removeClass('disabled');
-    if( typeof(tas10.clipboardStore) === 'undefined' || (tas10.clipboardStore && tas10.clipboardStore.length == 0 ) )
-      $(this).closest('.tas10-list-wrapper').find('.browser-actions a.paste').addClass('disabled');
+    tas10.updateListSelection( $(this).closest('.action-container') );
   });
 
   $('.tas10-list li').liveDraggable({

@@ -1,5 +1,5 @@
 <script id="acl-form-template" type="text/x-jsrender">
-  <form action="{{:action}}" data-remote="true" method="post" class="tas10-acl-form">
+  <form action="{{:action}}" data-remote="true" method="post" data-parent-elem-id="{{:parentElemId}}" class="tas10-acl-form">
     {{if showTitle}}
     <p class="desc"><%= t('acl.share_selected_items') %></p>
     {{/if}}
@@ -15,6 +15,7 @@
     <a href="#" class="tas10-acl-priv del">d</a>
     <input type="hidden" name="privileges" value="rw" />
     <input type="hidden" name="email" />
+    <input type="hidden" name="doc_ids" />
     <select class="select-user-combobox" name="user_id" />
   </form>
 </script>

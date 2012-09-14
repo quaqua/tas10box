@@ -1,17 +1,20 @@
 .browser-actions.ui-helper-clearfix
-  %a.disabled.multi.single.default.cut.live-tipsy{ :"original-title" => t( 'cut' )}
+  -if defined?(show_checkbox)
+    %a.multi.single.default.select-all.live-tipsy{ :"original-title" => t( 'select_all' )}
+      %span.tas10-icon16.tas10-icon-checkbox
+  %a.disableable.disabled.multi.single.default.cut.live-tipsy{ :"original-title" => t( 'cut' )}
     %span.ui-icon.ui-icon-scissors
-  %a.disabled.multi.single.default.copy.live-tipsy{ :"original-title" => t( 'copy' )}
+  %a.disableable.disabled.multi.single.default.copy.live-tipsy{ :"original-title" => t( 'copy' )}
     %span.ui-icon.ui-icon-copy
-  %a.disabled.disabled.default.paste.live-tipsy{ :"original-title" => t( 'paste' )}
+  %a.disableable.disabled.disabled.default.paste.live-tipsy{ :"original-title" => t( 'paste' )}
     %span.ui-icon.ui-icon-clipboard
-  %a.disabled.multi.single.default.info.live-tipsy{ :"original-title" => t( 'info' )}
+  %a.disableable.disabled.multi.single.default.info.live-tipsy{ :"original-title" => t( 'info' )}
     %span.ui-icon.ui-icon-lightbulb
-  %a.disabled.multi.single.default.share.live-tipsy{ :"original-title" => t( 'share' )}
+  %a.disableable.disabled.multi.single.default.share.live-tipsy{ :"original-title" => t( 'share' )}
     %span.ui-icon.ui-icon-person
-  %a.disabled.multi.single.default.edit.live-tipsy{ :"original-title" => t( 'edit' )}
+  %a.disableable.disabled.multi.single.default.edit.live-tipsy{ :"original-title" => t( 'edit' )}
     %span.ui-icon.ui-icon-pencil
-  %a.disabled.multi.single.default.delete.live-tipsy{ :"original-title" => t( 'delete' )}
+  %a.disableable.disabled.multi.single.default.delete.live-tipsy{ :"original-title" => t( 'delete' )}
     %span.ui-icon.ui-icon-trash
   %span.spacer
   - if defined?(additional_icons) && additional_icons

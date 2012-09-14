@@ -3,7 +3,8 @@
  */
 
 tas10['showAclMiniDialog'] = function showAclMiniDialog( elem, action, showTitle ){
-  var form = $($('#acl-form-template').render({ action: action, showTitle: (showTitle || false) }));
+  var form = $($('#acl-form-template').render({ action: action, 
+    parentElemId: $(elem).closest('.action-container').attr('id'), showTitle: (showTitle || false) }));
   $('body').append(form);
   $(form).css({top: $(elem).offset().top, left: $(elem).offset().left}).show();
   if( ! $(form).find('.ui-autocomplete-input').length ){
@@ -13,10 +14,14 @@ tas10['showAclMiniDialog'] = function showAclMiniDialog( elem, action, showTitle
       emptyDataCallback: function(select, val){
         var validEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if( validEmail.test( val) ){
+          var docIds = [];
+          $(elem).closest('.action-container').find('.selected-item').each( function(){
+            docIds.push( $(this).attr('data-id') );
+          });
           $(select).closest('.tas10-acl-form').find('.create-button').show();
           var form = $(select).closest('.tas10-acl-form');
+          $(form).find('input[name=doc_ids]').val( docIds.join(',') );
           $(form).find('input[name=email]').val( $(form).find('.ui-autocomplete-input').val() );
-          console.log('setting data', (form).find('.ui-autocomplete-input').val())
         } else
           $(select).closest('.tas10-acl-form').find('.create-button').hide();
       },

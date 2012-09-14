@@ -18,6 +18,24 @@ $(function(){
 		});
 	});
 
+	$('.browser-actions .select-all').live('click', function(){
+		if( $(this).hasClass('disabled') )
+			return;
+		var items = $(this).closest('.action-container').find('li.list-item');
+		if( $(this).find('.tas10-icon-checkbox').hasClass('checked') )
+      $(items).each(function(){
+      	$(this).removeClass('selected').removeClass('selected-item');
+      	$(this).find('.tas10-checkbox').removeClass('checked');
+      });
+    else
+      $(items).each(function(){
+      	$(this).addClass('selected').addClass('selected-item');
+      	$(this).find('.tas10-checkbox').addClass('checked');
+      });
+   	$(this).find('.tas10-icon-checkbox').toggleClass('checked');
+   	tas10.updateListSelection( $(this).closest('.action-container') );
+	});
+
 	$('.browser-actions .share').live('click', function(){
 		if( $(this).hasClass('disabled') )
 			return;
@@ -50,7 +68,6 @@ $(function(){
 				$(li).attr('data-move', $(li).parent().parent().data('id'));
 	    else if( $(li).closest('.tab-content').data('id') )
 	    	$(li).attr('data-move', $(li).closest('.tab-content').data('id') )
-	    console.log('move', $(li).attr('data-move') );
 	    tas10.clipboard('push', li);
 		});
 	  
@@ -79,7 +96,6 @@ $(function(){
 			if( $(elem).length )
 				labelId = $(elem).data('id');
 		}
-		console.log('elem id', labelId);
 		for( var i in cS )
 			tas10.moveCopyElem( labelId, cS[i] );
 

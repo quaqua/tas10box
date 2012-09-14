@@ -1,5 +1,5 @@
-.tas10-list-wrapper.action-container
+.tas10-list-wrapper.action-container{ :id => "doc-container-#{@doc ? @doc.id : Time.now.to_f}" }
   .browser-actions-bg
-    = render :partial => "common/browser_actions", :locals => { :additional_icons => (defined?(additional_icons) ? additional_icons : []), :type => (defined?(type) ? type : nil), :template => (defined?(template) ? template : nil) }
+    = render :partial => "common/browser_actions", :locals => { :additional_icons => (defined?(additional_icons) ? additional_icons : []), :type => (defined?(type) ? type : nil), :show_checkbox => (defined?(show_checkbox) ? show_checkbox : nil), :template => (defined?(template) ? template : nil) }
 
   %ul.tas10-list{ :class => "tas10-list-#{@doc ? @doc.id : ''}", :"data-id" => (@doc ? @doc.id : '') }

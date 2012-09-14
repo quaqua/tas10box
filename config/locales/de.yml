@@ -28,6 +28,7 @@ de:
 
   new: "Neu"
   cut: "Ausschneiden"
+  select_all: "Alle markieren"
   copy: "Kopieren"
   paste: "Einfügen"
   info: "Info"
@@ -45,7 +46,7 @@ de:
   cancel: "Abbrechen"
   refresh: "Aktualisieren"
 
-  insufficient_rights: "Due besitzt nicht genügend Rechte auf '%{name}' um diese Aktion auszuführen"
+  insufficient_rights: "Du besitzt nicht genügend Rechte auf '%{name}' um diese Aktion auszuführen"
   not_found: "Das angeforderte Dokument wurde nicht gefunden"
   only_admin: "Nur Administratoren dürfen diese Aktion ausführen"
 

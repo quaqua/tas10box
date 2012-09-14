@@ -35,9 +35,11 @@ class UsersController < Tas10boxController
   # updates user's attributes
   #
   def update
-    if authenticated? && current_user
+    if renew_authentication
       @user = get_user_by_id
-      if @user.id != current_user.id || @user.admin?
+      puts "userid: #{@user.id} current: #{current_user.id}"
+      if @user.id == current_user.id || current_user.admin?
+        puts 'inside'
         unless params[:tas10_user][:password].blank?
           @user.password = params[:tas10_user][:password]
           @user.password_confirmation = params[:tas10_user][:password_confirmation]

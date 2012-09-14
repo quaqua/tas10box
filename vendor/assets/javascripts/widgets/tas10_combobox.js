@@ -73,16 +73,20 @@
           $(select).find('option[value='+ui.item.id+']').attr('selected', true);
           var form = $(select).closest('form')
             , formData = $(select).closest('form').serializeArray();
-          formData['doc_ids'] = [];
-          $('.selected-item').each( function(){
-            if( formData['doc_ids'].indexOf($(this).attr('data-id')) < 0 )
-              formData['doc_ids'].push($(this).attr('data-id'));
+          docIds = [];
+          parentElemId = $(form).attr('data-parent-elem-id');
+          $('#' + parentElemId).find('.selected-item').each( function(){
+            if( docIds.indexOf($(this).attr('data-id')) < 0 )
+              docIds.push($(this).attr('data-id'));
           })
+          formData.push( { name: 'doc_ids', value: docIds })
           if( self.options.submitOnSelect ){
             $(input).val('');
             $(select).find('option').remove();
             $.ajax({ url: $(form).attr('action'), data: formData, dataType: 'script', type: 'post', success: self.options.successCallback });
           }
+          if( self.options.onSubmit && typeof(self.options.onSubmit) === 'function' )
+            self.options.onSubmit();
         },
         search: function( event, ui ){
           //console.log('change', input.val(), select.children('option') )

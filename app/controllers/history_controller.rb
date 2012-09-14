@@ -29,7 +29,7 @@ class HistoryController < Tas10boxController
       :message => t( l.action, 
         :name => ( l.document_id ? 
           "<a href='#{document_path(l.document_id)}' data-remote='true'>#{l.document_name}</a>" :
-          nil ),
+          ( l.document_name ? l.document_name : nil ) ),
         :message => (l.additional_message ? l.additional_message : nil),
         :user => (l.user_name ?
           "<a href='#{user_path(l.user_id)}' data-remote='true'>#{l.user_name}</a>" : 
