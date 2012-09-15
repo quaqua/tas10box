@@ -80,18 +80,22 @@ class DocumentsController < Tas10boxController
 
   def sort
     succeeded = 0
-    params[:item].each_with_index do |id,i|
-      item = Tas10::Document.where(:id => id).first_with_user( current_user )
-      item.versionless do
-        if item.update_attributes( :pos => i )
-          succeeded += 1
+    if params[:item]
+      params[:item].each_with_index do |id,i|
+        item = Tas10::Document.where(:id => id).first_with_user( current_user )
+        item.versionless do
+          if item.update_attributes( :pos => i )
+            succeeded += 1
+          end
         end
       end
-    end
-    if succeeded == params[:item].size
-      flash[:notice] = t('document.order_saved')
+      if succeeded == params[:item].size
+        flash[:notice] = t('document.order_saved')
+      else
+        flash[:error] = t('document.ordering_failed')
+      end
     else
-      flash[:error] = t('document.ordering_failed')
+      flash[:error] = "Keine Elemente erhalten. Keine Sortierung gespeichert!"
     end
     render :template => "documents/update"
   end
