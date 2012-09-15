@@ -45,6 +45,8 @@ de:
   back: "Zurück"
   cancel: "Abbrechen"
   refresh: "Aktualisieren"
+  move_to: "Verschieben nach"
+  copy_to: "Kopieren nach"
 
   insufficient_rights: "Du besitzt nicht genügend Rechte auf '%{name}' um diese Aktion auszuführen"
   not_found: "Das angeforderte Dokument wurde nicht gefunden"
