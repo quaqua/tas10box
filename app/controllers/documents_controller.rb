@@ -148,9 +148,14 @@ class DocumentsController < Tas10boxController
       render :json => @docs.to_json
     else
       @docs = @docs.all_with_user( current_user )
-      @label_ids = @docs.inject([]){ |arr,doc| arr += doc.label_ids ; arr }
-      @query_scripts = QueryScript.all_with_user( current_user )
-      @labels = Tas10::Document.in(:id => @label_ids ).all_with_user( current_user )
+      respond_to do |format|
+        format.json{ render :json => @docs.to_json }
+        format.js do
+          @label_ids = @docs.inject([]){ |arr,doc| arr += doc.label_ids ; arr }
+          @query_scripts = QueryScript.all_with_user( current_user )
+          @labels = Tas10::Document.in(:id => @label_ids ).all_with_user( current_user )
+        end
+      end
     end
   end
 

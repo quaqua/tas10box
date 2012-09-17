@@ -84,8 +84,7 @@ $( function(){
     $(this).prev('.tas10-checkbox').toggleClass('checked');
   });
 
-
-  $('input.tas10-current-tag').val('');
+  $('.tas10-current-label').val('');
   $('#tas10-tab-container').tas10Container();
 
   function hideAjaxLoader(e){

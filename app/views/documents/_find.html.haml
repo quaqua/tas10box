@@ -10,7 +10,7 @@
         -@query_scripts.each do |script|
           %li.script-url{ :"data-url" => script.query, :"data-columns" => script.columns, :"data-id" => script.id }
 
-    = render :partial => "common/browser_actions"
+    = render :partial => "common/browser_actions", :locals => {:show_checkbox => true}
 
   .results-overview
     %span.desc

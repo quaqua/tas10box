@@ -1,3 +1,61 @@
-= Tas10box
+= tas10box
 
-This project rocks and uses MIT-LICENSE.
+tas10box is a content repository mapper using mongoid and hacking into rails with a beautiful graphical frontend. This is the base module of TASTENWERK's tools plattform.
+
+=== features
+
+ * integrated user access control (anybody, users, groups)
+ * authentication system (email confirmation, forgot password)
+ * version control (based on mongoid's versioning plugin)
+ * auditing (everything is logged and is shown)
+ * labeling system (similar to google docs) - content can be labeled with one or many other labels and will be shown in a directory like structure in any of those label (parents). The first label given will be used as conventional parent (e.g. when syncing with local file system)
+
+=== planned
+
+ * sync to local file system like dropbox or google drive
+
+
+== Installation
+
+To get a bootstrap with tas10box enabled installation, start a new project with
+
+  rails new -m https://raw.github.com/quaqua/tas10box/tas10box_template.rb
+
+To setup a default manager user and a group, run (inside the new rails app directory):
+
+  rake tas10box:setup
+
+You should see a feedback saying, group admin, user anybody, user manager have been created.
+
+Login at http://localhost:8080/login and try if you can create a plain label. If it worked, you are set.
+
+== Extending tas10box
+
+Either in your app folder or by creating a new rails engine, use the conventional rails app structure to
+define models, controllers and views and additionally setup your extension anywhere either in a config/initializers/tas10box_extensions.rb or anywhere else in your rails engine:
+
+=== Plugin setup
+
+  Tas10box.register_plugin ::Tas10box::ApplicationPlugin.new( :name => 'mymodel', 
+    :creates => true
+
+==== Options
+
+ [:name] - the name of the model which is expected in app/models (here: app/models/Mymodel)
+ [:creates] - can the user create new instances of this model and store them to the database (most of the time: true)
+
+=== Defining a model
+
+  class Mymodel < Tas10::Document
+    field :valid_till, :type => DateTime
+  end
+
+You don't have to add any field. The default attributes will be loaded by inheriting from Tas10::Document.
+
+==== Default attributes (relevant for the programmer)
+
+ * name
+ * pos
+
+Other attributes can be looked up in the API documentation
+Documentation will follow shortly. Meanwhile, you can compile your own api documatation by checkout tas10box and run rdoc

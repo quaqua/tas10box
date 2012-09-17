@@ -154,6 +154,10 @@
 		    }
 	    	$('#tab_'+containerId).effect('explode');
 	    	setTimeout(function(){ $('#tab_'+containerId).remove(); }, 500);
+	    },
+	    closeActiveTab: function(){
+				var activeTab = $(this).find('.tab.active');
+	    	$(this).tas10Container('remove', $(activeTab).attr('id').replace('tab_','') );
 	    }
 	  };
 

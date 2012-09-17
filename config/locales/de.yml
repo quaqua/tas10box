@@ -47,6 +47,7 @@ de:
   refresh: "Aktualisieren"
   move_to: "Verschieben nach"
   copy_to: "Kopieren nach"
+  template: "Vorlage"
 
   insufficient_rights: "Du besitzt nicht genügend Rechte auf '%{name}' um diese Aktion auszuführen"
   not_found: "Das angeforderte Dokument wurde nicht gefunden"

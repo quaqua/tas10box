@@ -1,7 +1,9 @@
 <%= render "common/create" %>
 <% if flash[:notice] %>
-  if( doc.template && doc.template !== 'none' ){
-    $('#tas10-' + doc.template + '-tree').tas10Tree( 'append', doc );
+  if( doc.template && doc.template !== '' && doc.template !== 'keine' && doc.template !== 'none' ){
+    $('#tas10-'+ doc.template.replace(/\//g,'-') +'-list')
+        .append( $('#' + doc.template.replace(/\//g,'-') + '-list-template').render( doc ) );
+    $('#tas10-' + doc.template.replace(/\//g,'-') + '-tree').tas10Tree( 'append', doc );
   } else {
     $('#tas10-browser-tree').tas10Tree( 'append', doc );
   }

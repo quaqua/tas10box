@@ -2,7 +2,7 @@ module Tas10boxHelper
 
   def get_tas10box_plugin_options( key, include_none=true )
     options = []
-    options << ['', t('none')] if include_none
+    options << [t('none'),''] if include_none
     Tas10box.plugins.each do |plugin|
       if plugin.label_templates
         plugin.label_templates.each do |template|
