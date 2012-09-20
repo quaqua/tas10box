@@ -105,6 +105,27 @@ tas10['setupNewDialog'] = function setupNewDialog( options ){
 
 }
 
+tas10.newDialog = {
+	getOptions: function(){ 
+    var dtype = $('.tab-content:visible .new-item').attr('data-type') || 'label';
+    var options = {
+      dataType: dtype,
+			labelId: null,
+      dataTypeName: I18n.t(dtype+'s.title'),
+      dataTypeTemplate: $('.tab-content:visible .new-item').attr('data-type-template') || null,
+      availableCreates: $('[data-tas10-creates]').map( function( item, el ){
+      	return {value: $(el).attr('data-tas10-creates'),
+      	 name: $(el).attr('title') }
+      }).get()
+    };
+
+		if( $('#tas10-find .path-item').length && $('#tas10-find .path-item:last').html().length > 2 ){
+			options.labelId = $('.tas10-current-label').val();
+			options.labelName = $('.path-item.item_'+options.labelId+'_title:first').text();
+		}
+		return options;
+  }
+}
 $(function(){
 
 	$('.new-item').live('click', function(){
@@ -117,5 +138,27 @@ $(function(){
 			tas10.setupNewDialog( options );
 		});
 	});
+
+  $('#button_new_dialog').popover({ content: function(){
+      setTimeout( function(){ 
+      	$('.popover').css('width', 500); 
+      	$('.popover input[type=text]:first').focus();
+      	$('.popover .dropdown-menu li').on('click', function(){
+      		$(this).closest('form').find('input[name=_type]').val( $(this).attr('data-name') );
+      		$(this).closest('form').find('.dataTypeName').text( $(this).text() );
+      	})
+      	$('.popover form').on('submit', function(){
+      		var appName = $(this).find('input[name=_type]').val();
+      		$(this).attr('action', appName);
+      		$(this).append('<input type="hidden" name="'+appName+'[label_ids]" value="'+$(this).find('input[name=label_ids]').val()+'" />');
+      		$(this).append('<input type="hidden" name="'+appName+'[name]" value="'+$(this).find('input[name=name]').val()+'" />');
+      	});
+      }, 50);
+      return $('#new-popover-template-content').render(tas10.newDialog.getOptions());
+    },
+    title: function(){
+      return $('#new-popover-template-title').render(tas10.newDialog.getOptions());
+    }
+  })
 
 });

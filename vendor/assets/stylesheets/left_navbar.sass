@@ -23,6 +23,7 @@
   height: 100%
   width: 260px
   border: 1px solid #ccc
+  z-index: 0
 
 #tas10-navbar
   position: absolute
@@ -50,10 +51,12 @@
     position: absolute
     top: 0
     left: 4px
-    width: 30px
+    width: 36px
     height: 28px
     z-index: 1
     border: 1px solid #ccc
+    border-right: none
+    background-color: #fff
   .navbar-button
     position: relative
     z-index: 2
@@ -72,6 +75,12 @@
       background-image: url("/assets/tas10-icons_24x24w.png")
       .button-text
         color: #fff
+    &.current:hover
+      background-color: #fff
+      border-color: #fff
+      border: none
+      margin: 2px 3px 5px 8px
+      background-image: url("/assets/tas10-icons_24x24.png")
     .button-text
       font-family: 'Verdana', sans-serif
       color: #333

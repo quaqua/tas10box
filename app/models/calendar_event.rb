@@ -8,7 +8,7 @@ class CalendarEvent < Tas10::Document
   field :location
 
   attr_accessor :starts_at_date, :starts_at_time, :ends_at_date, :ends_at_time
-  before_create :setup_dates
+  before_save :setup_dates
 
   @@event_subclasses = []
   def self.event_subclasses

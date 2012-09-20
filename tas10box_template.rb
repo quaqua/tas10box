@@ -14,8 +14,8 @@ gem 'unicorn'
 
 
 gem 'tas10box', :git => 'git://github.com/quaqua/tas10box.git'
-gem 'tas10web', :git => 'ssh://tastenbox@digitalnova.tastenwerk.com/home/tastenbox/git-repos/tas10web.git'
-gem 'tas10crm', :git => 'ssh://tastenbox@digitalnova.tastenwerk.com/home/tastenbox/git-repos/tas10crm.git'
+#gem 'tas10web', :git => 'ssh://tastenbox@digitalnova.tastenwerk.com/home/tastenbox/git-repos/tas10web.git'
+#gem 'tas10crm', :git => 'ssh://tastenbox@digitalnova.tastenwerk.com/home/tastenbox/git-repos/tas10crm.git'
 
 #gem 'tas10box', :path => '../tas10box'
 #gem 'tas10crm', :path => '../tas10crm'

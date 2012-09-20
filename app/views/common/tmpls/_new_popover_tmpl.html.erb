@@ -1,0 +1,28 @@
+<script id="new-popover-template-title" type="text/x-jsrender">
+  <div class="title">
+    <button type="button" class="close pull-right" onclick="$('#button_new_dialog').popover('hide');" aria-hidden="true">&times;</button>
+    <%= t('documents.new') %>
+    &nbsp;
+    &nbsp;
+    <span style="font-size: 10px;"><%= t('labels.title_pl') %>:</span>
+    {{if labelId}}
+      <span class="label" data-id="{{:labelId}}">{{:labelName}}</span>
+    {{/if}}
+  </div>
+</script>
+<script id="new-popover-template-content" type="text/x-jsrender">
+  <form action="/documents" data-remote="true" method="post" class="content new-item-content">
+    <div class="btn-group dropdown">
+      <input type="text" name="name" class="input-xlarge pull-left">
+      <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"><span class="dataTypeName">{{:dataTypeName}}</span><span class="caret"></span></button>
+        <ul class="dropdown-menu pull-right">
+          {{for availableCreates}}
+            <li data-name="{{:#data.value}}"><a href="#">{{:#data.name}}</a></li>
+          {{/for}}
+        </ul>
+      <button type="submit" class="btn btn-tas10"><%= t('create') %></button>
+    </div>
+    <input type="hidden" name="_type" value="{{:dataType}}" />
+    <input type="hidden" name="label_ids" value="{{if labelId}}{{:labelId}}{{/if}}" />
+  </form>
+</script>

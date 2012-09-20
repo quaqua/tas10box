@@ -4,6 +4,7 @@
  *= require 3rdparty/tipsy
  *= require 3rdparty/fileuploader
  *= require 3rdparty/dragtable
+ *= require 3rdparty/bootstrap.min
  *= require user
  *= require left_navbar
  *= require icons
@@ -27,6 +28,15 @@ body
   margin: 0
   padding: 0
   background-image: url("/assets/main_bg.png")
+
+  .btn-tas10
+    box-shadow: none
+    background: $button_color
+    text-shadow: none
+    color: #fff
+    &:hover
+      background: #333
+      color: #fff
 
 a
   color: #444
@@ -371,6 +381,12 @@ fieldset
     margin: 5px
     text-transform: uppercase
 
+.tas10-form-actions
+  background: #eaeaea
+  padding: 5px
+  text-align: right
+  border: 1px solid #ccc
+
 ul.tas10-tree
   margin: 0
   list-style-type: none
@@ -425,8 +441,8 @@ ul.tas10-tree
 
 .path-item
   float: left
-  margin: 0 5px
-  padding: 2px 5px
+  margin: 2px 5px 0
+  //padding: 2px 5px
   background-color: #d64
   color: #fff
 
@@ -468,6 +484,9 @@ ul.tas10-tree
     position: absolute
     width: 300px
     margin: 3px 60px 0 0
+    -moz-transition: none
+    -webkit-transition: none
+    box-shadow: none
     &:focus
       outline: none
   .path, .conditions
@@ -603,5 +622,9 @@ button.ui-button.ui-widget
       &:hover
         text-decoration: underline
 
+.new-item-content
+  input[type=text], .dropdown-toggle
+    border-top-right-radius: 0
+    border-bottom-right-radius: 0
 #tas10-history
   overflow: auto

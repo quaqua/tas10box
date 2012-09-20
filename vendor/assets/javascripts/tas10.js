@@ -270,7 +270,7 @@ tas10['setPath'] = function tas10SetPath( path, append ){
         path.splice(i, 1);
 
   var tas10PathMarkup = "&nbsp;/&nbsp;<a href=\"/{{:_type ? _type.toLowerCase()+'s' : ''}}/{{:id}}\" data-remote=\"true\" class=\"item_{{:id}}_title\">{{:name}}</a>";
-  var tas10FindMarkup = "<span class=\"path-item item_{{:id}}_title\" data-id=\"{{:id}}\">{{:name}}</span>";
+  var tas10FindMarkup = "<span class=\"label path-item item_{{:id}}_title\" data-id=\"{{:id}}\">{{:name}}</span>";
   $.templates("tas10Path", tas10PathMarkup);
   $.templates("tas10Find", tas10FindMarkup);
 

@@ -4,6 +4,7 @@
 //= require 3rdparty/jsrender
 //= require 3rdparty/jquery-ui.min
 //= require 3rdparty/jquery.tipsy
+//= require 3rdparty/bootstrap.min
 //= require 3rdparty/jquery.timeago
 //= require 3rdparty/moment.min
 //= require 3rdparty/jquery.dragtable
