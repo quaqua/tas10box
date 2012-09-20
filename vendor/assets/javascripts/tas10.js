@@ -116,7 +116,8 @@ tas10['notify'] = function tas10Notify( msg, error ){
   else
     $(notifier).removeClass('error');
   $('#tas10-notifier .content').html(msg);
-  $(notifier).clearQueue().stop(true, true).css('zIndex', 10002).show().delay(3000).animate({'zIndex': 9998});
+  //$(notifier).clearQueue().stop(true, true).css('zIndex', 10002).show().delay(3000).animate({'zIndex': 9998});
+  $(notifier).show();
   $(notifier).find('.wrapper').clearQueue().stop(true, true).switchClass('low','high', 0)
     .delay(2000).switchClass('high','low', 600, 'easeOutBack');
 }

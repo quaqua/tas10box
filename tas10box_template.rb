@@ -111,10 +111,9 @@ end
 
 create_file 'config/tas10box.yml' do
   <<-eos
-
 site:
   name: '#{app_name}'
-  domain: 'localhost.loc'
+  domain_name: 'localhost.loc'
   
   eos
 end

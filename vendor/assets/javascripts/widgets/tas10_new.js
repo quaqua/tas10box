@@ -106,17 +106,24 @@ tas10['setupNewDialog'] = function setupNewDialog( options ){
 }
 
 tas10.newDialog = {
+
+  availableCreates: function(){
+    var creates = $('[data-tas10-creates]').map( function( item, el ){
+            return {value: $(el).attr('data-tas10-creates'),
+             name: $(el).attr('title') }
+          }).get();
+    creates.push({value: 'label', name: I18n.t('labels.title') });
+    return creates;
+  },
+
 	getOptions: function(){ 
-    var dtype = $('.tab-content:visible .new-item').attr('data-type') || 'label';
+    var dtype = $('.tab-content:visible .new-item').attr('data-type') || 'labels';
     var options = {
       dataType: dtype,
 			labelId: null,
-      dataTypeName: I18n.t(dtype+'s.title'),
+      dataTypeName: I18n.t(dtype+'.title'),
       dataTypeTemplate: $('.tab-content:visible .new-item').attr('data-type-template') || null,
-      availableCreates: $('[data-tas10-creates]').map( function( item, el ){
-      	return {value: $(el).attr('data-tas10-creates'),
-      	 name: $(el).attr('title') }
-      }).get()
+      availableCreates: tas10.newDialog.availableCreates()
     };
 
 		if( $('#tas10-find .path-item').length && $('#tas10-find .path-item:last').html().length > 2 ){
@@ -124,6 +131,13 @@ tas10.newDialog = {
 			options.labelName = $('.path-item.item_'+options.labelId+'_title:first').text();
 		}
 		return options;
+  },
+
+  singularize: function( str ){
+    if( str[str.length-1] === 's' )
+      return str.substring(0,str.length-1);
+    else
+      return str;
   }
 }
 $(function(){
@@ -150,8 +164,8 @@ $(function(){
       	$('.popover form').on('submit', function(){
       		var appName = $(this).find('input[name=_type]').val();
       		$(this).attr('action', appName);
-      		$(this).append('<input type="hidden" name="'+appName+'[label_ids]" value="'+$(this).find('input[name=label_ids]').val()+'" />');
-      		$(this).append('<input type="hidden" name="'+appName+'[name]" value="'+$(this).find('input[name=name]').val()+'" />');
+      		$(this).append('<input type="hidden" name="'+tas10.newDialog.singularize(appName)+'[label_ids]" value="'+$(this).find('input[name=label_ids]').val()+'" />');
+      		$(this).append('<input type="hidden" name="'+tas10.newDialog.singularize(appName)+'[name]" value="'+$(this).find('input[name=name]').val()+'" />');
       	});
       }, 50);
       return $('#new-popover-template-content').render(tas10.newDialog.getOptions());

@@ -1,4 +1,6 @@
 <% if flash[:notice] %>
+  alert('he');
+  $('#button_new_dialog').popover('hide');
   var doc = <%= raw( @doc.to_json ) %>;
   $('.tas10-labels-form').remove();
   $('.tas10-labels[data-id=<%= @doc.id %>]').append(' <%= escape_javascript( render :partial => "common/snippets/label", :locals => {:label => @label} ) %>');
