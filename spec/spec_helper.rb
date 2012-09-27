@@ -31,3 +31,10 @@ RSpec.configure do |config|
   # rspec-rails.
   #config.infer_base_class_for_anonymous_controllers = false
 end
+
+def setup_deep_hierarchical_struct(user, label_ids=nil)
+  a = PlainDoc.create_with_user( user, :name => 'a', :label_ids => [ label_ids ] )
+  b = PlainDoc.create_with_user( user, :name => 'b', :label_ids => [ a.id ] )
+  c = PlainDoc.create_with_user( user, :name => 'c', :label_ids => [ b.id ] )
+  [a,b,c]
+end

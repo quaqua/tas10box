@@ -74,7 +74,6 @@ module Tas10
 
     end
 
-
     module InstanceMethods
 
       def update_log

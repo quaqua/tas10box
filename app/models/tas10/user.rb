@@ -3,7 +3,6 @@ require 'digest/sha2'
 class Tas10::User
   include Mongoid::Document
   include Mongoid::Versioning
-  include Mongoid::Paranoia
 
   max_versions 30
 
@@ -42,6 +41,7 @@ class Tas10::User
   # hooks
   before_save :encrypt_password
   before_create :generate_salt, :generate_password_if_none, :generate_confirmation_key, :setup_default_settings
+  after_destroy :remove_acls
 
   def self.anybody_id
     Moped::BSON::ObjectId(24.times.inject(""){ |str,i| str << "0" })
@@ -147,6 +147,16 @@ class Tas10::User
 
   def setup_default_settings
     self.settings = Tas10box::default_user_settings
+  end
+
+  # remove acls set in any document if this user is destroyed permanently
+  def remove_acls
+    Tas10::Document.where(:"acl.#{id}.privileges" => /r\w*/ ).each do |doc|
+      doc.versionless do
+        doc.acl.delete(id.to_s)
+        doc.save
+      end
+    end
   end
 
   #has_one :details, class: Tas10::Contact

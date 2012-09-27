@@ -18,6 +18,7 @@ module Tas10
       end
       privileges = 'r' if user.is_a?(Tas10::User) && user.anybody?
       self.acl["#{user.id}"] = { "privileges" => privileges, "inherited" => {}, "invited" => (new_record? ? nil : @user.id), "at" => Time.now }
+      self
     end
 
     def privileges( user=@user )
@@ -32,6 +33,7 @@ module Tas10
     def unshare( user )
       raise InvalidUserError if user.nil? || !valid_user_or_group?( user )
       self.acl.delete "#{user.id}"
+      self
     end
 
     def can_share?( user=@user )
@@ -39,8 +41,19 @@ module Tas10
       privileges(user).include? 's'
     end
 
+    # returns if a user can write this content
+    # if now user is given, no check will be done
+    # this simplifies anonymous content creation
+    # and content repository maintainance (e.g. destroying user, cleanup
+    # documents aftewards)
+    #
+    # @param {User} User object. default: @user
+    #
+    # @return true|false
+    #
     def can_write?( user=@user )
-      raise InvalidUserError if user.nil? || !valid_user_or_group?( user )
+      return true unless user
+      raise InvalidUserError if !valid_user_or_group?( user )
       privileges(user).include? 'w'
     end
 
@@ -85,9 +98,6 @@ module Tas10
             child.acl[u_id] = acl
           end
         end
-        puts "SHARING CHILD: "
-        puts child.name
-        puts "END SH"
         child.versionless do
           child.save(:safe => true)
         end
@@ -95,6 +105,7 @@ module Tas10
     end
 
     def check_label_ids
+      return if label_ids.blank?
       label_ids.each do |label_id|
         if label = Tas10::Document.where(:id => label_id).first
           label.acl.each_pair do |aid,a|

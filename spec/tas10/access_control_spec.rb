@@ -79,4 +79,27 @@ describe "Access Control" do
     lambda{ d1.destroy }.should raise_error( Tas10::SecurityTransgressionError )
   end
 
+  it "User b can access hierarchical content of a -> b -> c up to c" do
+    a, b, c = setup_deep_hierarchical_struct( @a )
+    a.share( @b, 'rws' )
+    c.can_read?( @b ).should == false
+    a.save.should == true
+    c.reload.can_read?( @b ).should == true
+  end
+
+  it "User b can access hierarchical content a -> b -> c, if b, c is created after user b got access to a" do
+    @doc1.share( @b, 'rwsd' )
+    @doc1.save.should == true
+    @doc1.can_read?( @b ).should == true
+    b, c, d = setup_deep_hierarchical_struct( @a, @doc1.id )
+    b.can_read?( @b ).should == true
+  end
+
+  it "If User b is deleted all access privileges are deleted as well" do
+    @doc1.reload.can_read?( @b ).should == true
+    @doc1.acl.size.should == 2
+    @b.destroy.should == true
+    @doc1.reload.acl.size.should == 1
+  end
+
 end
