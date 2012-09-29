@@ -1,6 +1,6 @@
 <%= render "common/create" %>
 <% if flash[:notice] %>
-  $('#button_new_dialog').popover('hide');
+  $('#button_new_dialog').slideUp(200);
   if( doc.template && doc.template !== '' && doc.template !== 'keine' && doc.template !== 'none' ){
     $('#tas10-'+ doc.template.replace(/\//g,'-') +'-list')
         .append( $('#' + doc.template.replace(/\//g,'-') + '-list-template').render( doc ) );
