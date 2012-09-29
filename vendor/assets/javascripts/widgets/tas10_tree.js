@@ -122,7 +122,10 @@ tas10.updateTreeSelection = function updateTreeSelection( actionContainer ){
 	      $(this).data('settings', settings);
 
 	      $(this).addClass('tas10-tree-obj');
-	      $(this).css('height', $(this).closest('#tas10-left-panel').height()-50);
+	      var height = $(this).closest('#tas10-left-panel').height()-50
+	      if( height < 100 )
+	      	height = 100;
+	      $(this).css('height', height);
 
 	      setupTas10TreeEvents( this );
 

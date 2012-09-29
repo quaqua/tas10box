@@ -71,24 +71,9 @@ $(function(){
     $('#' + $(list).attr('id') + ' li').live('mouseenter', function(e){
       if( $(this).hasClass('loading') )
         return;
-      $('#tas10-table-item-details').remove();
-      var itemDetails = $('<div id="tas10-table-item-details"/>');
-
-      $(itemDetails).append('<a href="/documents/'+$(this).attr('data-id')+'" data-remote="true" original-title="'+I18n.t('show')+'"><span class="ui-icon ui-icon-arrow-1-e"></span></a>')
-              .append('<a href="/documents/'+$(this).attr('data-id')+'/edit" data-remote="true" original-title="'+I18n.t('edit')+'"><span class="ui-icon ui-icon-pencil"></span></a>')
-              .append('<a href="/documents/'+$(this).attr('data-id')+'" data-remote="true" data-method="delete" data-confirm="'+I18n.t('really_delete', {name: $(this).attr('data-title')})+'" original-title="'+I18n.t('delete')+'"><span class="ui-icon ui-icon-trash"></span></a>');        
-      $('body').append(itemDetails);
-      $(itemDetails).css({top: $(this).offset().top, left: $(this).offset().left - $(itemDetails).outerWidth() + 4});
-      $(itemDetails).bind('mouseleave', function(){ 
-        if( $(e.target).closest('#tas10-table-item-details').length )
-          return;
-        $(this).remove(); 
-      });
+      $(this).find('.item-quick-actions-container').fadeIn(200)
     }).live('mouseleave', function(e){
-      var newElem = e.toElement || e.relatedTarget;
-      if( $(newElem).attr('id') && $(newElem).attr('id') === 'tas10-table-item-details' )
-        return;
-      $('#tas10-table-item-details').remove();
+      $(this).find('.item-quick-actions-container').fadeOut(200)
     });
 
     $('#' + $(list).attr('id')).closest('.action-container').find('.refresh').bind('click', function(){

@@ -34,7 +34,7 @@
         $(this).find('.settings-tabs a:first').addClass('current');
         $(this).find('.settings-tab-content:first').show();
 
-        $(this).find('.settings-tab-content').css({ height: ($(window).height() - 200)});
+        $(this).find('.settings-tab-content').css({ height: ($(window).height() - 130)});
 
       }
     };

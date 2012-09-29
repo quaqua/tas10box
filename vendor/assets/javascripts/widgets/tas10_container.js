@@ -29,6 +29,8 @@
     		path = [];
 
     	tas10.setPath(path);
+    	$(containerItem).find('.tab-content .selected').removeClass('selected');
+    	$(containerItem).find('.checked').removeClass('checked');
     	$('.tas10-tree').tas10Tree( 'select', id );
 		});
 
@@ -90,19 +92,19 @@
 
 	    	var container = $('<div class="tab-content" data-id="'+options.id+'" id="tab_content_'+options.id+'" />');
 	    	$(container).html( options.content );
-	    	var centerTab = $('<span class="center" />');
+	    	var centerTab = '';
 	    	//$(centerTab).append('<span class="tab-sprite tab-close"></span>');
-	    	if( options.title.length > 15 )
-	    		$(centerTab).append('<span data-attr-name="name" data-id="'+options.id+'" class="tab-title item_'+options.id+'_title">'+options.title.substring(0,15)+'</span>');
+	    	if( options.title.length > 12 )
+	    		centerTab = $('<span data-attr-name="name" data-id="'+options.id+'" class="tab-title item_'+options.id+'_title">'+options.title.substring(0,12)+'</span>');
 	    	else
-	    		$(centerTab).append('<span data-attr-name="name" data-id="'+options.id+'" class="tab-title item_'+options.id+'_title">'+options.title+'</span>');
+	    		centerTab = $('<span data-attr-name="name" data-id="'+options.id+'" class="tab-title item_'+options.id+'_title">'+options.title+'</span>');
 	    	var shortOpts = options;
 	    	delete shortOpts['content'];
 	    	var tab = $('<li class="tab active" id="tab_'+options.id+'" />').data('options', shortOpts);
 	    	$(tab).append('<span class="ui-icon ui-icon-close tab-close"></span>');
 	    	$(tab).append(centerTab);
 	    	$(tab)
-	    	if( options.title.length > 15 )
+	    	if( options.title.length > 12 )
 	    		  $(tab).attr('original-title', options.title)
 	    		  		.addClass('live-tipsy');
 	    	$(tab).show();

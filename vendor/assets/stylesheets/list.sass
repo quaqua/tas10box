@@ -17,12 +17,9 @@
       padding: 50px
 
 li.list-item, .tas10-list-h li
-  padding: 3px 0
   min-height: 20px
   position: relative
-  margin: 2px 0
-  &:hover
-    box-shadow: -3px 0 3px rgba(0,0,0,0.5)
+  margin: 0
   .tas10-icon-checkbox
     float: left
     margin: -1px 5px 0 10px
@@ -69,9 +66,35 @@ li.list-item, .tas10-list-h li
     text-decoration: none
     font-weight: 500
   &.selected-item
-    background-color: #fea
-    a
-      color: #333
+    .item-container
+      background-color: #fea
+      a
+        color: #333
+  .item-container
+    height: 20px
+    padding: 7px 3px
+    border-top: 1px solid #cfcfcf
+    margin: 0 5px
+    .item-quick-actions-container
+      position: absolute
+      right: 5px
+      top: 0
+      padding: 9px 5px
+      background: rgba(0,0,0,0.7)
+      width: 75px
+      height: 17px
+      display: none
+      i
+        opacity: 0.7
+        &:hover
+          opacity: 1
+      .starred
+        margin: 0
+        .tas10-icon16
+          margin: 0
+  &:first-child
+    .item-container
+      border-top: none
 
 li.list-item
   .move-helper

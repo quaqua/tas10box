@@ -27,7 +27,8 @@ body
   font: 13px "Lucida Grande", Helvetica, Arial, sans-serif
   margin: 0
   padding: 0
-  background-image: url("/assets/main_bg.png")
+  //background-image: url("/assets/main_bg.png")
+  background-color: #fafafa
 
   .btn-tas10
     box-shadow: none
@@ -47,16 +48,9 @@ input, textarea
   background-color: #fff
   &:hover, &:focus
     outline: none
-  &[type=submit]
-    margin: 0
-    padding: 6px 10px
-    font-size: 14px
-    cursor: pointer
-    background-color: $button_color
-    border: none
-    color: #fff
-    &:hover, &:focus
-      background-color: #444
+
+label, input, textarea
+  font-size: 12px
 
 .fill-width
   width: 100%
@@ -88,7 +82,10 @@ p
     margin-top: 0
 
 .userpic
-  border: 1px solid #ddd
+  border: 2px solid #fff
+  .x20
+    width: 20px
+    height: 20px
   .x30
     width: 30px
     height: 30px
@@ -157,28 +154,174 @@ fieldset
       padding: 0
 
 #tas10-top-panel
-  margin: 10px
+  background: #8a0
+  height: 35px
+  position: absolute
+  top: 5px
+  right: 5px
+  left: 5px
+  z-index: 1
   #account-info
     float: right
     min-width: 300px
-    a.username
-      color: #333
-      font-size: 12px
-      text-decoration: none
-      opacity: 0.8
-      &:hover
-        opacity: 1
-    .username
-      float: right
-      margin: 7px 0 0
-      opacity: 0.7
-    .logout
-      float: right
-      opacity: 0.4
-      padding: 6px
-      margin: 1px 5px 0 0
+    a.account-trigger
+      width: 14px
+      height: 14px
+      margin: 15px 5px 0 0
+      .caret
+        border-top-color: #fff
+        opacity: 0.5
     .userpic
-      margin-top: -1px
+      margin: 5px
+    .account-info-dropdown
+      display: none
+      background: #fff
+      padding: 5px
+      position: absolute
+      top: 35px
+      right: 5px
+      box-shadow: 2px 2px 5px #777
+      ul
+        list-style: none
+        padding: 0
+        li
+          margin: 4px 10px
+          padding: 4px
+          text-align: right
+          font-size: 12px
+          border-radius: 5px
+          border: 1px solid #fff
+          a
+            text-decoration: none
+          &:last-child
+            border-bottom: none
+          &:hover
+            border: 1px solid #ddd
+
+#button-find-dropdown
+  position: absolute
+  top: 15px
+  left: 167px
+  opacity: 0.5
+  text-transform: uppercase
+  z-index: 5
+  .trigger
+    width: 70px
+    padding: 6px 5px 7px
+    height: 13px
+    cursor: pointer
+    .title
+      font-size: 10px
+      margin: 2px
+      color: #fff
+  .find-dropdown-content
+    display: none
+    position: absolute
+    top: 24px
+    left: 0
+    right: 70px
+    width: 600px
+    background: #fff
+    box-shadow: 3px 3px 3px #777
+    #tas10-find
+      form
+        margin: 0
+        height: 34px
+      .submit
+        position: absolute
+        top: 4px
+        right: 30px
+        opacity: 0.5
+        &:hover
+          opacity: 1
+      .settings
+        position: absolute
+        top: 8px
+        right: 10px
+        opacity: 0.5
+        &:hover
+          opacity: 1
+      .available-scripts
+        list-style-type: none
+        margin: 0
+        padding: 0
+        li
+          padding: 3px
+          cursor: pointer
+          &:hover
+            background-color: #6db4ff
+      input[type=text]
+        border: none
+        background: none
+        font-size: 16px
+        position: absolute
+        width: 300px
+        margin: 3px 60px 0 0
+        -moz-transition: none
+        -webkit-transition: none
+        box-shadow: none
+        &:focus
+          outline: none
+      .path, .conditions
+        margin: 6px 8px
+        float: left
+      .field-condition
+        float: left
+        margin: 0 5px
+        padding: 2px 5px
+        background-color: #ddd
+        color: #000
+      .label-res
+        list-style-type: none
+        padding: 0
+        margin: 0
+        position: absolute
+        top: 30px
+        width: 200px
+        background-color: #fff
+        z-index: 10
+        border: 1px solid #ddd
+        box-shadow: 0 3px 3px #555
+        li
+          padding: 5px
+          &.selected-res
+            background-color: #6db4ff
+            color: #fff
+            cursor: pointer
+
+#button-new-dropdown
+  position: absolute
+  top: 15px
+  left: 250px
+  opacity: 0.5
+  text-transform: uppercase
+  cursor: pointer
+  z-index: 5
+  .trigger
+    padding: 6px 5px 7px
+    width: 55px
+    height: 13px
+    .title
+      font-size: 10px
+      margin: 2px
+      color: #fff
+  .new-dropdown-content
+    margin: 0
+    width: 500px
+    background: #fff
+    padding: 5px
+    box-shadow: 3px 3px 3px #777
+    display: none
+    form
+      margin: 0
+    input
+      margin: 0
+    .btn.dropdown-toggle
+      font-size: 10px
+    .dropdown-menu
+      font-size: 10px
+    .label-container
+      margin-top: 5px
 
 #tas10-logo
   cursor: pointer
@@ -186,10 +329,11 @@ fieldset
   width: 30px
   height: 30px
   cursor: pointer
-  margin: 10px
+  margin: 5px
   position: absolute
-  top: 0
-  left: 5px
+  top: 0px
+  left: 8px
+  opacity: 0.5
 
 #tas10-loader
   position: absolute
@@ -202,8 +346,10 @@ fieldset
   height: 19px
 
 .browser-actions
-  margin: 4px
-  border: 1px solid #ddd
+  padding: 4px
+  //border: 1px solid #ddd
+  background-color: #f0f0f0
+  border-bottom: 1px solid #ddd
   span.spacer
     float: left
     height: 16px
@@ -212,9 +358,10 @@ fieldset
     float: left
     background: none
     padding: 3px 5px 3px 4px
-    cursor: pointer
     &:hover .ui-icon
       opacity: 1
+    &.select-all
+      margin-left: 10px
     .ui-icon
       opacity: 0.5
     &.disabled
@@ -224,14 +371,23 @@ fieldset
         opacity: 0.2
       &:hover
         box-shadow: none
-        margin-right: 0
-        padding-right: 4px
     &.paste
       background-color: #fc6
       &.disabled
-        background-color: #fff
+        background-color: #f0f0f0
+        opacity: 0.3
     .tas10-icon16
       margin-top: -2px
+.form-actions
+  padding: 4px
+  background-color: #f0f0f0
+  border-bottom: 1px solid #ddd
+  margin: 0
+  border: none
+  text-align: right
+  a
+    float: none
+    font-size: 12px
 
 //.context-trigger:hover .context-content
 //  display: block
@@ -361,6 +517,7 @@ fieldset
   label
     text-transform: uppercase
     color: #999
+    margin
   input[type='text'],input[type='password'],textarea
     padding: 5px 0
     font-size: 14px
@@ -368,6 +525,8 @@ fieldset
       border-color: #999
     &.name
       font-weight: 900
+  .form-horizontal .control-label
+    padding-top: 10px
   .continue-creating
     margin: 7px 10px 0 0
   p.desc
@@ -445,76 +604,6 @@ ul.tas10-tree
   //padding: 2px 5px
   background-color: #d64
   color: #fff
-
-#tas10-find
-  position: absolute
-  left: 320px
-  right: 10px
-  top: 53px
-  height: 32px
-  background-color: #fff
-  border: 1px solid #ddd
-  .submit
-    position: absolute
-    top: 4px
-    right: 30px
-    opacity: 0.5
-    &:hover
-      opacity: 1
-  .settings
-    position: absolute
-    top: 8px
-    right: 10px
-    opacity: 0.5
-    &:hover
-      opacity: 1
-  .available-scripts
-    list-style-type: none
-    margin: 0
-    padding: 0
-    li
-      padding: 3px
-      cursor: pointer
-      &:hover
-        background-color: #6db4ff
-  input[type=text]
-    border: none
-    background: none
-    font-size: 16px
-    position: absolute
-    width: 300px
-    margin: 3px 60px 0 0
-    -moz-transition: none
-    -webkit-transition: none
-    box-shadow: none
-    &:focus
-      outline: none
-  .path, .conditions
-    margin: 6px 8px
-    float: left
-  .field-condition
-    float: left
-    margin: 0 5px
-    padding: 2px 5px
-    background-color: #ddd
-    color: #000
-  .label-res
-    list-style-type: none
-    padding: 0
-    margin: 0
-    position: absolute
-    top: 30px
-    width: 200px
-    background-color: #fff
-    z-index: 10
-    border: 1px solid #ddd
-    box-shadow: 0 3px 3px #555
-    li
-      padding: 5px
-      &.selected-res
-        background-color: #6db4ff
-        color: #fff
-        cursor: pointer
 
 .results-overview
   margin: 10px

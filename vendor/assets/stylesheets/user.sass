@@ -20,30 +20,18 @@ body
   right: 0
   bottom: 0
   margin: auto
-  width: 450px
+  width: 400px
   height: 128px
   background: #fff
-  border: 1px solid #ddd
+  border: 1px solid #ccc
+  border-radius: 5px
   padding: 10px
+  input[type=password]
+    margin-bottom: 0
   p
     margin: 1px
-  input
-    &[type=text], &[type=password]
-      width: 280px
-      padding: 5px
-      font-size: 16px
-      background: #fff !important
-      &.error
-        border-color: #d00
   label
     color: #999
-  input[type=submit]
-    margin-left: 20px
-    &:disabled
-      cursor: default
-      opacity: 0.5
-      &:hover
-        background: $button_color
   .error
     color: #d00
 
@@ -69,7 +57,7 @@ body
   top: 190px
   margin: auto
   color: #777
-  width: 460px
+  width: 400px
   height: 16px
   text-align: right
   font-size: 10px

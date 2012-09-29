@@ -8,12 +8,23 @@
         <a href="/{{:_type.toLowerCase()}}s/{{:_id}}?browser=true" data-remote="true" class="title item_{{:_id}}_title{{if color && color.length > 0}} item-color" style="background-color: {{:color}}{{/if}}" data-attr-name="name-{{:_id}}">{{:name}}</a>
         <span class="desc last-update">{{:~formattedDate(log_entries[log_entries.length-1].created_at) }}</span>
         <span class="starred" data-id="{{:_id}}"><span class="tas10-icon16 black tas10-icon-star-{{: (starred ? 'full' : 'empty')}} star"></span></span>
+        <div class="item-quick-actions-container">
+          <span class="starred" data-id="{{:_id}}"><span class="tas10-icon16 black tas10-icon-star-{{: (starred ? 'full' : 'empty')}} star"></span></span>
+          <a href="/documents/{{:_id}}" data-remote="true"><i class="icon-white icon-eye-open" /></a>
+          <a href="/documents/{{:_id}}/edit" data-remote="true"><i class="icon-white icon-pencil" /></a>
+          <a href="/documents/{{:_id}}" data-remote="true"data-confirm="<%= t('really_delete_item') %>" data-method="delete"><i class="icon-white icon-trash" /></a>
+        </div>
       </div>
     {{else}}
       <div class="item-container">
-        <span class="starred" data-id="{{:_id}}"><span class="tas10-icon16 black tas10-icon-star-{{: (starred ? 'full' : 'empty')}} star"></span></span>
         <span class="type"><span class="tas10-icon16 black tas10-icon-{{:_type.toLowerCase()}} float-left"></span></span>
         <a href="/{{:_type.toLowerCase()}}s/{{:_id}}" data-remote="true" class="title item_{{:_id}}_title{{if color && color.length > 0}} item-color" style="background-color: {{:color}}{{/if}}" data-attr-name="name-{{:_id}}">{{:name}}</a>
+        <div class="item-quick-actions-container">
+          <span class="starred" data-id="{{:_id}}"><span class="tas10-icon16 black tas10-icon-star-{{: (starred ? 'full' : 'empty')}} star"></span></span>
+          <a href="/documents/{{:_id}}" data-remote="true"><i class="icon-white icon-eye-open" /></a>
+          <a href="/documents/{{:_id}}/edit" data-remote="true"><i class="icon-white icon-pencil" /></a>
+          <a href="/documents/{{:_id}}" data-remote="true"data-confirm="<%= t('really_delete_item') %>" data-method="delete"><i class="icon-white icon-trash" /></a>
+        </div>
       </div>
     {{/if}}
   </li>

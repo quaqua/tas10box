@@ -11,14 +11,14 @@
     %p
       %label= t('login.name_email')
     %p
-      = text_field_tag( :name_or_email, '', :class => 'js-get-focus')
+      = text_field_tag( :name_or_email, '', :class => 'js-get-focus input-xlarge')
 
     %p
       %label= t('login.password')
     %p
-      = password_field_tag( :password )
+      = password_field_tag( :password, '', :class => 'input-xlarge' )
 
-      = submit_tag( t('login.title') )
+      = submit_tag( t('login.title'), :class => "btn btn-inverse" )
 
 .login-footer-container
   &copy; TASTENWERK (2o12)

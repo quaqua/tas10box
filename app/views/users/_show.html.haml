@@ -1,6 +1,7 @@
-.container-padding.user-container
-  %a.tas10-button.float-right{ :href => edit_user_path(@user), :"data-remote" => true }
+.form-actions
+  %a{ :href => edit_user_path(@user), :"data-remote" => true, :class => "btn btn-inverse" }
     =t('edit')
+.container-padding.user-container
 
   .userpic.float-left.x100
     %img.x100{ :src => "#{picture_of_user_path(@user)}/?size=100", :class => "userpic-#{@user.id}" }

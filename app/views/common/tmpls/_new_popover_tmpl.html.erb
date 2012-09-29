@@ -1,15 +1,3 @@
-<script id="new-popover-template-title" type="text/x-jsrender">
-  <div class="title">
-    <button type="button" class="close pull-right" onclick="$('#button_new_dialog').popover('hide');" aria-hidden="true">&times;</button>
-    <%= t('documents.new') %>
-    &nbsp;
-    &nbsp;
-    <span style="font-size: 10px;"><%= t('labels.title_pl') %>:</span>
-    {{if labelId}}
-      <span class="label" data-id="{{:labelId}}">{{:labelName}}</span>
-    {{/if}}
-  </div>
-</script>
 <script id="new-popover-template-content" type="text/x-jsrender">
   <form action="/documents" data-remote="true" method="post" class="content new-item-content">
     <div class="btn-group dropdown">
@@ -24,5 +12,13 @@
     </div>
     <input type="hidden" name="_type" value="{{:dataType}}" />
     <input type="hidden" name="label_ids" value="{{if labelId}}{{:labelId}}{{/if}}" />
+
+    <div class="label-container">
+      <span style="font-size: 10px;"><%= t('labels.title_pl') %>:</span>
+      {{if labelId}}
+        <span class="label" data-id="{{:labelId}}">{{:labelName}}</span>
+      {{/if}}
+    </div>
+
   </form>
 </script>

@@ -142,37 +142,35 @@ tas10.newDialog = {
 }
 $(function(){
 
-	$('.new-item').live('click', function(){
-		var trigger = this;
-		var options = {
-			dataType: $(trigger).attr('data-type'),
-			dataTypeTemplate: $(trigger).attr('data-type-template')
-		}
-		tas10.dialog( 'load', '/documents/new', function(){
-			tas10.setupNewDialog( options );
-		});
-	});
-
-  $('#button_new_dialog').popover({ content: function(){
-      setTimeout( function(){ 
-      	$('.popover').css('width', 500); 
-      	$('.popover input[type=text]:first').focus();
-      	$('.popover .dropdown-menu li').on('click', function(){
-      		$(this).closest('form').find('input[name=_type]').val( $(this).attr('data-name') );
-      		$(this).closest('form').find('.dataTypeName').text( $(this).text() );
-      	})
-      	$('.popover form').on('submit', function(){
-      		var appName = $(this).find('input[name=_type]').val();
-      		$(this).attr('action', appName);
-      		$(this).append('<input type="hidden" name="'+tas10.newDialog.singularize(appName)+'[label_ids]" value="'+$(this).find('input[name=label_ids]').val()+'" />');
-      		$(this).append('<input type="hidden" name="'+tas10.newDialog.singularize(appName)+'[name]" value="'+$(this).find('input[name=name]').val()+'" />');
-      	});
-      }, 50);
-      return $('#new-popover-template-content').render(tas10.newDialog.getOptions());
-    },
-    title: function(){
-      return $('#new-popover-template-title').render(tas10.newDialog.getOptions());
+  $('#button-new-dropdown').hover(function(e){
+    $(this).css('opacity', 1) },
+    function(e){
+      if( !$('.new-dropdown-content').is(':visible') )
+        $(this).css('opacity', 0.5)
+    }).on('click', function(e){
+    if( !$(e.target).closest('.trigger').length )
+      return;
+    if( $(this).find('.new-dropdown-content').is(':visible') ){
+      $(this).find('.new-dropdown-content').slideUp(200);
+      return;
     }
-  })
+    $('.new-dropdown-content').html(
+      $('#new-popover-template-content').render(tas10.newDialog.getOptions())
+    );
+    $('.new-dropdown-content').slideDown(200, function(){
+      $('.new-dropdown-content input[type=text]:first').focus();
+    	$('.new-dropdown-content .dropdown-menu li').on('click', function(){
+    		$(this).closest('form').find('input[name=_type]').val( $(this).attr('data-name') );
+        $(this).closest('form').find('input[name=name]').focus();
+    		$(this).closest('form').find('.dataTypeName').text( $(this).text() );
+    	})
+    	$('.new-dropdown-content form').on('submit', function(){
+    		var appName = $(this).find('input[name=_type]').val();
+    		$(this).attr('action', appName);
+    		$(this).append('<input type="hidden" name="'+tas10.newDialog.singularize(appName)+'[label_ids]" value="'+$(this).find('input[name=label_ids]').val()+'" />');
+    		$(this).append('<input type="hidden" name="'+tas10.newDialog.singularize(appName)+'[name]" value="'+$(this).find('input[name=name]').val()+'" />');
+    	});
+    });
+  });
 
 });

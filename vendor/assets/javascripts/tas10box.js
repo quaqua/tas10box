@@ -81,6 +81,20 @@ $( function(){
          }})
   })
 
+  $('.account-trigger').on('click', function(){
+    if( $(this).hasClass('white') ){
+      $(this).removeClass('white');
+      $('#account-info .account-info-dropdown').slideUp(200);
+    } else {
+      $(this).addClass('white');
+      $('#account-info .account-info-dropdown').slideDown(200, function(){
+      });
+    }
+  });
+  $('#account-info .account-info-dropdown li').on('click', function(e){ 
+    $('#account-info .account-info-dropdown').slideUp(200); 
+  });
+
   $('.tas10-checkbox-label').live('click', function(e){
     $(this).prev('.tas10-checkbox').toggleClass('checked');
   });
@@ -131,6 +145,14 @@ $( function(){
       $('#tas10-dialog').hide();
       $('#tas10-overlay').hide();
     }
+    if( $(e.target).attr('id') !== 'button-new-dropdown' && $(e.target).closest('#button-new-dropdown').length < 1 && $('.new-dropdown-content').is(':visible') ){
+      $('.new-dropdown-content').slideUp(200);
+      $('#button-new-dropdown').css('opacity', 0.5);
+    }
+    if( $(e.target).attr('id') !== 'button-find-dropdown' && $(e.target).closest('#button-find-dropdown').length < 1 && $('.find-dropdown-content').is(':visible') ){
+      $('.find-dropdown-content').slideUp(200);
+      $('#button-find-dropdown').css('opacity', 0.5);
+    }
   }).bind('keydown', function(e){
       // ESC
       if ( e.keyCode === 27 ){
@@ -140,7 +162,13 @@ $( function(){
           $('.tas10-acl-form').remove()
         else if( $('.tas10-labels-form').length )
           $('.tas10-labels-form').remove()
-        else if( $('#tas10-dialog').is(':visible') )
+        else if( $('.new-dropdown-content').is(':visible') ){
+          $('.new-dropdown-content').slideUp(200);
+          $('#button-new-dropdown').css('opacity', 0.5);
+        } else if( $('.find-dropdown-content').is(':visible') ){
+          $('.find-dropdown-content').slideUp(200);
+          $('#button-find-dropdown').css('opacity', 0.5);
+        } else if( $('#tas10-dialog').is(':visible') )
           tas10.dialog('close');
         else if( $('#tas10-find .label-res').length )
           $('#tas10-find .label-res').remove();

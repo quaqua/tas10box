@@ -25,7 +25,7 @@ module Tas10box
       
       Tas10box::try_load_tas10box_config
 
-      Tas10box.register_plugin ::Tas10box::NavBarPlugin.new( :name => 'new_dialog', :skip_navbar => true )
+      #Tas10box.register_plugin ::Tas10box::NavBarPlugin.new( :name => 'new_dialog', :skip_navbar => true )
       Tas10box.register_plugin ::Tas10box::NavBarPlugin.new( :name => 'home' )
       Tas10box.register_plugin ::Tas10box::NavBarPlugin.new( :name => 'history' )
       Tas10box.register_plugin ::Tas10box::NavBarPlugin.new( :name => 'favorites' )

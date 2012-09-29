@@ -1,12 +1,25 @@
 #tas10-top-panel
 
+  #tas10-logo.live-tipsy-w{ :"original-title" => t('dashboard.goto') }
+
   #account-info{ :"data-id" => current_user.id }
-    %a.userpic.x30.float-right{ :href => user_path(current_user), :"data-remote" => true }
-      %img.userpic.x30.float-right{ :class => "userpic-#{current_user.id}", :src => "#{picture_of_user_path( current_user )}?size=30" }
-    %a.live-tipsy.logout{ :href => logout_path, :"original-title" => t('logout') }
-      %span.ui-icon.ui-icon-power.float-right
-    %a.live-tipsy.username{ :href => user_path(current_user), :"data-remote" => true, :"original-title" => t('user.click_to_edit_profile') }
-      = current_user.fullname_or_name
+    %a.account-trigger.float-right{ :href => "#" }
+      %i.caret
+    %a.userpic.float-right{ :href => user_path(current_user), :"data-remote" => true }
+      %img.x20.float-right{ :class => "userpic-#{current_user.id}", :src => "#{picture_of_user_path( current_user )}?size=20" }
+    .account-info-dropdown
+      %ul
+        %li
+          %a.live-tipsy.username{ :href => user_path(current_user), :"data-remote" => true }
+            = current_user.fullname_or_name
+        %li
+          %a{ :href => edit_user_path(current_user), :"data-remote" => true }
+            %i.icon-pencil
+            = t('edit')
+        %li
+          %a.live-tipsy.logout{ :href => logout_path }
+            %i.icon-off
+            = t('logout')
 
   #tas10-loader
     =image_tag('loading_16x16.gif' )
@@ -18,3 +31,18 @@
       %span.content
       %a{ :onclick => "$('#tas10-notifier').hide();" }
         %span.ui-icon.ui-icon-close
+
+#button-new-dropdown
+  .trigger
+    %span.tas10-icon16.white.tas10-icon-new.float-left
+    %span.title.float-left
+      =t('new')
+  .new-dropdown-content
+
+#button-find-dropdown
+  .trigger
+    %span.tas10-icon16.white.tas10-icon-find.float-left
+    %span.title.float-left
+      =t('find')
+  .find-dropdown-content
+    =render 'panels/find'

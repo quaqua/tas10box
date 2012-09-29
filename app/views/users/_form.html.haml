@@ -1,38 +1,33 @@
-=form_for @user, :remote => true, :html => {:class => 'user-form tas10-form' } do |f|
-  %p
-    %label.desc
+.form-horizontal{:style => "margin-top: 40px"}
+  .control-group
+    %label.control-label
       =t('user.email')
-    %br
-    =f.text_field :email
-  %p
-    %label.desc
-      =t('user.name')
-    %br
-    =f.text_field :name
-  %p
-    %label.desc
-      =t('user.fullname')
-    %br
-    =f.text_field :fullname
-  %p
-    %label.desc
-      =t('login.password')
-    %br
-    %label{:style => "text-transform: none"}
-      = raw t('user.password_desc')
-    %br
-    =f.password_field :password, :class => 'new-password'
-  %p
-    %label.desc
-      =t('login.password_confirm')
-    %br
-    =f.password_field :password_confirmation, :class => 'confirm-password'
+    .controls
+      =f.text_field :email
 
-  %p{ :style => "text-align:right" }
-    %a{ :href => user_path(@user), :"data-remote" => true }
-      =t('cancel')
-    &nbsp;
-    =f.submit t('save')
+  .control-group
+    %label.control-label
+      =t('user.name')
+    .controls
+      =f.text_field :name
+
+  .control-group
+    %label.control-label
+      =t('user.fullname')
+    .controls
+      =f.text_field :fullname
+
+  .control-group
+    %label.control-label
+      =t('login.password')
+    .controls
+      =f.password_field :password, :class => 'new-password'
+
+  .control-group
+    %label.control-label
+      =t('login.password_confirm')
+    .controls
+      =f.password_field :password_confirmation, :class => 'confirm-password'
 
 :javascript
 

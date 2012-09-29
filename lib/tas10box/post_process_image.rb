@@ -12,7 +12,7 @@ module Tas10box
     end
 
     def self.userpic( filename )
-      thumb_sizes = ['16x16','30x30', '50x50','100x100']
+      thumb_sizes = ['16x16','20x20', '30x30', '50x50','100x100']
       thumb_sizes.each do |thumbsize|
         create_thumb(filename, thumbsize)
       end

@@ -1,12 +1,19 @@
-.container-padding.user-container
+=form_for @user, :remote => true, :html => {:class => 'user-form tas10-form' } do |f|
+  .form-actions
+    %a{ :href => user_path(@user), :"data-remote" => true }
+      =t('cancel')
+    &nbsp;
+    =f.submit t('save'), :class => "btn btn-inverse"
 
-  %img.userpic.float-left.x_100{ :src => "#{picture_of_user_path(@user)}/?size=100" }
+  .container-padding.user-container
 
-  .next-to-picture
-    %h1
-      -if current_user.id == @user.id
-        =t('user.your_profile', :name => @user.fullname_or_name)
-      -else
-        =t('user.profile_of', :name => @user.fullname_or_name)
+    %img.userpic.float-left.x_100{ :src => "#{picture_of_user_path(@user)}/?size=100" }
 
-    =render "form"
+    .next-to-picture
+      %h1
+        -if current_user.id == @user.id
+          =t('user.your_profile', :name => @user.fullname_or_name)
+        -else
+          =t('user.profile_of', :name => @user.fullname_or_name)
+
+      =render :partial => "form", :locals => {:f => f}

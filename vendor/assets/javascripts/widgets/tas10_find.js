@@ -9,7 +9,24 @@ tas10['appendFindFilter'] = function( sel ){
 tas10['tas10FindSettingsInit'] = false;
 
 $(function(){
-	
+
+  $('#button-find-dropdown').hover(function(e){
+    $(this).css('opacity', 1) },
+    function(e){
+      if( !$('.find-dropdown-content').is(':visible') )
+        $(this).css('opacity', 0.5)
+    }).on('click', function(e){
+    if( !$(e.target).closest('.trigger').length )
+      return;
+    if( $(this).find('.find-dropdown-content').is(':visible') ){
+      $(this).find('.find-dropdown-content').slideUp(200);
+      return;
+    }
+    $('.find-dropdown-content').slideDown(200, function(){
+    	$('.find-dropdown-content [name=query]').focus();
+    });
+  });
+
 	$('#tas10-find input[name=query]').val('');
 	$('#tas10-find input[name=label_ids]').val('');
 	$('#tas10-find input[name=conditions]').val('');
@@ -124,6 +141,10 @@ $(function(){
 			$('#tas10-find form').submit();
 		else
 			$('#tas10-find input[name=query]').focus();
+	});
+
+	$('#tas10-find form').on('submit', function(e){
+		$(this).closest('.find-dropdown-content').slideUp(200);
 	});
 
 	$('#tas10-find .settings').on('hover', function(){
