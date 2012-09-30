@@ -26,6 +26,8 @@ de:
   favorites:
     title: "Meine Favoriten"
 
+  upload: "Hochladen"
+  details: "Details"
   new: "Neu"
   cut: "Ausschneiden"
   select_all: "Alle markieren"
@@ -131,6 +133,10 @@ de:
 
   comments:
     title: "Kommentare"
+    num:
+      zero: "Keine Kommentare"
+      one: "Ein Kommentar"
+      other: "%{count} Kommentare"
     new: "Neu schreiben..."
     created: "Kommentar für '%{name}' wurde gespeichert"
     deleted: "Kommentar '%{name}' wurde gelöscht"

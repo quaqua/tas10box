@@ -1,11 +1,7 @@
 .tas10-info-container{ :"data-id" => @doc.id }
-  .info-title.tas10-dialog-header
-    .separator-border
-      .separator
-    .icon-container
-      %span.tas10-icon16.float-left.white{ :class => "tas10-icon-#{@doc.class.name.downcase}"}
-    %h1{ :"data-name" => "name", :"data-url" => document_path( @doc ) }
-      %span.text.title{ :"data-attr-name" => "name-#{@doc.id}" }= @doc.name.blank? ? "NO NAME" : @doc.name
+  %h1{ :"data-name" => "name", :"data-url" => document_path( @doc ) }
+    %span.tas10-icon16.float-left{ :class => "tas10-icon-#{@doc.class.name.downcase}"}
+    %span.text.title{ :"data-attr-name" => "name-#{@doc.id}" }= @doc.name.blank? ? "NO NAME" : @doc.name
 
   .tas10-dialog-content
     %table
@@ -38,30 +34,25 @@
             %label.desc= t('color')
           %td
             = render "common/snippets/color_chooser"
-      %tr
-        %td
-          %label.desc= t('labels.title')
-        %td
-          = render "common/snippets/labels"
 
-      %tr
-        %td
-          %label.desc= t('acl.title')
-        %td
-          = render "common/snippets/acl"
+    %p
+      %label.desc= t('labels.title')
+    = render "common/snippets/labels"
 
-    %fieldset.tas10-steps
-      %legend{ :align => "right" }
-        %span.live-tipsy.float-right.ui-icon.ui-icon-triangle-1-s{ :"original-title" => t('comments.show'), :onclick => "$(this).closest('.tas10-info-container').find('table.comments').slideToggle()" }
-        = t('comments.title')
+    %p
+      %label.desc= t('acl.title')
+    = render "common/snippets/acl"
+
+    %p
+      %span.live-tipsy-e.float-right.ui-icon.ui-icon-triangle-1-s{ :"original-title" => t('comments.show'), :onclick => "$(this).closest('.tas10-info-container').find('table.comments').slideToggle()" }
+      %label.desc= t('comments.num', :count => @doc.comments.size)
 
     = render :partial => "common/comments", :locals => { :hidden => true }
 
 
-    %fieldset.tas10-steps
-      %legend{ :align => "right" }
-        %span.live-tipsy.float-right.ui-icon.ui-icon-triangle-1-s{ :"original-title" => t('document.log.show'), :onclick => "$(this).closest('.tas10-info-container').find('table.log').slideToggle(); $('#tas10-dialog').center();" }
-        = t('document.log.title')
+    %p
+      %span.live-tipsy-e.float-right.ui-icon.ui-icon-triangle-1-s{ :"original-title" => t('document.log.show'), :onclick => "$(this).closest('.tas10-info-container').find('table.log').slideToggle(); $('#tas10-dialog').center();" }
+      %label.desc= t('document.log.title')
 
     %table.log
       - @doc.log_entries.each_with_index do |log_entry, i|

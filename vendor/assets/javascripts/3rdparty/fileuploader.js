@@ -420,14 +420,16 @@ qq.FileUploaderBasic.prototype = {
     if (this._options.autoUpload) {
       this._filesInProgress++;
     }
+    $(this._element).find('.qq-upload-list-wrapper').fadeIn();
   },
   _onProgress: function(id, fileName, loaded, total){
   },
   _onComplete: function(id, fileName, result){
     this._filesInProgress--;
-    if (result.error){
-      this._options.showMessage(result.error);
-    }
+    if (result.error ){
+      this._options.showMessage(result.reason);
+    } else
+      $(this._element).find('.qq-upload-list-wrapper').fadeOut(2000);
   },
   _onCancel: function(id, fileName){
     if (this._options.autoUpload) {
@@ -577,7 +579,7 @@ qq.FileUploader = function(o){
     template: '<div class="qq-uploader">' +
         '<div class="qq-upload-drop-area"><span>{dragText}</span></div>' +
         '<div class="qq-upload-button"><span class="tas10-icon24 tas10-icon-upload white"></span></div>' +
-        '<ul class="qq-upload-list"></ul>' +
+        '<div class="qq-upload-list-wrapper"><a href="#" class="close-upload-report" onclick="$(this).closest(\'.qq-upload-list-wrapper\').hide();">&times;</a><ul class="qq-upload-list"></ul></div>' +
         '</div>',
 
     // template for one item in file list
@@ -1000,6 +1002,7 @@ qq.UploadButton.prototype = {
       right: 0,
       top: 0,
       width: '50px',
+      height: '50px',
       fontFamily: 'Arial',
       // 4 persons reported this, the max values that worked for them were 243, 236, 236, 118
       fontSize: '35px',

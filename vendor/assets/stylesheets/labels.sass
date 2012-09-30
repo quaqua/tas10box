@@ -1,6 +1,6 @@
 
 @import colors
-.tas10-labels, .tas10-acl
+.tas10-labels
   margin: 5px 0 10px
   position: relative
   min-height: 2em
@@ -15,7 +15,7 @@
       opacity: 1
   form
     display: none
-.tas10-label, .tas10-acl-entry
+.tas10-label
   //padding: 2px 18px 2px 5px
   padding: 2px 0 1px 0
   background-color: #50659c
@@ -57,11 +57,15 @@
   .save-button, .close-button, .create-button
     opacity: 0.5
     float: right
-    margin: 6px 3px
+    margin: 4px 0
     &:hover
       opacity: 1
+  .caret
+    margin-top: 10px
   .save-button
     display: none
+  .ui-autocomplete-input
+    width: 250px
 .users-for-group-form
   display: block
   position: relative
@@ -93,15 +97,10 @@
     color: #fff
   &.read
     margin-left: 5px
-.tas10-acl-entry
-  background-color: #b7b
-  &.group
-    background-color: #5a3
 
 @media screen and (-webkit-min-device-pixel-ratio:0)
   .ui-autocomplete-input
     padding: 6px 0 !important
-
 ul.groups-users
   list-style-type: none
   padding-left: 10px
@@ -112,3 +111,25 @@ ul.groups-users
     width: 300px
     &:hover
       background-color: #ffc
+
+.tas10-acl
+  ul
+    list-style: none
+    margin: 0
+    .tas10-acl-entry
+      border-bottom: 1px solid #ccc
+      padding: 5px 0
+      margin: 5px 0
+      .ui-icon-close
+        float: right
+        margin: -2px
+      .privileges
+        float: right
+        border: 1px solid #ccc
+        background-color: #ddd
+        padding: 1px 3px
+        margin: -3px 5px 0 5px
+        font-size: 8px
+        border-radius: 3px
+.input-border
+  border: 1px solid #aaa

@@ -2,4 +2,5 @@
   .browser-actions-bg
     = render :partial => "common/browser_actions", :locals => { :additional_icons => (defined?(additional_icons) ? additional_icons : []), :type => (defined?(type) ? type : nil), :show_checkbox => (defined?(show_checkbox) ? show_checkbox : nil), :template => (defined?(template) ? template : nil) }
 
-  %ul.tas10-list{ :class => "tas10-list-#{@doc ? @doc.id : ''}", :"data-id" => (@doc ? @doc.id : '') }
+  %ul.tas10-list.tas10-right-panel-control{ :class => "tas10-list-#{@doc ? @doc.id : ''}", :"data-id" => (@doc ? @doc.id : '') }
+  .tas10-right-panel

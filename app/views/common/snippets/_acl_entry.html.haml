@@ -1,6 +1,10 @@
-%span.tas10-acl-entry{ :"data-id" => user.id, :class => (user.is_a?(Tas10::Group) ? "group" : nil) }
-  = user.fullname_or_name
-  = acl["privileges"]
-  -if user.id != current_user.id && @doc.privileges.index(/s/)
-    %span.remove.ui-icon.ui-icon-close.live-tipsy{ :"original-title" => t('acl.remove') }
-&nbsp;
+-if user
+  %li.tas10-acl-entry{ :"data-id" => user.id }
+    -if user.is_a?(Tas10::Group)
+      %span.label
+        =t('group')
+    = user.fullname_or_name
+    -if user.id != current_user.id && @doc.privileges.index(/s/)
+      %span.remove.ui-icon.ui-icon-close.live-tipsy-e{ :"original-title" => t('acl.remove') }
+    %span.privileges
+      = acl["privileges"]

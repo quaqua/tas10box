@@ -1,0 +1,22 @@
+.item-actions.ui-helper-clearfix
+  %span.spacer
+  - unless doc.new_record?
+    %a.default.share.live-tipsy{ :"original-title" => t( 'share' ), :onclick => "tas10.showAclMiniDialog( this, '/documents/#{doc._id}/acl', true );"}
+      %span.tas10-icon16.tas10-icon-share
+    %a.default.delete.live-tipsy{ :"original-title" => t( 'delete' ), :"data-method" => "delete", :"data-confirm" => t('really_delete', :name => doc.name), :"data-remote" => true }
+      %span.tas10-icon16.tas10-icon-trash
+    %a.default.details.live-tipsy{ :href => info_document_path(doc), :"data-remote" => true, :"original-title" => t( 'details' )}
+      %span.tas10-icon16.tas10-icon-details
+    %span.spacer
+  - if defined?(additional_icons) && additional_icons
+    - additional_icons.each do |icon|
+      =raw(icon)
+  - unless doc.new_record?
+    %a.new-item{ :href => "/#{doc.class.name.underscore.pluralize}/new?label_ids=#{doc.id}", :"data-remote" => true }
+      %span.float-left=t("#{doc.class.name.underscore.pluralize}.new")
+      %span.tas10-icon16.tas10-icon-new.float-left{ :style => "margin-left: 5px"}
+    %a.new-item{ :href => "#", :"data-remote" => true }
+      %span.float-left=t("upload")
+      %span.tas10-icon16.tas10-icon-upload.float-left{ :style => "margin-left: 5px"}
+
+  %input.new-item{ :type => "hidden", :"data-type" => (defined?(type) && type ? "#{type}s" : 'labels' ), :"data-type-template" => (defined?(template) ? template : nil) }

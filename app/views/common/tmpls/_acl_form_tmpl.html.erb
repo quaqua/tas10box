@@ -3,19 +3,21 @@
     {{if showTitle}}
     <p class="desc"><%= t('acl.share_selected_items') %></p>
     {{/if}}
-    <a class="live-tipsy close-button" href="#" onclick="$(this).closest('form').remove();" original-title="<%= t('close') %>">
-      <span class="ui-icon ui-icon-close"></span>
-    </a>
-    <a class="live-tipsy create-button" href="#" original-title="<%= t('user.invite') %>" style="display:none">
-      <span class="ui-icon ui-icon-disk"></span>
-    </a>
-    <a href="#" class="tas10-acl-priv read sel">r</a>
-    <a href="#" class="tas10-acl-priv write sel">w</a>
-    <a href="#" class="tas10-acl-priv share">s</a>
-    <a href="#" class="tas10-acl-priv del">d</a>
-    <input type="hidden" name="privileges" value="rw" />
-    <input type="hidden" name="email" />
-    <input type="hidden" name="doc_ids" />
-    <select class="select-user-combobox" name="user_id" />
+    <div class="input-border">
+      <a class="live-tipsy close-button" href="#" onclick="$(this).closest('form').remove();" original-title="<%= t('close') %>">
+        <span class="ui-icon ui-icon-close"></span>
+      </a>
+      <a class="live-tipsy create-button" href="#" original-title="<%= t('user.invite') %>" style="display:none">
+        <span class="ui-icon ui-icon-disk"></span>
+      </a>
+      <a href="#" class="tas10-acl-priv read sel">r</a>
+      <a href="#" class="tas10-acl-priv write sel">w</a>
+      <a href="#" class="tas10-acl-priv share">s</a>
+      <a href="#" class="tas10-acl-priv del">d</a>
+      <input type="hidden" name="privileges" value="rw" />
+      <input type="hidden" name="email" />
+      <input type="hidden" name="doc_ids" />
+      <select class="select-user-combobox" name="user_id" />
+    </div>
   </form>
 </script>

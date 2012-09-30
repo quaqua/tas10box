@@ -1,6 +1,6 @@
 .tas10-acl{ :"data-id" => @doc.id }
   %span.tas10-icon16.tas10-icon-plus.add.live-tipsy{ :"original-title" => t('acl.add'), :"data-url" => document_acl_index_path(@doc) }
 
-  %div{ :class => "tas10-acl-#{@doc.id}" }
+  %ul{ :class => "tas10-acl-#{@doc.id}" }
     - @doc.acl.each_pair do |user_id, acl|
       = render :partial => "common/snippets/acl_entry", :locals => { :user => get_user_or_group_by_id(user_id), :acl => acl }

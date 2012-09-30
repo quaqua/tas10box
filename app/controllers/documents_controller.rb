@@ -134,7 +134,7 @@ class DocumentsController < Tas10boxController
   # find any document matching the given query
   #
   def find
-    @conditions = Tas10::Document
+    @conditions = Tas10::Document.all_of
     rebuild_dynamic_parameters
     get_query
     get_label_ids_query
@@ -221,7 +221,7 @@ class DocumentsController < Tas10boxController
       params[:label_ids].split(',').each do |label_id|
         labels_q << { :label_ids => Moped::BSON::ObjectId(label_id) }
       end
-      @conditions = @conditions.where({ :"$or" => labels_q })
+      @conditions = @conditions.all_of({ :"$or" => labels_q })
       @labels = Tas10::Document.in(:id => params[:label_ids].split(',')).all_with_user( current_user )
       @query << (@query.size > 0 ? "|" : "") << @labels.first.name if @labels.size > 0
     end

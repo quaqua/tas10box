@@ -58,7 +58,7 @@ $(function(){
 
 		// enter key pressed
 		if( e.keyCode === 13 ){
-			if( $(this).val().length > 1 && $(this).val().substring(0,1) === ':' ){
+			if( $(this).val().length > 1 && $(this).val().substring(0,1) === '#' ){
 				var sel = $('#tas10-find .selected-res');
 				if( sel.length ){
 					tas10.appendFindFilter( sel );
@@ -94,7 +94,7 @@ $(function(){
 			return;
 		}
 
-		if( $(this).val().length > 2 && $(this).val().substring(0,1) === ':' ){
+		if( $(this).val().length > 2 && $(this).val().substring(0,1) === '#' ){
 			var labelName = $(this).val().substring(1,$(this).val().length-1);
 			$.ajax({url: '/documents/find', data: { 
 						query: labelName, labelable: true, findCombo: true

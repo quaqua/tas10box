@@ -12,7 +12,7 @@
 
     = render :partial => "common/browser_actions", :locals => {:show_checkbox => true}
 
-  .results-overview
+  .results-overview.tas10-right-panel-control
     %span.desc
       =t('found', :count => @docs.size)
     %strong.desc
@@ -26,4 +26,5 @@
           %span.tas10-label.float-left{ :style => (label.color.blank? ? '' : "color: #fff; background-color:#{label.color}") }
             =label.name
 
-  %ul.tas10-list{ :class => "tas10-list-#{CGI::escape(@query).gsub('%','')}" }
+  %ul.tas10-list.tas10-right-panel-control{ :class => "tas10-list-#{CGI::escape(@query).gsub('%','')}" }
+  .tas10-right-panel

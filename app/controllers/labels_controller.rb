@@ -94,12 +94,18 @@ class LabelsController < Tas10boxController
   private
 
   def get_labelables_query
-    q = Tas10::Document
+    q = ( params[:_type] ? params[:_type].classify.constantize : Tas10::Document )
     q = q.where( :label_ids => [] ) if params[:roots]
     q = q.where( :label_ids => Moped::BSON::ObjectId(params[:id]) ) if params[:id]
     q = q.where( :labelable => true ) unless params[:any]
     q = q.where( :name => /#{params[:term]}/i ) unless params[:term].blank?
-    q = q.where( :template => /#{params[:template]}/i ) unless params[:template].blank?
+    unless params[:template].blank?
+      if params[:template] == 'empty'
+        q = q.all_of( :"$or" => [{ :template => ''}, {:template => nil}] )
+      else
+        q = q.where( :template => /#{params[:template]}/i )
+      end
+    end
     q
   end
 

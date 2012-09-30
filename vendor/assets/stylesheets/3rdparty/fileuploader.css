@@ -9,7 +9,7 @@
   width: 50px;
   height: 50px;
   padding: 0;
-  background: #a11;
+  background: #777;
 }
 .qq-upload-button .tas10-icon24 {
   float: left;
@@ -56,6 +56,30 @@
   padding: 0;
   list-style: none;
 }
+.qq-upload-list-wrapper{
+  display: none;
+  position: absolute;
+  top: 0;
+  right: -420px;
+  width: 400px;
+  z-index: 5;
+  background: #fff;
+  padding: 10px;
+  border: 1px solid #aaa;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+.qq-upload-list-wrapper .close-upload-report{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.qq-upload-list-close{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+}
 .qq-upload-list li {
   margin: 0;
   padding: 9px;
@@ -70,7 +94,7 @@
 }
 .qq-upload-spinner {
   display: inline-block;
-  background: url("loading.gif");
+  background: url("/assets/loading_16x16w.gif");
   width: 15px;
   height: 15px;
   vertical-align: text-bottom;

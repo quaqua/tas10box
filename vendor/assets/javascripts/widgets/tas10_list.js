@@ -67,14 +67,6 @@ $(function(){
 (function( jQuery ){
 
   var setupTas10ListEvents = function(list){
-  
-    $('#' + $(list).attr('id') + ' li').live('mouseenter', function(e){
-      if( $(this).hasClass('loading') )
-        return;
-      $(this).find('.item-quick-actions-container').fadeIn(200)
-    }).live('mouseleave', function(e){
-      $(this).find('.item-quick-actions-container').fadeOut(200)
-    });
 
     $('#' + $(list).attr('id')).closest('.action-container').find('.refresh').bind('click', function(){
       $('#' + $(list).attr('id')).tas10List('reload');

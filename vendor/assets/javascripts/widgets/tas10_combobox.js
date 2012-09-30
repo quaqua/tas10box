@@ -137,18 +137,11 @@
       .appendTo( ul );
   };
 
-  this.button = $( "<button type='button'>&nbsp;</button>" )
+  this.button = $( "<i class='caret' />" )
     .attr( "tabIndex", -1 )
     .attr( "original-title", "Show All Items" )
     .insertAfter( input )
-    .button({
-      icons: {
-               primary: "ui-icon-triangle-1-s"
-             },
-      text: false
-    })
-  .removeClass( "ui-corner-all" )
-    .addClass( "ui-corner-right ui-button-icon live-tipsy" )
+    .addClass( "live-tipsy" )
     .click(function() {
       // close if already visible
       if ( input.autocomplete( "widget" ).is( ":visible" ) ) {

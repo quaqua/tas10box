@@ -3,46 +3,18 @@
     %a.multi.single.default.select-all.live-tipsy{ :"original-title" => t( 'select_all' )}
       %span.tas10-icon16.tas10-icon-checkbox
   %a.disableable.disabled.multi.single.default.cut.live-tipsy{ :"original-title" => t( 'cut' )}
-    %span.ui-icon.ui-icon-scissors
+    %span.tas10-icon16.tas10-icon-cut
   %a.disableable.disabled.multi.single.default.copy.live-tipsy{ :"original-title" => t( 'copy' )}
-    %span.ui-icon.ui-icon-copy
+    %span.tas10-icon16.tas10-icon-copy
   %a.disableable.disabled.disabled.default.paste.live-tipsy{ :"original-title" => t( 'paste' )}
-    %span.ui-icon.ui-icon-clipboard
-  %a.disableable.disabled.multi.single.default.info.live-tipsy{ :"original-title" => t( 'info' )}
-    %span.ui-icon.ui-icon-lightbulb
+    %span.tas10-icon16.tas10-icon-paste
   %a.disableable.disabled.multi.single.default.share.live-tipsy{ :"original-title" => t( 'share' )}
-    %span.ui-icon.ui-icon-person
-  %a.disableable.disabled.multi.single.default.edit.live-tipsy{ :"original-title" => t( 'edit' )}
-    %span.ui-icon.ui-icon-pencil
+    %span.tas10-icon16.tas10-icon-share
   %a.disableable.disabled.multi.single.default.delete.live-tipsy{ :"original-title" => t( 'delete' )}
-    %span.ui-icon.ui-icon-trash
+    %span.tas10-icon16.tas10-icon-trash
   %span.spacer
   - if defined?(additional_icons) && additional_icons
     - additional_icons.each do |icon|
       =raw(icon)
 
-  %a.preferences.context-trigger.live-tipsy{ :"original-title" => t( 'settings' ) }
-    %span.ui-icon.ui-icon-triangle-1-s
-
-    .context-content
-      %h3= t( 'view_type' )
-      %select.tas10-select{ :name => 'view-type-selector' }
-        %option{ :value => 'tree' }= t('tree')
-        %option{ :value => 'list' }= t('list')
-        %option{ :value => 'bussiness-cards' }= t('bussiness_cards')
-        %option{ :value => 'table'}= t('table')
-
-      %h3= t( 'filter' )
-
-      %ul.browser-filter
-        - Tas10box.plugins.each do |plugin|
-          - if plugin.creates
-            %li{ :"data-filter" => plugin.name }
-              %span.tas10-icon16.float-left{ :class => "tas10-icon-#{plugin.name}"}
-
-      .sort-filter.ui-helper-clearfix
-        %h3= t( 'sort' )
-
-        %select.tas10-select{ :name => 'sort' }
-
-  %input.new-item{ :type => "hidden", :"data-type" => (defined?(type) ? type : 'label' ), :"data-type-template" => (defined?(template) ? template : nil) }
+  %input.new-item{ :type => "hidden", :"data-type" => (defined?(type) && type ? "#{type}s" : 'labels' ), :"data-type-template" => (defined?(template) ? template : nil) }

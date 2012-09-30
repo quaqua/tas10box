@@ -6,7 +6,10 @@ tas10['showAclMiniDialog'] = function showAclMiniDialog( elem, action, showTitle
   var form = $($('#acl-form-template').render({ action: action, 
     parentElemId: $(elem).closest('.action-container').attr('id'), showTitle: (showTitle || false) }));
   $('body').append(form);
-  $(form).css({top: $(elem).offset().top, left: $(elem).offset().left}).show();
+  var left = $(elem).offset().left;
+  if ( $(elem).offset().left + 380 > $(window).width())
+    left = ($(window).width() - 400);
+  $(form).css({top: $(elem).offset().top, left: left}).show();
   if( ! $(form).find('.ui-autocomplete-input').length ){
     $(form).find('.select-user-combobox').tas10Combobox({ 
       submitOnSelect: true,

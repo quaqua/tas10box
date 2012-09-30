@@ -94,8 +94,8 @@
 	    	$(container).html( options.content );
 	    	var centerTab = '';
 	    	//$(centerTab).append('<span class="tab-sprite tab-close"></span>');
-	    	if( options.title.length > 12 )
-	    		centerTab = $('<span data-attr-name="name" data-id="'+options.id+'" class="tab-title item_'+options.id+'_title">'+options.title.substring(0,12)+'</span>');
+	    	if( options.title.length > 18 )
+	    		centerTab = $('<span data-attr-name="name" data-id="'+options.id+'" class="tab-title item_'+options.id+'_title">'+options.title.substring(0,17)+'</span>');
 	    	else
 	    		centerTab = $('<span data-attr-name="name" data-id="'+options.id+'" class="tab-title item_'+options.id+'_title">'+options.title+'</span>');
 	    	var shortOpts = options;
@@ -104,7 +104,7 @@
 	    	$(tab).append('<span class="ui-icon ui-icon-close tab-close"></span>');
 	    	$(tab).append(centerTab);
 	    	$(tab)
-	    	if( options.title.length > 12 )
+	    	if( options.title.length > 18 )
 	    		  $(tab).attr('original-title', options.title)
 	    		  		.addClass('live-tipsy');
 	    	$(tab).show();

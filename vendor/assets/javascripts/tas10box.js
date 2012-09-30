@@ -28,6 +28,7 @@
 //= require widgets/tas10_tree
 //= require widgets/tas10_table
 //= require widgets/tas10_settings_tabs
+//= require widgets/tas10_right_panel
 //= require i18n
 //= require i18n/translations
 
@@ -43,6 +44,11 @@ $( function(){
   $('.tas10-checkbox').live('click', function(e){
     $(this).toggleClass('checked');
   });
+
+  $('.submit-form').live('click', function(e){
+    e.preventDefault();
+    $(this).closest('.tab-content').find('form').submit();
+  })
 
   $('.comment-form-trigger').live('click', function(){
     $(this).closest('tr').next('tr').show().find('textarea').focus();

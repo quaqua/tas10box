@@ -110,7 +110,7 @@ tas10.newDialog = {
   availableCreates: function(){
     var creates = $('[data-tas10-creates]').map( function( item, el ){
             return {value: $(el).attr('data-tas10-creates'),
-             name: $(el).attr('title') }
+             name: $(el).attr('original-title') }
           }).get();
     creates.push({value: 'label', name: I18n.t('labels.title') });
     return creates;

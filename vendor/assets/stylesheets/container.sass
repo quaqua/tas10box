@@ -60,19 +60,18 @@
     padding: 6px 30px 6px 10px
     cursor: pointer
     width: 90px
-    &:hover
-      background: rgba(255,255,255,0.5)
-      .tab-close
-        opacity: 0.5
-        background-color: #000
-        background-image: url("/assets/3rdparty/jquery-ui/images/ui-icons_ffffff_256x240.png")
     .tab-title
       float: left
       width: 300px
+      font-size: 10px
     &.active
       background: #f0f0f0
       font-weight: 900
       cursor: default
+      .tab-close
+        background-color: #f0f0f0
+        &:hover
+          background-color: #444
   .tab-sprite
     width: 10px
     height: 20px
@@ -92,12 +91,13 @@
       max-width: 100px
       overflow: hidden
   .tab-close
-    opacity: 0.5
-    background-color: rgba(0,0,0,0.1)
-    border-radius: 10px
     position: absolute
     top: 4px
     right: 3px
     cursor: pointer
+    background-color: #AB5
+    &:hover
+      background-image: url("/assets/3rdparty/jquery-ui/images/ui-icons_ffffff_256x240.png")
+      background-color: #444
   .center
     font-size: 12px

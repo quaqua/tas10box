@@ -22,4 +22,8 @@ module Tas10box
     attr_accessor :double_click_action, :click_action
   end
 
+  class NavBarBottomPlugin < Plugin
+    attr_accessor :double_click_action, :click_action
+  end
+
 end

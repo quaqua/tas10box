@@ -28,7 +28,7 @@ body
   margin: 0
   padding: 0
   //background-image: url("/assets/main_bg.png")
-  background-color: #fafafa
+  background-color: $COLOR_MAIN_BG
 
   .btn-tas10
     box-shadow: none
@@ -61,6 +61,9 @@ label, input, textarea
 .float-left
   float: left
 
+.cursor-pointer
+  cursor: pointer
+  
 .desc
   color: #999
   font-size: 10px
@@ -345,7 +348,7 @@ fieldset
   width: 16px
   height: 19px
 
-.browser-actions
+.browser-actions, .item-actions
   padding: 4px
   //border: 1px solid #ddd
   background-color: #f0f0f0
@@ -356,18 +359,27 @@ fieldset
     padding: 3px 5px 3px 4px
   a
     float: left
-    background: none
     padding: 3px 5px 3px 4px
-    &:hover .ui-icon
-      opacity: 1
+    &:hover 
+      .ui-icon, .tas10-icon16
+        opacity: 1
     &.select-all
       margin-left: 10px
+      margin-top: -3px
+    &.new-item, &.upload-item
+      float: right
+    &.float-right
+      float: right
+    &.btn-mini
+      padding: 2px 6px
     .ui-icon
       opacity: 0.5
     &.disabled
       cursor: default
       background: none
       .ui-icon
+        opacity: 0.2
+      .tas10-icon16
         opacity: 0.2
       &:hover
         box-shadow: none
@@ -377,7 +389,9 @@ fieldset
         background-color: #f0f0f0
         opacity: 0.3
     .tas10-icon16
-      margin-top: -2px
+      margin-top: 0
+      opacity: 0.5
+      cursor: pointer
 .form-actions
   padding: 4px
   background-color: #f0f0f0
@@ -465,6 +479,26 @@ fieldset
       position: absolute
       top: 4px
 
+.tas10-right-panel
+  position: absolute
+  z-index: 5
+  right: -250px
+  top: 0
+  bottom: 0
+  width: 239px
+  background: #f0f0f0
+  border-left: 1px solid #ccc
+  padding: 10px
+  display: none
+  overflow: auto
+  height: 100%
+  h1
+    font-size: 14px
+    line-height: 16px
+    margin: 0 0 10px 0
+    .tas10-icon16
+      margin-right: 5px
+
 .tas10-dialog
   display: none
   position: absolute
@@ -506,8 +540,6 @@ fieldset
   .title
     font-size: 14px
     font-weight: 900
-  .info-container
-    min-width: 400px
   h3
     font-size: 12px
     font-weight: 500
@@ -718,3 +750,17 @@ button.ui-button.ui-widget
     border-bottom-right-radius: 0
 #tas10-history
   overflow: auto
+
+.next-to-uploader
+  margin-left: 80px
+
+.add-image, .add-file
+  position: absolute
+  width: 50px
+  height: 50px
+  background-color: #fff
+  border: 1px solid #aaa
+  padding: 2px
+  cursor: pointer
+  &:hover
+    opacity: 1
