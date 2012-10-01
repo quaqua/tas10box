@@ -9,8 +9,10 @@
         %td
           %label.desc= t('document.star')
         %td
+          %a.float-right.live-tipsy-e{:href => "#{@doc.class.name.underscore.pluralize}/#{@doc.id}/edit", :"data-remote" => true, :"original-title" => t('edit') }
+            %span.tas10-icon16.tas10-icon-pencil
           %span.starred{ :"data-id" => @doc.id }
-            %span.tas10-icon16.star.float-left{ :class => "tas10-icon-star-#{@doc.starred ? 'full' : 'empty'}"}
+            %span.tas10-icon16.star.live-tipsy.float-left{ :class => "tas10-icon-star-#{@doc.starred ? 'full' : 'empty'}", :"original-title" => t('document.mark_star') }
       %tr
         %td
           %label.desc= t('document.created')

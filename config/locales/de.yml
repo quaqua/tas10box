@@ -91,6 +91,8 @@ de:
 
   document:
     star: "Favorit"
+    mark_star: "Als Favorit markieren"
+    unmark_star: "Von Favoriten entfernen"
     created: "Angelegt"
     modified: "Geändert"
     saved_with_changes: "'%{name}' wurde gespeichert. Änderungen: %{changes}"
@@ -169,6 +171,7 @@ de:
 
   group:
     name: "Gruppenname"
+    title: "Gruppe"
 
   audit:
     created: "hat '%{name}' angelegt"

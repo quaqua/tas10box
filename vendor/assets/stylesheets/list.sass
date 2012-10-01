@@ -4,13 +4,20 @@
 .content-list
   .tas10-list
     top: 130px
-      left: 10px
-      right: 10px
+    left: 10px
+    right: 10px
 
 .tas10-list, .tas10-list-h
   list-style-type: none
   margin: 0
   padding: 0
+  position: absolute
+  top: 30px
+  bottom: 0
+  left: 0
+  right: 0
+  overflow: auto
+
   li
     &.loading
       text-align: center
@@ -41,6 +48,8 @@ li.list-item, .tas10-list-h li
     opacity: 0.3
     &:hover
       opacity: 0.8
+  .edit-short-item
+    margin: 2px 0 0 0
   .starred
     float: right
     width: 20px

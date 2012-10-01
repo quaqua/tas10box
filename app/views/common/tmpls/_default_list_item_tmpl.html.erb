@@ -15,6 +15,7 @@
     {{else}}
       <div class="item-container">
         <span class="type"><span class="tas10-icon16 black tas10-icon-{{:_type.toLowerCase()}} float-left"></span></span>
+        <a href="/documents/{{:_id}}/edit" class="float-right edit-short-item live-tipsy-e" original-title="<%= t('edit') %>"><span class="tas10-icon16 tas10-icon-pencil"></span></a>
         <a href="/{{:_type.toLowerCase()}}s/{{:_id}}" data-remote="true" class="title item_{{:_id}}_title{{if color && color.length > 0}} item-color" style="background-color: {{:color}}{{/if}}" data-attr-name="name-{{:_id}}">{{:name}}</a>
       </div>
     {{/if}}
