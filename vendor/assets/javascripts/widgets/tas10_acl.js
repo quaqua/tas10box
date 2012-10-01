@@ -32,7 +32,7 @@ tas10['showAclMiniDialog'] = function showAclMiniDialog( elem, action, showTitle
         $(select).closest('.tas10-acl-form').find('.create-button').hide();
       }
     });
-    $(form).find('.ui-autocomplete-input').on()
+    //$(form).find('.ui-autocomplete-input').on()
   }
   $(form).find('.ui-autocomplete-input').focus();
 }

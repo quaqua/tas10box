@@ -63,6 +63,9 @@ label, input, textarea
 
 .cursor-pointer
   cursor: pointer
+
+.content-padding
+  padding: 10px
   
 .desc
   color: #999
@@ -340,8 +343,8 @@ fieldset
 
 #tas10-loader
   position: absolute
-  top: 10px
-  left: 17px
+  top: 2px
+  left: 13px
   display: none
   background-color: $button_color
   padding: 7px 6px 4px
@@ -360,7 +363,8 @@ fieldset
   a
     float: left
     padding: 3px 5px 3px 4px
-    &:hover 
+    &:hover
+      text-decoration: none
       .ui-icon, .tas10-icon16
         opacity: 1
     &.select-all
@@ -545,6 +549,15 @@ fieldset
     color: #aaa
     text-transform: uppercase
 
+.form-icon
+  .tas10-icon28
+    opacity: 0.5
+    margin-left: 30px
+  .text
+    margin: 6px 0 0 10px
+    text-transform: uppercase
+    color: #777
+    
 .tas10-form
   label
     text-transform: uppercase
@@ -716,6 +729,18 @@ ul.query-scripts-list
 .ui-widget
   font-size: 12px
   font-family: 'Arial', sans-serif
+.combobox-caret
+  margin-top: 10px
+
+.tas10-combobox
+  display: inline-block
+  border: 1px solid #ccc
+  padding: 2px
+  input
+    border: none
+    margin-left: 5px
+  .combobox-caret
+    margin-right: 5px
 
 button.ui-button.ui-widget
   background: #fff

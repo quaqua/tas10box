@@ -1,8 +1,10 @@
 $(function(){
 	
 	$.views.helpers({
-		formattedDate: function( d ){
-			var t = moment( d ).format('DD.MM.YYYY HH:mm');
+		formattedDate: function( d, format ){
+			if( typeof format === 'undefined' )
+				format = 'DD.MM.YYYY HH:mm';
+			var t = moment( d ).format(format);
 			return t;
 		},
 		t: function( str ){

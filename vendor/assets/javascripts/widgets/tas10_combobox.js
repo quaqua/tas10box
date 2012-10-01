@@ -137,7 +137,7 @@
       .appendTo( ul );
   };
 
-  this.button = $( "<i class='caret' />" )
+  this.button = $( "<i class='caret combobox-caret' />" )
     .attr( "tabIndex", -1 )
     .attr( "original-title", "Show All Items" )
     .insertAfter( input )

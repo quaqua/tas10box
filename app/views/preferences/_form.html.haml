@@ -1,0 +1,26 @@
+.browser-actions-bg
+  .item-actions.ui-helper-clearfix
+    %span.spacer
+    %a.btn.btn-inverse.btn-mini.float-right{ :href => "#" }
+      =t('preferences.restore_defaults')
+
+.content-padding
+  %h1=t('preferences.title')
+
+  - Tas10box::defaults.each_pair do |key, value|
+
+    - if Tas10box::plugins.inject(Array.new){ |t,plugin| t << true if plugin.name == key; t }.size > 0
+      - if value.size > 0
+        =form_tag preferences_path do
+          .row-fluid
+            .span2.form-icon
+              %span.tas10-icon28.float-left{:class => "tas10-icon-#{key.singularize}"}
+              %span.text.float-left=t("#{key.pluralize}.title")
+          -value.each_pair do |k,v|
+            .row-fluid
+              .span8.offset2
+                .form-horizontal
+                  .control-group
+                    %label.control-label=t("#{key}.#{k}")
+                    .controls
+                      =text_field_tag k, ''

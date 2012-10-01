@@ -1,3 +1,3 @@
 module Tas10box
-  VERSION = "0.0.1" unless Tas10box.const_defined?(:VERSION)
+  VERSION = "3.0.2" unless Tas10box.const_defined?(:VERSION)
 end

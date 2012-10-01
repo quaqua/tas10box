@@ -1,0 +1,7 @@
+$('#tas10-main-container').tas10Container( 'append', {
+  replace: true,
+  title: '<%= t('preferences.title') %>', 
+  id: '_preferences', 
+  content: '<%= escape_javascript render('preferences/form') %>'
+  }, function( container ){}
+);

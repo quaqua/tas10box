@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get "/logout" => "Users#logout"
   match '/forgot_password' => "Users#forgot_password"
 
+  get "/preferences" => "Preferences#index"
+
   resources :tas10_users, :controller => "Users"
   resources :users do
     collection do

@@ -26,6 +26,7 @@ de:
   favorites:
     title: "Meine Favoriten"
 
+  filter: "Filter"
   upload: "Hochladen"
   details: "Details"
   new: "Neu"
@@ -132,6 +133,10 @@ de:
     sharing_failed: "'%{name}' konnte nicht mit Person '%{user}' geteilt werden (%{reason})"
   new_dialog:
     title: "Neues Dokument..."
+
+  preferences:
+    title: "Systemweite Einstellungen"
+    restore_defaults: "Standardeinstellungen wiederherstellen"
 
   comments:
     title: "Kommentare"
