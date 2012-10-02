@@ -1,27 +1,36 @@
 .browser-actions-bg
   .item-actions.ui-helper-clearfix
     %span.spacer
-    %a.btn.btn-inverse.btn-mini.float-right{ :href => "#" }
+    %a.btn.btn-warning.btn-mini.float-right{ :href => "#" }
       =t('preferences.restore_defaults')
+    %span.float-right
+      &nbsp;
+    %a.btn.btn-inverse.btn-mini.submit-form.float-right{ :href => "#" }
+      =t('save')
 
 .content-padding
   %h1=t('preferences.title')
 
-  - Tas10box::defaults.each_pair do |key, value|
+  =form_tag preferences_path, :remote => true do
 
-    .row
-      .span8.form-icon{:style => "text-align:center; height: 50px"}
+    - Tas10box::defaults.each_pair do |key, value|
+
+      .row
+        .span8.form-icon{:style => "text-align:center; height: 50px"}
+          -if Tas10box::plugins.inject(Array.new){ |arr,plugin| arr << 1 if plugin.name == key ; arr }.size > 0
+            %span.tas10-icon28.float-left{:class => "tas10-icon-#{key.singularize}"}
+            %span.text.float-left=t("#{key.pluralize}.title")
+
+      - if value.is_a?(Hash)
         -if Tas10box::plugins.inject(Array.new){ |arr,plugin| arr << 1 if plugin.name == key ; arr }.size > 0
-          %span.tas10-icon28.float-left{:class => "tas10-icon-#{key.singularize}"}
-          %span.text.float-left=t("#{key.pluralize}.title")
-
-    - if value.is_a?(Hash)
-      -if Tas10box::plugins.inject(Array.new){ |arr,plugin| arr << 1 if plugin.name == key ; arr }.size > 0
-
-        =form_tag preferences_path, :remote => true do
-          =hidden_field_tag :type, "Hash"
-          =hidden_field_tag :plugin, key
           -value.each_pair do |k,v|
+            -if k.to_s.match(/_desc$/)
+              .row
+                .form-horizontal
+                  .control-group
+                    .controls
+                      .span5.offset1.desc= v
+              -next
             =hidden_field_tag :name, k
             -if v.is_a?(Array)
               .row
@@ -32,17 +41,14 @@
                       .controls
                         -v.each do |entry|
                           .input-append
-                            =text_field_tag "#{k}[]", entry, :class => "span5"
+                            =text_field_tag "#{key}[#{k}][]", entry, :class => "span5"
                             %button.btn
                               %i.icon-minus
                         %br
                         .input-append
-                          =text_field_tag "#{k}[]", '', :class => "span5"
+                          =text_field_tag "#{key}[#{k}][]", '', :class => "span5"
                           %button.btn
                             %i.icon-plus
-                .span1.offset2
-                  %button.submit-form.btn
-                    %i.icon-hdd
             -elsif v.is_a?(Hash)
               -v.each_pair do |name, content|
                 .row
@@ -51,19 +57,22 @@
                       .control-group
                         %label.control-label="#{k}:#{name}"
                         .controls
-                          =text_field_tag "#{k}[#{name}]", content
-                  .span1
-                    %button.submit-form.btn
-                      %i.icon-hdd
+                          =text_field_tag "#{key}[#{k}][#{name}]", content, :class => "span5"
+            -elsif v.is_a?(String)
+              .row
+                .span5.offset1
+                  .form-horizontal
+                    .control-group
+                      %label.control-label="#{k}"
+                      .controls
+                        =text_field_tag "#{key}[#{k}]", v, :class => "span5"
 
-      - else
-        -value.each_pair do |k,v|
-          -if v.is_a?(Hash)
-            ="not implemented"
-          - elsif v.is_a?(Array)
-            .row
-              =form_tag preferences_path, :remote => true do
-                =hidden_field_tag :name, key
+        - else
+          -value.each_pair do |k,v|
+            -if v.is_a?(Hash)
+              ="not implemented"
+            - elsif v.is_a?(Array)
+              .row
                 .span5.offset1
                   .form-horizontal
                     .control-group
@@ -80,12 +89,7 @@
                           %button.btn
                             %i.icon-plus
 
-                .span1.offset2
-                  %button.submit-form.btn
-                    %i.icon-hdd
-          - elsif v.is_a?(String)
-            =form_tag preferences_path, :remote => true do
-              =hidden_field_tag :name, key
+            - elsif v.is_a?(String)
               .row
                 .span5.offset1
                   .form-horizontal
@@ -94,5 +98,3 @@
                       .controls
                         .input-append
                           =text_field_tag "#{key}[#{k}]", v, :class => "span5"
-                          %button.submit-form.btn
-                            %i.icon-hdd

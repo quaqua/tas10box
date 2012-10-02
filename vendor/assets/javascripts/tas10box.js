@@ -54,6 +54,8 @@ $( function(){
       form = $(this).closest('.tab-content').find('form:visible');
       if( form.length === 1 )
         form.submit();
+      else
+        alert('more than one forms found ('+form.length+')')
     }
   })
 

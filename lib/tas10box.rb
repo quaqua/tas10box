@@ -33,6 +33,10 @@ module Tas10box
     options ? Tas10::Defaults::write( options ) : Tas10::Defaults::read
   end
 
+  def self.defaults_set( key, value )
+    Tas10::Defaults::set(key, value)
+  end
+
   def self.root
     File::expand_path "../../", __FILE__
   end

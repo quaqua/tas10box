@@ -6,6 +6,10 @@ module Tas10
       @defaults.merge!( options )
     end
 
+    def self.set( key, value )
+      @defaults[key] = value if @defaults.has_key?(key)
+    end
+
     def self.read
       @defaults ||= HashWithIndifferentAccess.new({ :locales => ["de", "en"], 
         :site => { :name => 'My Company' },

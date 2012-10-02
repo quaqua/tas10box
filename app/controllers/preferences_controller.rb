@@ -6,39 +6,26 @@ class PreferencesController < Tas10boxController
   end
 
   def create
-    @pref = Tas10::Preference.where(:name => params[:name], :plugin => params[:plugin]).first
-    unless @pref
-      @pref = Tas10::Preference.new(:name => params[:name], :plugin => params[:plugin])
-      @pref.content = Tas10box::defaults[params[:name]]
-    end
-    content = params[params[:name].to_sym]
-    if content.is_a?(Array) && content.first.index('{')
-      content = []
-      params[params[:name].to_sym].each do |p|
-        content << eval(p)
+    require 'yaml'
+    params.each_pair do |key, value|
+      next if %w( utf8 authenticity_token _ ).include?(key)
+      if value.is_a?(Hash)
+        value.each_pair do |k,v|
+          if v.is_a?(Array)
+            v.reject!{ |e| e.blank? }
+            v.map!{ |a| a = eval(a) if a.include?("{") ; a }
+          end
+        end
       end
+      Tas10box::defaults_set(key, value)
     end
-    puts "got"
-    puts content.inspect
-    @pref.update(params[:name] => content)
-    if @pref.save
-      if params[:plugin] && Tas10box::defaults[params[:plugin]]
-        p = Tas10box::defaults[params[:plugin]][params[:name]]
-      else
-        p = Tas10box::defaults[params[:name]]
-      end
-      if p.is_a?(Hash)
-        p.merge! content
-      else
-        p = content
-      end
-      puts "SET: "
-      puts Tas10box::defaults[params[:name]]
-      puts ""
-      flash[:notice] = t('saved', :name => params[:name])
-    else
-      flash[:error] = t('saving_failed', :name => params[:name])
+    require 'fileutils'
+    filename = File::join( Rails.root, "config", "tas10box.yml" )
+    FileUtils::cp filename, "#{filename}_bak_#{Time.now.strftime('%Y-%m-%d_%H%M%S')}"
+    File.open(filename, "w") do |f|
+      f.write YAML::dump( Tas10box::defaults )
     end
+    flash[:notice] = t('saved', :name => t('preferences.title') )
   end
 
 end
