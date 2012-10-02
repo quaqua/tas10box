@@ -47,7 +47,14 @@ $( function(){
 
   $('.submit-form').live('click', function(e){
     e.preventDefault();
-    $(this).closest('.tab-content').find('form').submit();
+    var form = $(this).closest('form');
+    if( form.length )
+      form.submit();
+    else{
+      form = $(this).closest('.tab-content').find('form:visible');
+      if( form.length === 1 )
+        form.submit();
+    }
   })
 
   $('.comment-form-trigger').live('click', function(){

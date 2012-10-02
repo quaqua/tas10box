@@ -26,5 +26,5 @@
           %span.tas10-label.float-left{ :style => (label.color.blank? ? '' : "color: #fff; background-color:#{label.color}") }
             =label.name
 
-  %ul.tas10-list.tas10-right-panel-control{ :class => "tas10-list-#{CGI::escape(@query).gsub('%','')}" }
+  %ul.tas10-list.tas10-right-panel-control{ :class => "tas10-list-#{CGI::escape(@query).gsub('%','')}", :style => "top: 120px" }
   .tas10-right-panel

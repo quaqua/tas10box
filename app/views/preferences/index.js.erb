@@ -3,5 +3,13 @@ $('#tas10-main-container').tas10Container( 'append', {
   title: '<%= t('preferences.title') %>', 
   id: '_preferences', 
   content: '<%= escape_javascript render('preferences/form') %>'
-  }, function( container ){}
+  }, function( container ){
+    $('.row .submit-form').attr('disabled', true);
+    $('.row input[type=text]').on('keyup', function(){
+      $(this).closest('form').find('.submit-form').attr('disabled', false);
+    })
+    $('.row form').on('submit',function(){
+      $(this).find('.submit-form').attr('disabled', true);
+    })
+  }
 );

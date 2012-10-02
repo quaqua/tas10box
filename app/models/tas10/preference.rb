@@ -3,6 +3,7 @@ class Tas10::Preference
 
   field :name
   field :plugin
+  field :desc
 
   field :content, type: Hash
 
