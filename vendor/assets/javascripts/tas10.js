@@ -98,6 +98,21 @@ var tas10 = {
   'runWaitingLoaders': function runWaitingLoaders( pos ){
     if( this.loaderWaiting && this.loaderWaiting.length > pos && this.loaderWaiting[ pos ] )
       this.loaderWaiting[ pos ]();
+  },
+
+  'setupCheckbox': function setupCheckbox( elem ){
+
+    var input = $('<input type="checkbox" name="'+$(elem).attr('data-name')+'" />');
+    input.hide();
+    $(elem).after(input);
+
+    $(elem).on('click', function(){
+      if( $(elem).find('.tas10-checkbox').length )
+        $(elem).find('.tas10-checkbox').toggleClass('checked');
+      var checkbox = $(this).next('input[type=checkbox]');
+      checkbox.attr('checked', !checkbox.attr('checked'));
+    })
+
   }
 
 

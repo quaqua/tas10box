@@ -9,5 +9,8 @@ else {
 }
 tas10.appendToList( doc );
 $('[data-id=' + doc._id + ']').effect('highlight', { color: '#fc6' }, 2000 );
+
+  $('.new-dropdown-content').slideUp(200);
+  
 <% end %>
 <%= render "common/process_flash" %>

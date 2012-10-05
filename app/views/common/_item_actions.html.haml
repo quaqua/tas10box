@@ -8,6 +8,15 @@
     %a.default.details.live-tipsy{ :href => info_document_path(doc), :"data-remote" => true, :"original-title" => t( 'details' )}
       %span.tas10-icon16.tas10-icon-details
     %span.spacer
+
+  %a.submit-form.btn.btn-inverse.btn-mini.float-right{ :href => "#"}
+    #{doc.new_record? ? t('create') : t('save')}
+  -unless doc.new_record?
+    %a.live-tipsy.publish-webpage-button.float-right{ :href => publish_webpage_path(doc), :class => "publish-#{doc.id}-button #{doc.published? ? 'published' : nil}", :"original-title" => (doc.published? ? t('webpages.is_published') : t('webpages.is_locked') ), :"data-remote" => true, :"data-method" => "post"}
+      %span.icon-white{ :class => (doc.published? ? "icon-ok-sign" : "icon-ban-circle")}
+    %a.live-tipsy.view-webpage-button.float-right{ :href => webpage_path(doc), :target => "_blank", :"original-title" => t('webpages.view') }
+      %span.icon-eye-open
+
   - if defined?(additional_icons) && additional_icons
     - additional_icons.each do |icon|
       =raw(icon)

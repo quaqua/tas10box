@@ -7,7 +7,7 @@ class UsersController < Tas10boxController
   #
   def login
 
-    return redirect_to root_path if authenticated?
+    return redirect_to dashboard_path if authenticated?
 
     unless request.post?
       respond_to do |format|

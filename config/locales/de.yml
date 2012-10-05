@@ -29,6 +29,7 @@ de:
   filter: "Filter"
   upload: "Hochladen"
   details: "Details"
+  clear: "Zurücksetzen"
   new: "Neu"
   cut: "Ausschneiden"
   select_all: "Alle markieren"
@@ -51,6 +52,7 @@ de:
   move_to: "Verschieben nach"
   copy_to: "Kopieren nach"
   template: "Vorlage"
+  sum: "Summe"
 
   insufficient_rights: "Du besitzt nicht genügend Rechte auf '%{name}' um diese Aktion auszuführen"
   not_found: "Das angeforderte Dokument wurde nicht gefunden"
@@ -76,6 +78,7 @@ de:
 
   really_delete: "Möchtest du '%{name}' wirklich löschen?"
   really_delete_item: "Möchtest du dieses Element wirklich löschen?"
+  really_delete_items: "Möchtest du %{count} Elemente wirklich löschen?"
 
   none: "keine"
   type: "Typ"

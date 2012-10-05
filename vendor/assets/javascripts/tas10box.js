@@ -7,7 +7,9 @@
 //= require 3rdparty/bootstrap.min
 //= require 3rdparty/jquery.timeago
 //= require 3rdparty/moment.min
-//= require 3rdparty/jquery.dragtable
+// require 3rdparty/jquery.dragtable
+//= require 3rdparty/i18n/grid.locale-de
+//= require 3rdparty/jquery.jqGrid.min
 //= require 3rdparty/fileuploader
 //= require tinymce
 //= require tools/center
@@ -46,17 +48,8 @@ $( function(){
   });
 
   $('.submit-form').live('click', function(e){
-    e.preventDefault();
     var form = $(this).closest('form');
-    if( form.length )
-      form.submit();
-    else{
-      form = $(this).closest('.tab-content').find('form:visible');
-      if( form.length === 1 )
-        form.submit();
-      else
-        alert('more than one forms found ('+form.length+')')
-    }
+    form.submit();
   })
 
   $('.comment-form-trigger').live('click', function(){

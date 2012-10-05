@@ -5,7 +5,10 @@ tas10['rightPanel'] = function tas10RightPanel( action, text, callback ){
 
   if( action === 'hide' ){
     rightPanel.animate({right: -250}, 'easeOutQuart').delay(500).hide();
-    rightPanelControl.css('marginRight', 0);
+    if( rightPanelControl.css('position').match(/static|relative/) )
+      rightPanelControl.css({right: 0, width: rightPanelControl.width()+260})
+    else
+      rightPanelControl.css('marginRight', 0);
     return;
   }
 
@@ -16,7 +19,11 @@ tas10['rightPanel'] = function tas10RightPanel( action, text, callback ){
 
   if( !rightPanel.is(':visible') ){
     rightPanel.show().animate({right: 0}, 'easeInQuart');
-    rightPanelControl.css('marginRight', 260)
+    console.log( 'rcontrol', rightPanelControl.first().css('position') );
+    if( rightPanelControl.css('position').match(/static|relative/) )
+      rightPanelControl.css({right: 260, width: rightPanelControl.width()-260})
+    else
+      rightPanelControl.css('marginRight', 260)
   }
   
   if( typeof(callback) === 'function' )

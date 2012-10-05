@@ -2,7 +2,7 @@
   $.widget( "ui.tas10Combobox", {
 
     // These options will be used as defaults
-    options: { url : null, onSelectCallback: null },
+    options: { url : null },
 
     _create: function( ) {
       var self = this,
@@ -63,8 +63,8 @@
           }
         },
         select: function( event, ui ) {
-          if( self.options.onSelectCallback && typeof(self.options.onSelectCallback) === 'function' ){
-            self.options.onSelectCallback.call( this, select, ui );
+          if( self.options.onSelect && typeof(self.options.onSelect) === 'function' ){
+            self.options.onSelect.call( this, select, ui );
             return;
           }
           if( !$(select).find('option[value='+ui.item.id+']').length )

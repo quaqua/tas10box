@@ -112,7 +112,7 @@ $(function(){
         var item = data[i];
         totalColumns = [];
         for( var j in data[i]){
-          if(tas10TableMethods['specialTags'].indexOf(j) >= 0 )
+          if( j.match(tas10TableMethods['specialTags']) )
             continue;
           totalColumns.push(j);
         }
@@ -159,18 +159,15 @@ $(function(){
 
     },
 
-    specialTags: ['_id', 'columns', 'privileges', 'color', 'labelable',
-    'acl', 'history', 'label_ids', 'public', 'taggable', 
-    '_type', 'deleted_at', 'pos', 'starred', 'log_entries', 'versions', 'version'],
+    specialTags: /columns|privileges|color|labelable|acl|history|label_ids|public|taggable|_type|deleted_at|pos|starred|log_entries|versions|version|_id$/,
 
     append: function( elem ){
       var options = $(this).data('options');
 
       elem.columns = [];
-
       // in case if no options.items was passed, any column will be displayed apart from the special tags 
       for( var i in elem ){
-        if(tas10TableMethods['specialTags'].indexOf(i) >= 0 )
+        if(i.match(tas10TableMethods['specialTags']) )
           continue;
         elem.columns.push({ key: i, value: elem[i] });
       }
@@ -181,7 +178,16 @@ $(function(){
           if( options.items[i] in elem )
             elem.columns.push({ key: options.items[i], value: elem[options.items[i]]});
       }
+
       $(this).find('tbody').append( $('#default-table-item-template').render( elem ) );
+
+      if( options.sumCols )
+        tas10TableMethods.updateSumCols();
+
+    },
+
+    updateSumCols: function(){
+
     },
 
     setupSortSelect: function( options ){
@@ -268,6 +274,9 @@ $(function(){
         }
         $(tr).append(th);
       }
+      $(tr).append('<th/>'); // action arrow
+      if( options.sumCols )
+        $(tr).append('<th>'+I18n.t('sum')+'</th>');
 
       $(table).find('thead').remove()
       $(table).append($('<thead>').append(tr));

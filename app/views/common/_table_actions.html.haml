@@ -1,0 +1,30 @@
+.item-actions.ui-helper-clearfix
+  %span.spacer
+  - if defined?(additional_icons) && additional_icons
+    - additional_icons.each do |icon|
+      =raw(icon)
+
+  .limit-selector.float-right
+    %label.desc
+      =t('items_per_page')
+    %select{ :name => "limit" }
+
+  .page-selector.float-right
+    %label.desc
+      =t('page')
+    %select{ :name => "page" }
+
+  .column-selector.tas10-selector.float-right
+    %span.ui-icon.ui-icon-disk.save-columns-to-contact-list.float-left
+    %span.ui-icon.ui-icon-triangle-1-s.float-right
+    %label.desc.float-right
+      =t('columns')
+    %ul.column-content.tas10-selector-content
+
+  - if defined?(script_selector) && script_selector
+    .script-template-selector.tas10-selector.float-right
+      %span.ui-icon.ui-icon-triangle-1-s.float-right
+      %ul.available-scripts.columns.tas10-selector-content
+
+
+  %input.new-item{ :type => "hidden", :"data-type" => (defined?(type) && type ? "#{type}s" : 'labels' ), :"data-type-template" => (defined?(template) ? template : nil) }

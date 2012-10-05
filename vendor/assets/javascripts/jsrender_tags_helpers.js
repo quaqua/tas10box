@@ -13,6 +13,9 @@ $(function(){
 		colorTemplates: ['#aa9d73','#6d87d6','#22884f','#bf4e30','#85a000'],
 		defined: function( val ){
 			return typeof( val ) !== 'undefined';
+		},
+		isObject: function( val ){
+			return (typeof( val ) === 'object' && val);
 		}
 	})
 

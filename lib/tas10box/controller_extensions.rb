@@ -48,10 +48,10 @@ module Tas10box
         end
     
         # checks for valid user and updates user's last_request attribute
-        def renew_authentication( skip_update=:false )
+        def renew_authentication( skip_update=nil )
           #session[:came_from] = request.path_info
           if valid_session?
-            return true if skip_update == :false
+            return true if skip_update
             return current_user.update_request_log( request.env['REMOTE_ADDR'], request.env['REQUEST_PATH'] )
           else
             flash[:error] = I18n.t 'login.session_expired', :limit => Tas10box.defaults[:session_timeout]
@@ -107,6 +107,21 @@ module Tas10box
           else
             flash[:error] = t( 'creation_failed', :name => ( doc.name ? doc.name : '' ), :reason => doc.errors.messages.inspect.to_s )
           end
+        end
+
+        # get a prepared json
+        # for given @docs array
+        # usefull for tas10table responses
+        def get_prepared_json_for_table
+          @count = @docs.size
+          @pages = ( @count > params[:limit].to_i ? @count / params[:limit].to_i : 1 )
+          @docs = @docs.skip((params[:page].to_i - 1) * params[:limit].to_i).limit( params[:page].to_i * params[:limit].to_i )
+          @docs = @docs.all_with_user( current_user )
+          { :total => @count, 
+            :page => params[:page].to_i, 
+            :pages => @pages, 
+            :limit => params[:limit].to_i, 
+            :data => @docs}.to_json
         end
 
         def tas10_safe_update( doc, attrs )

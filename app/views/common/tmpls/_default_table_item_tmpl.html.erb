@@ -7,7 +7,20 @@
       <span class="starred" data-id="{{:_id}}"><span class="tas10-icon16 black tas10-icon-star-{{:(starred ? 'full' : 'empty')}} star"></span></span>
     </td>
     {{for columns}}
-      <td class="sort-{{:#data.key}}"><span class="inl-edit">{{:#data.value}}</span></td>
+      <td class="sort-{{:#data.key}}">
+        {{if ~isObject(#data.value)}}
+          <table class="subtable">
+            {{for #data.value tmpl="#default-subtable-item-template" /}}
+          </table>
+        {{else}}
+          <span class="inl-edit col-val-{{:#data.key}}">{{:#data.value}}</span>
+        {{/if}}
+      </td>
     {{/for}}
+    <td class="action-col">
+      <a data-remote="true" href="/documents/{{:_id}}/info" class="show-details">
+        <i class="icon-chevron-right"></i>
+      </a>
+    </td>
   </tr>
 </script>

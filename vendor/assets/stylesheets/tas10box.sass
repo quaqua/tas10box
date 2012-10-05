@@ -2,6 +2,7 @@
  *= require_tree ./3rdparty/jquery-ui 
  * require 3rdparty/jquery-ui/jquery-ui
  *= require 3rdparty/tipsy
+ *= require 3rdparty/ui.jqgrid
  *= require 3rdparty/fileuploader
  *= require 3rdparty/dragtable
  *= require 3rdparty/bootstrap.min
@@ -48,6 +49,17 @@ input, textarea
   background-color: #fff
   &:hover, &:focus
     outline: none
+
+.edit-cell
+  input
+    padding: 0
+    font-size: 12px
+    line-height: 12px
+    height: auto
+
+.ui-jqgrid-view
+  table
+    border-collapse: separate
 
 label, input, textarea
   font-size: 12px
@@ -396,6 +408,10 @@ fieldset
       margin-top: 0
       opacity: 0.5
       cursor: pointer
+  .keep-open-btn
+    margin: 0 5px
+    .tas10-checkbox
+      margin: -2px 5px 0 0
 .form-actions
   padding: 4px
   background-color: #f0f0f0
@@ -550,6 +566,7 @@ fieldset
     text-transform: uppercase
 
 .form-icon
+  margin-bottom: 10px
   .tas10-icon28
     opacity: 0.5
     margin-left: 30px
@@ -724,7 +741,7 @@ ul.query-scripts-list
   padding: 5px 0
   border-right: none
   border-color: #ddd
-  width: 225px
+  width: 245px
   outline: none
 .ui-widget
   font-size: 12px
@@ -736,6 +753,8 @@ ul.query-scripts-list
   display: inline-block
   border: 1px solid #ccc
   padding: 2px
+  border-radius: 3px
+  width: 265px
   input
     border: none
     margin-left: 5px
