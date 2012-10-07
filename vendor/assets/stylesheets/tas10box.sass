@@ -57,6 +57,12 @@ input, textarea
     line-height: 12px
     height: auto
 
+input.editable
+  padding: 0
+  font-size: 12px
+  line-height: 12px
+  height: auto
+
 .ui-jqgrid-view
   table
     border-collapse: separate
@@ -379,6 +385,11 @@ fieldset
       text-decoration: none
       .ui-icon, .tas10-icon16
         opacity: 1
+    .caret
+      margin: 5px 0 0
+      opacity: 0.5
+      &:hover
+        opacity: 1
     &.select-all
       margin-left: 10px
       margin-top: -3px
@@ -581,8 +592,8 @@ fieldset
     color: #999
     margin
   input[type='text'],input[type='password'],textarea
-    padding: 5px 0
-    font-size: 14px
+    //padding: 5px 0
+    //font-size: 14px
     &:focus
       border-color: #999
     &.name
@@ -601,12 +612,22 @@ fieldset
     color: #999
     margin: 5px
     text-transform: uppercase
+  select.big
+    padding: 6px 5px 5px
 
 .tas10-form-actions
   background: #eaeaea
   padding: 5px
   text-align: right
   border: 1px solid #ccc
+
+.template-button
+  position: absolute
+  top: 52px
+  left: 20px
+  z-index: 3
+  background: #fff
+  padding: 0 2px
 
 ul.tas10-tree
   margin: 0
@@ -807,3 +828,31 @@ button.ui-button.ui-widget
   cursor: pointer
   &:hover
     opacity: 1
+
+ul.userlist
+  list-style: none
+  padding: 0
+  margin: 0
+  li
+    padding: 5px
+    border-bottom: 1px solid #ddd
+    &:last-child
+      border: none
+    a.name
+      font-size: 16px
+      font-weight: 900
+      line-height: 30px
+ul.table-column-list
+  list-style: none
+  padding: 0
+  margin: 0
+  li
+    padding: 5px
+    border-bottom: 1px solid #ddd
+    &:last-child
+      border: none
+    .tas10-checkbox
+      margin: -3px 5px 0 0
+    .icon-resize-vertical
+      opacity: 0.5
+      cursor: move

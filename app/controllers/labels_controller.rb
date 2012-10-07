@@ -40,6 +40,7 @@ class LabelsController < Tas10boxController
     @doc = get_label_by_id
     @close_dialog = true
     tas10_safe_update( @doc, params[:label] )
+    logger.debug @doc.columns.inspect
     render :template => "documents/update"
   end
 
@@ -73,7 +74,7 @@ class LabelsController < Tas10boxController
     respond_to do |format|
       format.html{ redirect_to "#{dashboard_path}?_type=#{self.class.name.underscore.gsub('_controller','')}&id=#{params[:id]}" }
       format.js do
-        @doc = get_label_by_id
+        @doc = @label = get_label_by_id
         @docs = Tas10::Document.where(:label_ids => Moped::BSON::ObjectId(params[:id]))
         @label_ids = @docs.inject([]){ |arr,doc| arr += doc.label_ids ; arr }
         @labels = Tas10::Document.in(:id => @label_ids ).all_with_user( current_user )

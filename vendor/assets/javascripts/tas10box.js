@@ -65,7 +65,6 @@ $( function(){
   }, function(){
     $(this).attr('src', $(this).attr('src').replace('h.png','.png') );
   })
-
   
   $('.starred').live('click', function(){
     var self = this
@@ -152,6 +151,10 @@ $( function(){
     if( $(e.target).attr('id') === 'tas10-overlay' && $('#tas10-dialog').is(':visible') ){
       $('#tas10-dialog').hide();
       $('#tas10-overlay').hide();
+    }
+    if( $('.popover').length > 0 && $(e.target).closest('.popover').length < 1 && !$(e.target).hasClass('.popover-init') &&
+      $(e.target).closest('.popover-init').length < 1){
+      $('.popover').remove();
     }
     if( $(e.target).attr('id') !== 'button-new-dropdown' && $(e.target).closest('#button-new-dropdown').length < 1 && $('.new-dropdown-content').is(':visible') ){
       $('.new-dropdown-content').slideUp(200);
