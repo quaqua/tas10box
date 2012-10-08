@@ -123,7 +123,7 @@ class DocumentsController < Tas10boxController
   def children_for
     @docs = Tas10::Document
     @docs = @docs.where(:label_ids => Moped::BSON::ObjectId(params[:id])).order_by(:name.asc)
-    if params[:page] && params[:limit]
+    if params[:_search]
       render :json => get_prepared_json_for_table
     else
       @docs = @docs.all_with_user( current_user )
@@ -162,15 +162,37 @@ class DocumentsController < Tas10boxController
   private
 
   def get_prepared_json_for_table
-    @count = @docs.size
-    @pages = ( @count > params[:limit].to_i ? @count / params[:limit].to_i : 1 )
-    @docs = @docs.skip((params[:page].to_i - 1) * params[:limit].to_i).limit( params[:page].to_i * params[:limit].to_i )
-    @docs = @docs.all_with_user( current_user )
+    @docs = @docs.skip((params[:page].to_i - 1) * params[:rows].to_i).limit( params[:page].to_i * params[:rows].to_i )
+    records = @docs.size
+    price_total = 0
+    tickets_total = 0
+    total = ( records > params[:rows].to_i ? records / params[:rows].to_i : 1 )
+    @docs = @docs.all_with_user(current_user).inject(Array.new) do |arr,c|
+      ch = {} #c.as_document.to_hash
+      ch[:id] = c.id
+      c.attribute_names.each do |a|
+        logger.debug a + "," + c.send(:"#{a}").class.name
+        if c.send(:"#{a}").is_a?(Array)
+          ch[:"#{a.sub(/_addresses|_numbers/,'')}"] = c.send(:"#{a}").join(', ') 
+        else
+          ch[:"#{a}"] = c.send(:"#{a}")
+        end
+      end
+      ch[:details] = ["<a data-remote=\"true\" href=\"#{edit_document_path(c)}\" class=\"\"><i class=\"icon-pencil\" /></a>",
+        "<a data-remote=\"true\" href=\"#{info_document_path(c)}\"><i class=\"icon-chevron-right\"></i></a>"].join(' ')
+      logger.debug ch.inspect
+      arr << ch
+    end
+    @docs.sort_by!{ |b| b[:"#{params[:sidx]}"] }
+    @docs.reverse! if params[:sord] == "desc"
+    i=1
+    @docs.map!{ |c| c[:position] = i ; i+= 1 ; c }
+
     { :total => @count, 
       :page => params[:page].to_i, 
-      :pages => @pages, 
-      :limit => params[:limit].to_i, 
-      :data => @docs}.to_json
+      :records => records,
+      :total => total,
+      :rows => @docs }.to_json
   end
 
   def get_doc_by_id

@@ -1,4 +1,5 @@
 <% if flash[:notice] %>
+  $('#tab_<%= @doc.id %> .tab-close').click();
   $('[data-id=<%= @doc.id %>]').remove();
   $('#<%= @doc.id %>').remove();
 <% end %>

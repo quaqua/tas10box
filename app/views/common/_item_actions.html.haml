@@ -3,7 +3,7 @@
   - unless doc.new_record?
     %a.default.share.live-tipsy{ :"original-title" => t( 'share' ), :onclick => "tas10.showAclMiniDialog( this, '/documents/#{doc._id}/acl', true );"}
       %span.tas10-icon16.tas10-icon-share
-    %a.default.delete.live-tipsy{ :"original-title" => t( 'delete' ), :"data-method" => "delete", :"data-confirm" => t('really_delete', :name => doc.name), :"data-remote" => true }
+    %a.default.delete.live-tipsy{ :"original-title" => t( 'delete' ), :"data-method" => "delete", :"data-confirm" => t('really_delete', :name => doc.name), :"data-remote" => true, :href => document_path(doc) }
       %span.tas10-icon16.tas10-icon-trash
     %a.default.details.live-tipsy{ :href => info_document_path(doc), :"data-remote" => true, :"original-title" => t( 'details' )}
       %span.tas10-icon16.tas10-icon-details
