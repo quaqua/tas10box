@@ -65,9 +65,9 @@
                       %label.control-label="#{k}"
                       .controls
                         -if k.match(/_text$/i)
-                          =text_area_tag "#{key}[#{k}][]", v, :class => "span5"
+                          =text_area_tag "#{key}[#{k}]", v, :class => "span5"
                         -else
-                          =text_field_tag "#{key}[#{k}][]", v, :class => "span5"
+                          =text_field_tag "#{key}[#{k}]", v, :class => "span5"
 
         - else
           -value.each_pair do |k,v|
