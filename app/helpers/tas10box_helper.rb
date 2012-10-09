@@ -13,6 +13,12 @@ module Tas10boxHelper
     options
   end
 
+  def has_plugin?( name )
+    Tas10box.plugins.each do |plugin|
+      return true if plugin.name == name
+    end
+  end
+
   def get_templates_for( plugin_name )
     if plugin_name == 'labels'
       return get_tas10box_plugin_options( :label_templates )

@@ -1,7 +1,7 @@
 <% if !flash[:error] %>
 $('#tas10-main-container').tas10Container( 'append', {
   replace: true,
-  title: '<%= @user.name %>', 
+  title: '<%= @user.fullname_or_name %>', 
   id: '_<%= @user.id %>', 
   content: '<%= escape_javascript render('show') %>'
   }, function( container ){ 

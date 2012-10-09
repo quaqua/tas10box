@@ -18,8 +18,10 @@ class CalendarEvent < Tas10::Document
   private
 
   def setup_dates
-    if !starts_at_time.blank? && !ends_at_time.blank? && !starts_at_date.blank? && !ends_at_time.blank?
+    if !starts_at_time.blank? && !starts_at_date.blank?
       self.starts_at = Time.parse( "#{starts_at_date} #{starts_at_time}" )
+    end
+    if !ends_at_time.blank? && !ends_at_time.blank?
       self.ends_at = Time.parse( "#{ends_at_date} #{ends_at_time}" )
     end
   end

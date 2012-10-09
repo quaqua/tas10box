@@ -142,6 +142,7 @@ route "root :to => 'Dashboard#index'"
 # clean up rails defaults
 remove_file 'public/index.html'
 remove_file 'rm public/images/rails.png'
+get 'https://raw.github.com/quaqua/tas10box/master/vendor/assets/images/logo_150x150.png', 'app/assets/images/logo_150x150.png'
 run "echo '*.swp' >> .gitignore"
 run "echo '.DS_Store' >> .gitignore"
 run "echo 'datastore' >> .gitignore"

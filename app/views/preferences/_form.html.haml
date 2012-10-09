@@ -1,17 +1,16 @@
-.browser-actions-bg
-  .item-actions.ui-helper-clearfix
-    %span.spacer
-    %a.btn.btn-warning.btn-mini.float-right{ :href => "#" }
-      =t('preferences.restore_defaults')
-    %span.float-right
-      &nbsp;
-    %a.btn.btn-inverse.btn-mini.submit-form.float-right{ :href => "#" }
-      =t('save')
+=form_tag preferences_path, :remote => true, :class => "preferences-form" do
+  .browser-actions-bg
+    .item-actions.ui-helper-clearfix
+      %span.spacer
+      %a.btn.btn-warning.btn-mini.float-right{ :href => "#" }
+        =t('preferences.restore_defaults')
+      %span.float-right
+        &nbsp;
+      %a.btn.btn-inverse.btn-mini.submit-form.float-right{ :href => "#" }
+        =t('save')
 
-.content-padding
-  %h1=t('preferences.title')
-
-  =form_tag preferences_path, :remote => true do
+  .container-padding
+    %h1=t('preferences.title')
 
     - Tas10box::defaults.each_pair do |key, value|
 
@@ -65,7 +64,10 @@
                     .control-group
                       %label.control-label="#{k}"
                       .controls
-                        =text_field_tag "#{key}[#{k}]", v, :class => "span5"
+                        -if k.match(/_text$/i)
+                          =text_area_tag "#{key}[#{k}][]", v, :class => "span5"
+                        -else
+                          =text_field_tag "#{key}[#{k}][]", v, :class => "span5"
 
         - else
           -value.each_pair do |k,v|
