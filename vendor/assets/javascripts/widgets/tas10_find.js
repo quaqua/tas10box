@@ -20,6 +20,7 @@ $(function(){
       return;
     if( $(this).find('.find-dropdown-content').is(':visible') ){
       $(this).find('.find-dropdown-content').slideUp(200);
+      $('#tas10-find .settings').hide();
       return;
     }
     $('.find-dropdown-content').slideDown(200, function(){
@@ -147,18 +148,25 @@ $(function(){
 		$(this).closest('.find-dropdown-content').slideUp(200);
 	});
 
-	$('#tas10-find .settings').on('hover', function(){
-		if( !tas10.tas10FindSettingsInit ){
-
-			$.getJSON('/query_scripts.json?query=true', function( data ){
-				for( var i in data )
-					$('#tas10-find .available-scripts').append(
-						$('<li/>').attr('data-id', data[i]._id)
-						.attr('data-url', data[i].query)
-						.text(data[i].name) );
-			});
-			tas10.tas10FindSettingsInit = true;
+	$('#tas10-find .settings-trigger').on('click', function(){
+		if( $('#tas10-find .settings').is(':visible') ){
+			$('#tas10-find .settings').slideUp(200);
+			return;
 		}
+
+		$('#tas10-find .settings').slideDown(200, function(){
+			if( !tas10.tas10FindSettingsInit ){
+
+				$.getJSON('/query_scripts.json?query=true', function( data ){
+					for( var i in data )
+						$('#tas10-find .available-scripts').append(
+							$('<li/>').attr('data-id', data[i]._id)
+							.attr('data-url', data[i].query)
+							.html('<a href="/query_scripts/'+data[i]._id+'" data-remote="true">'+data[i].name+'</a>') );
+				});
+				tas10.tas10FindSettingsInit = true;
+			}
+		});
 	})
 
 });

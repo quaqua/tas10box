@@ -157,7 +157,7 @@ class DocumentsController < Tas10boxController
     get_conditions
     get_class_type
     @docs = @conditions.order_by(:name.asc)
-    if params[:page] && params[:limit]
+    if params[:_search]
       render :json => get_prepared_json_for_table
     elsif params[:findCombo]
       @docs = @docs.all_with_user( current_user )

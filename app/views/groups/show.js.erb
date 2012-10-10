@@ -4,7 +4,35 @@ $('#tas10-main-container').tas10Container( 'append', {
   title: '<%= @group.name %>', 
   id: '_<%= @group.id %>', 
   content: '<%= escape_javascript render('show') %>'
-  }, function( container ){  }
+  }, function( container ){ 
+
+    $(container).find('.add-user-combobox').tas10Combobox({ 
+      submitOnSelect: true,
+      url: '/users/' + $('#account-info').data('id') + '/known',
+      emptyDataCallback: function(select, val){
+        var validEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if( validEmail.test( val) ){
+          $(select).closest('.users-for-group-form').find('.create-button').show();
+          var form = $(select).closest('.users-for-group-form');
+          $(form).find('input[name=email]').val( $(form).find('.ui-autocomplete-input').val() );
+          console.log('setting data', $(select).closest('.users-for-group-form').find('.create-button'))
+        } else
+          $(select).closest('.users-for-group-form').find('.create-button').hide();
+      },
+      hasDataCallback: function(select){
+        $(select).closest('.users-for-group-form').find('.create-button').hide();
+      }
+    });
+
+    $('.users-for-group-form .create-button').live('click', function(){
+      var form = $(this).closest('form')
+      $(form).submit();
+    });
+    setTimeout( function(){
+      $(container).find('.ui-autocomplete-input').css({ width: '195px'});
+      $(container).find('.create-button').hide();
+    },50);
+ }
 );
 <% end %>
 <%= render "common/process_flash" %>

@@ -117,9 +117,6 @@ class LabelsController < Tas10boxController
   def create_label
     @doc = Label.new( params[:label] ).with_user( current_user )
     tas10_safe_create( @doc )
-    respond_with @doc do |format|
-      format.js{ render :template => '/documents/create' }
-    end
   end
 
   def label_document_with_label

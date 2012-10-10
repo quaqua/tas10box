@@ -1,0 +1,8 @@
+<%= render "common/create" %>
+<% if flash[:notice] %>
+  if( doc.template && doc.template !== '' && doc.template !== 'keine' && doc.template !== 'none' ){
+    $('.tas10-tree[data-type-template-tree="'+doc.template+'"]').tas10Tree( 'append', doc );
+  } else {
+    $('#tas10-browser-tree').tas10Tree( 'append', doc );
+  }
+<% end %>

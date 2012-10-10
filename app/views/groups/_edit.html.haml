@@ -1,9 +1,19 @@
-.container-padding.user-container
+=form_for @group, :remote => true, :html => {:class => 'user-form tas10-form' } do |f|
 
-  %img.userpic.float-left.x_100{ :src => "#{picture_of_user_path(@group)}/?size=100" }
+  .form-actions
+    %a{ :href => group_path(@group), :"data-remote" => true }
+      =t('cancel')
+    &nbsp;
+    =f.submit t('save'), :class => "btn btn-inverse btn-mini"
 
-  .next-to-picture
-    %h1
-      = @group.name
+  .container-padding.user-container
 
-    =render "form"
+    %img.userpic.float-left.x_100{ :src => "#{picture_of_user_path(@group)}/?size=100" }
+
+    .next-to-picture
+
+      %p
+        %label.desc
+          =t('group.name')
+        %br
+        =f.text_field :name

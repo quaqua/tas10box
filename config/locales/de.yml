@@ -21,13 +21,17 @@ de:
     goto: "Zum Dashboard"
   home:
     title: "Meine Dokumente"
+    title_pl: "Dateibaum"
   history:
     title: "Letzte Änderungen"
+    title_pl: "Systemlog"
   favorites:
     title: "Meine Favoriten"
+    title_pl: "Meine Favoriten"
 
   filter: "Filter"
   apply: "Anwenden"
+  advanced_settings: "Erweiterte Einstellungen"
   upload: "Hochladen"
   details: "Details"
   clear: "Zurücksetzen"
@@ -146,6 +150,7 @@ de:
 
   preferences:
     title: "Systemweite Einstellungen"
+    title_pl: "Systemweite Einstellungen"
     restore_defaults: "Standardeinstellungen wiederherstellen"
 
   comments:
@@ -210,6 +215,7 @@ de:
 
   query_scripts:
     title: "Suchvorlage"
+    save_as: "Als Suchvorlage speichern"
     templates: "Suchvorlagen"
     new: "Neue Suchvorlage"
     name: "Name"
@@ -218,6 +224,7 @@ de:
     doc_types: "Gilt für Dokumente des Typs"
     delete: "Suchvorlage löschen"
     edit: "Suchvorlage bearbeiten"
+  only_of_type: "Nur vom Typ"
 
   mailer:
     welcome: "Willkommen auf tas10box"

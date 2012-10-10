@@ -11,10 +11,23 @@
     %a.submit{ :href => '#' }
       %span.tas10-icon24.float-right.tas10-icon-find
 
-    .settings.context-trigger
-      %span.ui-icon.ui-icon-triangle-1-s
-      .context-content.settings
-        %h4= t( 'settings' )
-        %p= t( 'plugin.script.available' )
-        %ul.available-scripts.query
+    %span.settings-trigger.ui-icon.ui-icon-triangle-1-s
+    
+  .settings
+    %h5= t( 'advanced_settings' )
+
+    %table
+      %tr
+        %td
+          %p=t('query_scripts.title')
+          %ul.available-scripts
+        %td
+          %p=t('only_of_type')
+
+          - Tas10box.plugins.each do |plugin|
+            -if plugin.creates
+              .icn-btn.float-left{:onclick => "$('#tas10-find input[name=types]').val('#{plugin.name}')"}
+                %span.float-left.tas10-icon16{:class => "tas10-icon-#{plugin.name.singularize}"}
+            
+
 
