@@ -24,6 +24,22 @@ module Tas10box
     @plugins ||= []
   end
 
+  # returns if given plugin name is
+  # available
+  #
+  # @param [String,Symbol] name - the name of the plugin
+  # to be looked up
+  #
+  # @returns [Boolean] true/false
+  #
+  def self.has_plugin?( name )
+    name = name.to_sym
+    self.plugins.each do |plugin|
+      return true if plugin.name == name
+    end
+    false
+  end
+
   def self.register_plugin( plugin )
     @plugins ||= []
     @plugins << plugin
