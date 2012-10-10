@@ -25,13 +25,13 @@ class Tas10boxController < ActionController::Base
   
   rescue_from Error404, :with => :render_404
   rescue_from Exception, :with => :render_500 if Rails.env == 'production' && !defined?(JRUBY_VERSION)
-  rescue_from ActionView::MissingTemplate do |exception|
-    if Rails.env == 'production'
-      redirect_to "#{dashboard_path}"
-    else
-      raise exception
-    end
-  end
+  #rescue_from ActionView::MissingTemplate do |exception|
+  #  if Rails.env == 'production'
+  #    redirect_to "#{dashboard_path}"
+  #  else
+  #    raise exception
+  #  end
+  #end
  
  def render_404
     respond_to do |type| 
