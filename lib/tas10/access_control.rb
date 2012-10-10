@@ -121,7 +121,7 @@ module Tas10
           if child.acl[u_id]
             if child.acl[u_id]["inherited"].size > 1
               child.acl[u_id]["inherited"].delete(self.id.to_s)
-              child.acl[u_id]["privileges"] = child.acl[u_id]["inherited"].last[1]
+              child.acl[u_id]["privileges"] = child.acl[u_id]["inherited"][child.acl[u_id]["inherited"].keys.last]
             else
               child.acl.delete(u_id)
             end

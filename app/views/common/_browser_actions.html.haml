@@ -12,6 +12,11 @@
     %span.tas10-icon16.tas10-icon-share
   %a.disableable.disabled.multi.single.default.delete.live-tipsy{ :"original-title" => t( 'delete' )}
     %span.tas10-icon16.tas10-icon-trash
+  -if @doc.is_a?(Label)
+    %a.btn.btn-mini.float-right{:href => edit_label_path(@doc), :"data-remote" => true}
+      %i.tas10-icon16.tas10-icon-pencil.float-right
+    %a.btn.btn-mini.float-right{:href => info_document_path(@doc), :"data-remote" => true, :style => "margin: 0 5px"}
+      %i.tas10-icon16.tas10-icon-details.float-right
   %span.spacer
   - if defined?(additional_icons) && additional_icons
     - additional_icons.each do |icon|

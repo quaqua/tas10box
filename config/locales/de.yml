@@ -96,6 +96,10 @@ de:
   marked_favorite: "'%{name}' wurde zu Favoriten hinzugefügt"
   unmarked_favorite: "'%{name}' wurde von Favoriten entfernt"
 
+  published: "'%{name}' wurde veröffentlicht"
+  unpublished: "'%{name}' wurde für die Öffentlichkeit gesperrt"
+  publishing_failed: "'%{name}' konnte nicht veröffentlicht/gesperrt werden (%{reason})"
+
   document:
     star: "Favorit"
     mark_star: "Als Favorit markieren"

@@ -1,0 +1,8 @@
+<% if flash[:notice] %>
+  <% if @@doc.published? %>
+    $('.publish-<%= @@doc.id %>-button').addClass('published').attr('original-title', '<%= t('@docs.is_published') %>').find('.icon-white').removeClass('icon-ban-circle').addClass('icon-ok-sign');
+  <% else %>
+    $('.publish-<%= @@doc.id %>-button').removeClass('published').attr('original-title', '<%= t('@docs.is_locked') %>').find('.icon-white').removeClass('icon-ok-sign').addClass('icon-ban-circle');
+  <% end %>
+<% end %>
+<%= render "common/process_flash" %>

@@ -33,9 +33,8 @@ module Tas10box
   # @returns [Boolean] true/false
   #
   def self.has_plugin?( name )
-    name = name.to_sym
-    self.plugins.each do |plugin|
-      return true if plugin.name == name
+    @plugins.each do |plugin|
+      return true if plugin.name.to_s == name.to_s
     end
     false
   end

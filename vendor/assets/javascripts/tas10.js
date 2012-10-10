@@ -8,6 +8,10 @@ var tas10 = {
     $('.create-form input[type=text]').val('');
   },
 
+  calcHeight: function(){
+    return $(window).height()-75;
+  },
+
   'disabledContextMenuItems': {},
 
   'dashboard': function( action ){

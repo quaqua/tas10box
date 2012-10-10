@@ -2,6 +2,10 @@
  * tas10tree tas10box plugin (client side)
  */
 
+
+/**
+ * OBSOLETE!
+ */
 tas10.getTreeTemplate = function getTreeTemplate( doc ){
 	var name = '#'+doc._type.toLowerCase()+'-tree-item-template';
 	if( $(name).length )
@@ -9,6 +13,8 @@ tas10.getTreeTemplate = function getTreeTemplate( doc ){
 	else
 		return '#default-tree-item-template';
 };
+
+tas10.treeTemplate = "<li data-id=\"{{:_id}}\" data-_type=\"{{:_type}}\" class=\"item item-context-menu {{if taggable}}taggable{{/if}}\"><div class=\"item-container\"><span class=\"ui-icon ui-icon-triangle-1-e float-left opener\"></span><span class=\"tb-icon16 black tb-icon-{{:_type.toLowerCase()}} float-left\"></span><a href=\"/{{:_type.toLowerCase()}}s/{{:_id}}?browser=true\" data-remote=\"true\" class=\"title item_{{:_id}}_title{{if color && color.length > 0}} item-color\" style=\"background-color: {{:color}}{{/if}}\" data-attr-name=\"name-{{:_id}}\">{{:name}}</a></div></li>";
 
 tas10.updateTreeSelection = function updateTreeSelection( actionContainer ){
 
@@ -30,11 +36,13 @@ tas10.updateTreeSelection = function updateTreeSelection( actionContainer ){
 
 (function( jQuery ){
 
+	$.templates("tas10TreeTmpl", tas10.treeTemplate);
+
 	var loadTreeItemChildren = function loadTreeItemChildren( handle, li, id, callback ){
 		$.getJSON('/labels/' + id + '/children?taggable=true', function(data){
 					if( data && data.length > 0 ){
 						$(li).append('<ul class="children" style="padding-left: 16px"></ul>');
-						$(li).find('ul.children').append( $( tas10.getTreeTemplate( data[0] )).render( data ) );
+						$(li).find('ul.children').append( $.render.tas10TreeTmpl( data ) );
 						$(handle).addClass('open ui-icon-triangle-1-s').removeClass('ui-icon-triangle-1-e');
 			    	} else 
 			    		$(handle).die('click')
@@ -143,7 +151,7 @@ tas10.updateTreeSelection = function updateTreeSelection( actionContainer ){
 					if( 'items' in data )
 						data = data['items'];
 					if( data.length > 0 )
-						$(self).append( $( tas10.getTreeTemplate( data[0] )).render( data ) );
+						$(self).append( $.render.tas10TreeTmpl( data ) );
 					$(self).find('li.loading').remove();
 				});
 	    },
@@ -156,7 +164,7 @@ tas10.updateTreeSelection = function updateTreeSelection( actionContainer ){
 	    				if( !$(li).find('.opener').hasClass('open') )
 	    					$(li).find('.opener').click();
 	    				if( ! $(li).find('ul.children li[data-id='+doc._id+']').length )
-	    					$(li).find('.ul.children').prepend( $( tas10.getTreeTemplate( doc )).render( doc ) );
+	    					$(li).find('.ul.children').prepend( $.render.tas10TreeTmpl( doc ) );
 	    				$(li).find('li[data-id='+doc._id+']').effect('highlight', {color: '#fc6'}, 2000);
 	    			} else
 	    				loadTreeItemChildren( $(li).find('.opener'), li, doc.label_ids[i], function(){
@@ -165,7 +173,7 @@ tas10.updateTreeSelection = function updateTreeSelection( actionContainer ){
 	    				});
 	    		}
 	    	else
-	    		$(this).prepend( $( tas10.getTreeTemplate( doc )).render( doc ) );
+	    		$(this).prepend( $.render.tas10TreeTmpl( doc ) );
 	    },
 	    unselectAll: function(){
 	    	$('.selected-item').removeClass('selected-item');

@@ -78,6 +78,22 @@ class DocumentsController < Tas10boxController
     respond_with @doc
   end
 
+  def publish
+    if @doc = get_doc_by_id
+      @doc.can_read?( anybody ) ? @doc.unshare( anybody ) : @doc.share( anybody, 'r' )
+      if @doc.update( :acl => @doc.acl )
+        if @doc.published?
+          flash[:notice] = t('published', :name => @doc.name)
+        else
+          flash[:notice] = t('unpublished', :name => @doc.name)
+        end
+      else
+        flash[:error] = t('publishing_failed', :name => @doc.name, :reason => @doc.errors.messages.inspect.to_s)
+      end
+    end
+  end
+
+
   def sort
     succeeded = 0
     if params[:item]
