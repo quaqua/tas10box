@@ -1,6 +1,56 @@
 module Tas10
 
+  module AccessControlClassMethods
+
+    # copy access from relation (belongs_to)
+    #
+    # copies access from relation into this object's acl
+    #
+    # @example
+    #   belongs_to :webpage
+    #   copy_access_from :webpage
+    #
+    def copy_access_from( klass )
+      @copy_access_from ||= []
+      @copy_access_from << klass unless @copy_access_from.include?(klass)
+    end
+
+    def copy_access_from_objects
+      @copy_access_from ||= []
+    end
+    
+    # copy access to relation (has_many)
+    #
+    # copies access from relation into this object's acl
+    #
+    # @example
+    #   belongs_to :webpage
+    #   copy_access_from :webpage
+    #
+    def copy_access_to( klass )
+      @copy_access_to ||= []
+      @copy_access_to << klass unless @copy_access_to.include?(klass)
+    end
+
+    def copy_access_to_objects
+      @copy_access_to ||= []
+    end
+
+  end
+
   module AccessControl
+
+    # return all objects which have been defined via
+    # copy_access_from method
+    def copy_access_from_objects
+      self.class.copy_access_from_objects.map{ |a| instance_eval(a.to_s) }
+    end
+
+    # return all objects which have been defined via
+    # copy_access_to method
+    def copy_access_to_objects
+      self.class.copy_access_to_objects.map{ |a| instance_eval(a.to_s) }
+    end
 
     # shares this document with given
     # user and privileges
@@ -86,25 +136,21 @@ module Tas10
     end
 
     def share_children
-      children.each do |child|
-        collect_positive_changes.each_pair do |u_id, acl|
-          if child.acl[u_id]
-            if child.acl[u_id]["privileges"].size < acl["privileges"].size
-              child.acl[u_id]["privileges"] = acl["privileges"]
-            end
-            child.acl[u_id]["inherited"][self.id.to_s] = acl["privileges"]
-          else
-            acl["inherited"] = {self.id.to_s => acl["privileges"]}
-            child.acl[u_id] = acl
-          end
-        end
-        child.versionless do
-          child.save(:safe => true)
+      share_children_of( children )
+      [copy_access_to_objects].each do |objs|
+        objs.each do |obj|
+          share_children_of( obj )
         end
       end
     end
 
-    def check_label_ids
+    def check_access_inheritance
+      # relations like belongs_to
+      copy_access_from_objects.each do |klass|
+        klass.acl.each_pair do |aid,a|
+          self.acl[aid] = a
+        end
+      end
       return if label_ids.blank?
       label_ids.each do |label_id|
         if label = Tas10::Document.where(:id => label_id).first
@@ -116,7 +162,18 @@ module Tas10
     end
 
     def unshare_children
-      children.each do |child|
+      unshare_children_of( children )
+      [copy_access_to_objects].each do |objs|
+        objs.each do |obj|
+          unshare_children_of( obj )
+        end
+      end
+    end
+
+    private
+
+    def unshare_children_of( obj )
+      obj.each do |child|
         collect_negative_changes.each do |u_id|
           if child.acl[u_id]
             if child.acl[u_id]["inherited"].size > 1
@@ -133,7 +190,24 @@ module Tas10
       end
     end
 
-    private
+    def share_children_of( obj )
+      obj.each do |child|
+        collect_positive_changes.each_pair do |u_id, acl|
+          if child.acl[u_id]
+            if child.acl[u_id]["privileges"].size < acl["privileges"].size
+              child.acl[u_id]["privileges"] = acl["privileges"]
+            end
+            child.acl[u_id]["inherited"][self.id.to_s] = acl["privileges"]
+          else
+            acl["inherited"] = {self.id.to_s => acl["privileges"]}
+            child.acl[u_id] = acl
+          end
+        end
+        child.versionless do
+          child.save(:safe => true)
+        end
+      end
+    end
 
     def collect_positive_changes
       return @positive_changes if @positive_changes

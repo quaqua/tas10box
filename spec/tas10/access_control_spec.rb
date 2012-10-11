@@ -102,4 +102,14 @@ describe "Access Control" do
     @doc1.reload.acl.size.should == 1
   end
 
+  it "defines classes which should give access to this subclass by copy_access_from class method" do
+    PlainSubDoc.copy_access_from_objects.size.should == 1
+    PlainSubDoc.copy_access_from_objects.first.should == :plain_doc
+  end
+
+  it "defines classes which should inherit acl to this subclass by copy_access_to class method" do
+    PlainDoc.copy_access_to_objects.size.should == 1
+    PlainDoc.copy_access_to_objects.first.should == :plain_sub_docs
+  end
+
 end

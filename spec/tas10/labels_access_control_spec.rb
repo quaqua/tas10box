@@ -55,4 +55,30 @@ describe "Label Inheritance Access Control" do
     doc5.can_read?( @b ).should == true
   end
 
+  it "gives access to all has_many relations on subdoc creation" do
+    @doc1.plain_sub_docs.size.should == 0
+    subdoc = PlainSubDoc.create_with_user( @a, :name => 'Oscar', :plain_doc => @doc1 )
+    @doc1.plain_sub_docs.size.should == 1
+    PlainSubDoc.where(:id => subdoc.id).first_with_user( @b ).name.should == 'Oscar'
+  end
+
+  it "unshares subdocs relations along with document" do
+    d = PlainDoc.where(:id => @doc1.id).first_with_user( @a )
+    d.unshare( @b )
+    d.save.should == true
+    d = PlainDoc.where(:id => @doc1.id).first_with_user( @a )
+    d.can_read?( @b ).should == false
+    PlainSubDoc.first_with_user( @a ).privileges(@b).should == ''
+    PlainSubDoc.first_with_user( @b ).should == nil
+  end
+
+  it "gives access to all has_many relations" do
+    d = PlainDoc.create_with_user( @a, :name => 'dd' )
+    psd1 = PlainSubDoc.create_with_user( @a, :name => 'psd1', :plain_doc => d )
+    PlainSubDoc.where(:id => psd1.id).first_with_user( @b ).should == nil
+    d.share( @b, "rwsd" )
+    d.save.should == true
+    PlainSubDoc.where(:id => psd1.id).first_with_user( @b ).name.should == 'psd1'
+  end
+
 end
