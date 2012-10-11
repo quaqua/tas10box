@@ -8,8 +8,20 @@ var tas10 = {
     $('.create-form input[type=text]').val('');
   },
 
-  calcHeight: function(){
-    return $(window).height()-75;
+  /**
+   * calculate the height of the window
+   * and subtract a given number from it (e.g. space on top)
+   *
+   * @param [Number] num - the num to subtract. defaults: 75
+   *
+   */
+  calcHeight: function(num){
+    if( typeof(num) === 'undefined' )
+      num = 75
+    var height = $(window).height()-num;
+    if( height < 100)
+      height = 100;
+    return height;
   },
 
   'disabledContextMenuItems': {},

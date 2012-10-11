@@ -1,9 +1,9 @@
 <% if flash[:notice] && @doc %>
-  <% @doc.log_entries.last.changed_fields.each do |attr| %>
-    <% next if attr == 'name' %>
-    <% next if @doc.send(attr).nil? || !@doc.send(attr).is_a?(String) %>
-    $('[data-attr-name="<%= attr %>-<%= @doc.id %>"]').text( '<%= escape_javascript(@doc.send(attr)) %>' );
-    $('[data-attr-name="<%= attr %>-<%= @doc.id %>"]').effect('highlight', { color: '#fc6' }, 2000 );
+  <% @doc.attributes.each_pair do |key,attr| %>
+    <% next if key == 'name' %>
+    <% next if attr.blank? || !%w(String Fixnum).include?(attr.class.name) %>
+    $('[data-attr-name="<%= key %>-<%= @doc.id %>"]').text( '<%= escape_javascript(attr.to_s) %>' );
+    $('[data-attr-name="<%= key %>-<%= @doc.id %>"]').effect('highlight', { color: '#fc6' }, 2000 );
   <% end %>
   $('[data-attr-name="name-<%= @doc.id %>"]').text( '<%= escape_javascript(@doc.name) %>' );
   $('[data-attr-name="name-<%= @doc.id %>"]').effect('highlight', { color: '#fc6' }, 2000 );
