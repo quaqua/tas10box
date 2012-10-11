@@ -30,6 +30,9 @@ de:
     title_pl: "Meine Favoriten"
 
   filter: "Filter"
+  commands_desc: "Sonderzeichen und Funktion"
+  add_label_and_add_to_search: "Labels suchen und zur aktuellen Suche hinzufügen"
+  add_field_and_add_to_search: "Feld zur Suche hinzufügen"
   apply: "Anwenden"
   advanced_settings: "Erweiterte Einstellungen"
   upload: "Hochladen"

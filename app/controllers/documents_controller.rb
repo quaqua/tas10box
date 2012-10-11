@@ -160,9 +160,11 @@ class DocumentsController < Tas10boxController
     if params[:_search]
       render :json => get_prepared_json_for_table
     elsif params[:findCombo]
+      @docs = @docs.limit( 30 )
       @docs = @docs.all_with_user( current_user )
       render :json => @docs.to_json
     else
+      @docs = @docs.limit( 100 )
       @docs = @docs.all_with_user( current_user )
       respond_to do |format|
         format.json{ render :json => @docs.to_json }
@@ -227,6 +229,18 @@ class DocumentsController < Tas10boxController
     if params[:"_type"] && params[:"_type"].size > 1
       @conditions = @conditions.where(:"_type" => params[:"_type"].classify)
       @query << (@query.size > 0 ? "|" : "") << params[:"_type"]
+    end
+    if params[:types] && params[:types].size > 1
+      types = []
+      params[:types].split(',').each do |t| 
+        if t == 'events'
+          types << 'WebpageEvent'
+          types << 'CalendarEvent'
+        else
+          types << t.singularize.classify
+        end
+      end
+      @conditions = @conditions.in(:_type => types)
     end
   end
 

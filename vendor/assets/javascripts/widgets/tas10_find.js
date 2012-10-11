@@ -6,9 +6,25 @@ tas10['appendFindFilter'] = function( sel ){
 
 }
 
+tas10['loadFindSettings'] = function(){
+
+	
+
+	if( !tas10.tas10FindSettingsInit ){
+
+		$.getJSON('/query_scripts.json?query=true', function( data ){
+			$('#tas10-find .available-scripts').append( $.render.tas10FindQueryScriptMarkup(data) );
+		});
+		tas10.tas10FindSettingsInit = true;
+	}
+
+};
+
 tas10['tas10FindSettingsInit'] = false;
 
 $(function(){
+
+	$.templates('tas10FindQueryScriptMarkup', "<li data-id=\"{{:_id}}\" data-url=\"{{:url}}\"><a href=\"/query_scripts/{{:_id}}\" data-remote=\"true\">{{:name}}</a></li>");
 
   $('#button-find-dropdown').hover(function(e){
     $(this).css('opacity', 1) },
@@ -20,17 +36,18 @@ $(function(){
       return;
     if( $(this).find('.find-dropdown-content').is(':visible') ){
       $(this).find('.find-dropdown-content').slideUp(200);
-      $('#tas10-find .settings').hide();
       return;
     }
     $('.find-dropdown-content').slideDown(200, function(){
     	$('.find-dropdown-content [name=query]').focus();
+    	tas10.loadFindSettings();
     });
   });
 
 	$('#tas10-find input[name=query]').val('');
 	$('#tas10-find input[name=label_ids]').val('');
 	$('#tas10-find input[name=conditions]').val('');
+	$('#tas10-find input[name=types]').val('');
 
 	$.templates('tas10FindLabelResMarkup', "<li data-id=\"{{:_id}}\">{{:name}}</li>");
 
@@ -50,11 +67,19 @@ $(function(){
 			  , id = $(item).data('id');
 			if( $(this).prev('.path').find('.path-item').length === 0 ){
 				item = $('#tas10-find .conditions').find('.field-condition:last');
-			  	field = $('#tas10-find [name=conditions]');
-			  	id = $(item).text();
+			  field = $('#tas10-find [name=conditions]');
+			  id = $(item).text();
 			}
 			$(field).val( $(field).val().replace(','+id,'').replace(id+',','').replace(id,'') );
 			$(item).remove();
+
+			if( $(this).prev('.types').find('.add-type').length === 0 ){
+				item = $('#tas10-find .types').find('.add-type:last');
+			  field = $('#tas10-find [name=types]');
+			  id = $(item).attr('data-name');
+				$(field).val( $(field).val().replace(','+id,'').replace(id+',','').replace(id,'') );
+				$(item).remove();
+			}
 		}
 
 		// enter key pressed
@@ -138,7 +163,8 @@ $(function(){
 	$('#tas10-find .tas10-icon-find').on('click', function(){
 		if( $('#tas10-find input[name=query]').val().length > 0 ||
 			$('#tas10-find input[name=conditions]').val().length > 0 ||
-			$('#tas10-find input[name=label_ids]').val().length > 0 )
+			$('#tas10-find input[name=label_ids]').val().length > 0 ||
+			$('#tas10-find input[name=types]').val().length > 0 )
 			$('#tas10-find form').submit();
 		else
 			$('#tas10-find input[name=query]').focus();
@@ -154,19 +180,18 @@ $(function(){
 			return;
 		}
 
-		$('#tas10-find .settings').slideDown(200, function(){
-			if( !tas10.tas10FindSettingsInit ){
+		$('#tas10-find .settings').slideDown(200, tas10.loadFindSettings);
+	})
 
-				$.getJSON('/query_scripts.json?query=true', function( data ){
-					for( var i in data )
-						$('#tas10-find .available-scripts').append(
-							$('<li/>').attr('data-id', data[i]._id)
-							.attr('data-url', data[i].query)
-							.html('<a href="/query_scripts/'+data[i]._id+'" data-remote="true">'+data[i].name+'</a>') );
-				});
-				tas10.tas10FindSettingsInit = true;
-			}
-		});
+	$('#tas10-find .add-type').on('click', function(){
+		$('#tas10-find .types').append( $(this).clone() );
+		var v = [];
+		if( $('#tas10-find input[name=types]').val().length > 1 )
+			v.push( $('#tas10-find input[name=types]').val() )
+		if( v.indexOf( $(this).attr('data-name') ) < 0 )
+			v.push( $(this).attr('data-name') );
+		$('#tas10-find input[name=types]').val( v.join(',') );
+		$('#tas10-find input[type=text]:first').focus();
 	})
 
 });

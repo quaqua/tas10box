@@ -1,5 +1,12 @@
 <%= render "common/create" %>
 <% if flash[:notice] %>
+
+  <% if params[:keep_open] %>
+    $('.tab-content:visible').find('input[type=text]').val('').end()
+  <% else %>
+    $('.tab.active .tab-close').click();
+  <% end %>
+
   if( doc.template && doc.template !== '' && doc.template !== 'keine' && doc.template !== 'none' ){
     $('#tas10-'+ doc.template.replace(/\//g,'-') +'-list')
         .append( $('#' + doc.template.replace(/\//g,'-') + '-list-template').render( doc ) );

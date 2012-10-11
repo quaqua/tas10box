@@ -227,7 +227,6 @@ fieldset
   top: 15px
   left: 167px
   opacity: 0.5
-  text-transform: uppercase
   z-index: 5
   .trigger
     width: 70px
@@ -249,25 +248,30 @@ fieldset
     box-shadow: 3px 3px 3px #777
     #tas10-find
       form
-        margin: 0
+        margin: 10px
         height: 34px
+        border: 1px solid #ccc
+        border-radius: 3px
       .submit
         position: absolute
-        top: 4px
-        right: 30px
+        top: 15px
+        right: 35px
         opacity: 0.5
         &:hover
           opacity: 1
       .settings-trigger
         position: absolute
-        top: 8px
-        right: 10px
+        top: 19px
+        right: 15px
         opacity: 0.5
         &:hover
           opacity: 1
+      legend
+        font-size: 14px
+        line-height: 20px
+        color: #999
       .settings
-        display: none
-        padding: 20px
+        padding: 0 10px 10px
         table
           width: 100%
           td
@@ -275,10 +279,20 @@ fieldset
             &:last-child
               width: 40%
 
-      .icn-btn
+      .icn-btn.add-type
         margin-right: 5px
         border: 1px solid #ccc
         padding: 5px
+        cursor: pointer
+        border-radius: 5px
+        &:hover
+          background: #333
+          .tas10-icon16
+            background-image: url("/assets/tas10-icons_16x16w.png")
+
+      .types
+        .add-type
+          margin: 3px
 
       .available-scripts
         list-style-type: none
@@ -287,8 +301,16 @@ fieldset
         li
           padding: 3px
           cursor: pointer
-          &:hover
-            background-color: #6db4ff
+          margin-bottom: 5px
+          a
+            background: #ddd
+            color: #333
+            padding: 3px 5px
+            text-decoration: none
+            border-radius: 3px
+            &:hover
+              background: #333
+              color: #fff
       input[type=text]
         border: none
         background: none

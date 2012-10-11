@@ -3,7 +3,8 @@
     %input{ :type => 'hidden', :name => 'label_ids' }
     %input{ :type => 'hidden', :name => 'types' }
     %input{ :type => 'hidden', :name => 'conditions' }
-
+    
+    %span.types
     %span.conditions
     %span.path
     %input{ :type => 'text', :name => 'query' }
@@ -14,20 +15,40 @@
     %span.settings-trigger.ui-icon.ui-icon-triangle-1-s
     
   .settings
-    %h5= t( 'advanced_settings' )
+    %legend= t( 'advanced_settings' )
 
     %table
       %tr
         %td
-          %p=t('query_scripts.title')
+          %p.desc=t('query_scripts.title')
           %ul.available-scripts
         %td
-          %p=t('only_of_type')
+          %p.desc=t('only_of_type')
 
           - Tas10box.plugins.each do |plugin|
             -if plugin.creates
-              .icn-btn.float-left{:onclick => "$('#tas10-find input[name=types]').val('#{plugin.name}')"}
+              .icn-btn.float-left.add-type.live-tipsy{ :"original-title" => t("#{plugin.name}.title_pl"), :"data-name" => plugin.name }
                 %span.float-left.tas10-icon16{:class => "tas10-icon-#{plugin.name.singularize}"}
+    .hints{:style => "margin-top: 10px"}
+      %legend=t('commands_desc')
+      %p
+        %strong
+          %tt
+            \#
+        =t('add_label_and_add_to_search')
+        .desc
+          %tt
+            \#label
+      %p
+        %strong
+          %tt
+            \$
+        =t('add_field_and_add_to_search')
+        .desc
+          %tt
+            \$age<20
+            &nbsp;
+            \$gender=male
             
 
 

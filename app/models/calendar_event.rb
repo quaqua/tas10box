@@ -7,6 +7,8 @@ class CalendarEvent < Tas10::Document
   field :note
   field :location
 
+  field :columns, :type => Array
+
   attr_accessor :starts_at_date, :starts_at_time, :ends_at_date, :ends_at_time
   before_save :setup_dates
 
