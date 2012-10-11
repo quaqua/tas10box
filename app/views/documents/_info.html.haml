@@ -17,17 +17,18 @@
         %td
           %label.desc= t('document.created')
         %td
-          %span.small= l( @doc.log_entries.first.created_at )
+          %span.small= l( @doc.log_entries.last.created_at )
           %br
-          %span.small= "#{t('by')} #{@doc.log_entries.first.user.fullname_or_name}"
+          %span.small= "#{t('by')} #{@doc.log_entries.last.user.fullname_or_name}"
       %tr
         %td
           %label.desc= t('document.modified')
         %td
           - if @doc.log_entries.size > 1
-            %span.small= l( @doc.log_entries.last.created_at, :format => :default )
+            %span.small= l( @doc.log_entries.first.created_at, :format => :default )
             %br
-            %span.small= "#{t('by')} #{@doc.log_entries.last.user.fullname_or_name}"
+            -if @doc.log_entries.first.user
+              %span.small= "#{t('by')} #{@doc.log_entries.first.user.fullname_or_name}"
           - else
             %span.small= t('never')
       - if @doc.respond_to? :color
@@ -58,6 +59,7 @@
 
     %table.log
       - @doc.log_entries.each_with_index do |log_entry, i|
+        -next if log_entry.user.nil?
         %tr
           %td.modifier= log_entry.user.fullname_or_name
           %td.created_at= l( log_entry.created_at )

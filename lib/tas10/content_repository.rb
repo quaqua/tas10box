@@ -77,7 +77,7 @@ module Tas10
     module InstanceMethods
 
       def update_log
-        return if skip_audit
+        return if skip_audit && @user.nil?
         c = changed
         c.delete('version')
         c.delete('label_ids')
