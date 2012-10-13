@@ -12,6 +12,9 @@
     %span.tas10-icon16.tas10-icon-share
   %a.disableable.disabled.multi.single.default.info.live-tipsy{ :"original-title" => t( 'details' )}
     %span.tas10-icon16.tas10-icon-details
+  -if defined?(show_edit)
+    %a.disableable.disabled.multi.single.default.edit.live-tipsy{ :"original-title" => t( 'details' )}
+      %span.tas10-icon16.tas10-icon-pencil
   %a.disableable.disabled.multi.single.default.delete.live-tipsy{ :"original-title" => t( 'delete' )}
     %span.tas10-icon16.tas10-icon-trash
   -if @doc.is_a?(Label)

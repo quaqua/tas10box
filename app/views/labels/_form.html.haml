@@ -1,24 +1,27 @@
--label = @label || @docs["label"]
-= form_for( label, :remote => true, :html => {:class => 'tas10-form'} ) do |f|
-  -if label.new_record?
+= form_for( @label, :remote => true ) do |f|
+  
+  =f.submit :style => "display: none"
+
+  .browser-actions-bg
+    = render :partial => "common/item_actions", :locals => {:doc => @label, :skip_view_button => true, :skip_new_button => true, :additional_icons => (@label.new_record? ? ["<a class='keep-open-btn btn btn-mini float-right' data-name='keep_open'><span class='tas10-icon16 tas10-icon-checkbox tas10-checkbox float-left'></span> #{t('keep_open')}</a>"] : nil )}
+
+  -if @label.new_record?
     = f.hidden_field( :label_ids, :class => "tas10-current-label" )
 
-  %p.desc.default-width= t( 'labels.desc' )
+  .content-padding
+    .form-horizontal
 
-  %p
-    %label= t( 'name' )
-    %br
-    = f.text_field( :name, :class => "name js-get-focus", :required => true )
+      .control-group
+        %label.control-label.desc=t('name')
+        .controls
+          =f.text_field :name, :class => "name js-get-focus span4", :required => true
 
-  %p
-    %label= t( 'labels.template' )
-    %br
-    %span.desc.default-width= t( 'labels.template_desc' )
-    %br
-    = f.select( :template, get_tas10box_plugin_options( :label_templates ), :class => "template tas10-select" )
+      .control-group
+        %label.control-label.desc=t('labels.template')
+        .controls
+          =f.select :template, get_tas10box_plugin_options( :label_templates ), :class => "template tas10-select" 
 
-  %p
-    %input.tas10-button.float-right{ :type => 'submit', :value => (label.new_record? ? t( 'create' ) : t('save') ) }
-    %span.float-right.continue-creating.desc
-      %input.continue-editing.tas10-checkbox{ :type => 'checkbox', :name => 'continue-creating' }
-      =t( 'continue_creating' )
+      .control-group
+        %label.control-label.desc=t('labels.as_checkbox')
+        .controls
+          =f.check_box :as_checkbox

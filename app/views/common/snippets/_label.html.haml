@@ -1,4 +1,4 @@
-%span.tas10-label{ :style => (label.color.blank? ? "" : "background-color: #{label.color}"), :"data-id" => label.id }
+%span.tas10-label{ :style => (!label.respond_to?(:color) || label.color.blank? ? "" : "background-color: #{label.color}"), :"data-id" => label.id }
   &nbsp;
   = label.name
   &nbsp;

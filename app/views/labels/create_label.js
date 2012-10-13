@@ -9,7 +9,7 @@
   $('#tas10-browser-tree').tas10Tree( 'append', doc );
   // also in table
   <% @doc.label_ids.each do |label_id| %>
-    $('#tas10-table-<%= label_id %>').tas10Table('append', doc);
+    //$('#tas10-table-<%= label_id %>').tas10Table('append', doc);
     $('#tas10-list-<%= label_id %>').tas10List('append', doc);
   <% end %>
 <% end %>

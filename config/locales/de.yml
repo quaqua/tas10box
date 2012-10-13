@@ -29,6 +29,8 @@ de:
     title: "Meine Favoriten"
     title_pl: "Meine Favoriten"
 
+  list_detail_combo: "Liste + Detailansicht Combo"
+  list: "Liste"
   filter: "Filter"
   commands_desc: "Sonderzeichen und Funktion"
   add_label_and_add_to_search: "Labels suchen und zur aktuellen Suche hinzufügen"
@@ -123,6 +125,7 @@ de:
   labels:
     title: "Label"
     title_pl: "Labels"
+    as_checkbox: "Formular-Checkbox"
     desc: "Labels können wie Ordner in einem Dateisystem verstanden werden. Dokumente können beliebig viele Labels tragen und können so kategorisiert und zugeordnet werden."
     associate_desc: "Zugeordnete Labels helfen, dieses Dokument zu finden und zu verwalten."
     template: "Vorlage"

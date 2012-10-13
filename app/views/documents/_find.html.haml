@@ -14,7 +14,7 @@
         =t('labeled_with')
       .tas10-labels{:style => "margin: 10px 50px 10px 10px"}
         -@labels.each do |label|
-          %span.tas10-label.float-left{ :style => (label.color.blank? ? '' : "color: #fff; background-color:#{label.color}") }
+          %span.tas10-label.float-left{ :style => (!label.respond_to?(:color) || label.color.blank? ? '' : "color: #fff; background-color:#{label.color}") }
             =label.name
 
   %ul.tas10-list.tas10-right-panel-control{ :class => "tas10-list-#{CGI::escape(@query).gsub('%','')}", :style => "top: 120px" }

@@ -24,7 +24,11 @@ tas10['tas10FindSettingsInit'] = false;
 
 $(function(){
 
-	$.templates('tas10FindQueryScriptMarkup', "<li data-id=\"{{:_id}}\" data-url=\"{{:url}}\"><a href=\"/query_scripts/{{:_id}}\" data-remote=\"true\">{{:name}}</a></li>");
+	$.templates('tas10FindQueryScriptMarkup', "<li data-id=\"{{:_id}}\" data-url=\"{{:url}}\" class=\"script-item\"><a href=\"/documents/{{:_id}}\" class=\"float-right\"><i class=\"icon-trash\"/></a> <a href=\"/query_scripts/{{:_id}}\" data-remote=\"true\">{{:name}}</a></li>");
+
+	$('#tas10-find .query-script-item').on('click', function(){
+		$('#button-find-drop .find-dropdown-content').slideUp(200);
+	});
 
   $('#button-find-dropdown').hover(function(e){
     $(this).css('opacity', 1) },
