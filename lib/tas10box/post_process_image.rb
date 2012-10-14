@@ -25,7 +25,11 @@ module Tas10box
       return unless File::exists?( filename )
       img = Magick::Image.read( filename ).first
       img.format = Tas10box::defaults[:post_processor][:image_format] || "PNG"
-      img.crop_resized!(x, y, Magick::CenterGravity)
+      if y
+        img.crop_resized!(x, y, Magick::CenterGravity)
+      else
+        img.resize_to_fill!(x, x)
+      end
       thumbname = "#{File::dirname(filename)}/thumb_#{thumbsize}.#{Tas10box::defaults[:post_processor][:image_format] || 'png'}"
       img.write(thumbname)
     end

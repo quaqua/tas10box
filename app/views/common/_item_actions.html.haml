@@ -35,9 +35,8 @@
         %span.tas10-icon16.tas10-icon-new.float-left
         %span=t("#{doc.class.name.underscore.pluralize}.new")
     -unless defined?(skip_upload_button)
-      -if 1!=1
-        %a.btn.float-right.btn-mini{ :href => "#", :"data-remote" => true, :style => "margin-left: 5px"}
-          %i.tas10-icon16.tas10-icon-upload.float-left
-          %span=t("upload")
+      %a.btn.float-right.btn-mini{ :href => "#upload-modal-#{@webpage.id}", :style => "margin-left: 5px", :"data-toggle" => "modal"}
+        %i.tas10-icon16.tas10-icon-upload.float-left
+        %span=t("upload")
 
   %input.new-item{ :type => "hidden", :"data-type" => (defined?(type) && type ? "#{type}s" : 'labels' ), :"data-type-template" => (defined?(template) ? template : nil) }

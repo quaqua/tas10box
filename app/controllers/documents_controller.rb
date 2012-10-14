@@ -139,6 +139,7 @@ class DocumentsController < Tas10boxController
   def children_for
     @docs = Tas10::Document
     @docs = @docs.where(:label_ids => Moped::BSON::ObjectId(params[:id]))
+    @docs = @docs.where(:_type => params[:_type]) unless params[:_type].blank?
     if params[:order_by] && params[:order_by] == "position"
       @docs = @docs.asc :pos
     else
