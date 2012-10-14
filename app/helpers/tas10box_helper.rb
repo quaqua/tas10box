@@ -24,6 +24,15 @@ module Tas10boxHelper
     end
   end
 
+  def get_label(label_id)
+    Tas10::Document.where(:id => label_id).first_with_user( current_user )
+  end
+
+  def get_label_name(label_id)
+    l = get_label label_id
+    l ? l.name : 'not found'
+  end
+
   def get_options_for_query_script_types
     options = []
     Tas10box.plugins.each do |plugin|

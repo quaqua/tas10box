@@ -1,6 +1,13 @@
 .item-actions.ui-helper-clearfix
   %span.spacer
-  - unless doc.new_record?
+  - if doc.new_record?
+    .path
+      -label_ids =( @doc.label_ids.is_a?(Array) ? @doc.label_ids : @doc.label_ids.split(',') )
+      -label_ids.each do |label_id|
+        %span.label.path-item{ :class => "item_new_webpage_#{label_id}_title", :"data-id" => label_id}
+          =get_label_name(label_id)
+
+  -else
     %a.default.share.live-tipsy{ :"original-title" => t( 'share' ), :onclick => "tas10.showAclMiniDialog( this, '/documents/#{doc._id}/acl', true );"}
       %span.tas10-icon16.tas10-icon-share
     %a.default.delete.live-tipsy{ :"original-title" => t( 'delete' ), :"data-method" => "delete", :"data-confirm" => t('really_delete', :name => doc.name), :"data-remote" => true, :href => "#{doc.class.name.underscore.pluralize}/#{doc.id}" }
@@ -24,12 +31,13 @@
       =raw(icon)
   - unless doc.new_record?
     -unless defined?(skip_new_button)
-      %a.new-item{ :href => "/#{doc.class.name.underscore.pluralize}/new?label_ids=#{doc.id}", :"data-remote" => true }
-        %span.float-left=t("#{doc.class.name.underscore.pluralize}.new")
-        %span.tas10-icon16.tas10-icon-new.float-left{ :style => "margin-left: 5px"}
+      %a.btn.float-right.btn-mini{ :href => "/#{doc.class.name.underscore.pluralize}/new?label_ids=#{doc.id}", :"data-remote" => true, :style => "margin: 0 5px" }
+        %span.tas10-icon16.tas10-icon-new.float-left
+        %span=t("#{doc.class.name.underscore.pluralize}.new")
     -unless defined?(skip_upload_button)
-      %a.new-item{ :href => "#", :"data-remote" => true }
-        %span.float-left=t("upload")
-        %span.tas10-icon16.tas10-icon-upload.float-left{ :style => "margin-left: 5px"}
+      -if 1!=1
+        %a.btn.float-right.btn-mini{ :href => "#", :"data-remote" => true, :style => "margin-left: 5px"}
+          %i.tas10-icon16.tas10-icon-upload.float-left
+          %span=t("upload")
 
   %input.new-item{ :type => "hidden", :"data-type" => (defined?(type) && type ? "#{type}s" : 'labels' ), :"data-type-template" => (defined?(template) ? template : nil) }

@@ -16,6 +16,10 @@ $(function(){
 		},
 		isObject: function( val ){
 			return (typeof( val ) === 'object' && val);
+		},
+		formattedFileSize: function(size){
+			var s = parseInt(parseFloat(size) / 1024).toString()
+			return s + 'kb';
 		}
 	})
 

@@ -3,7 +3,10 @@
     -if user.is_a?(Tas10::Group)
       %span.label.label-info G
       = raw("&nbsp;")
-    = user.fullname_or_name
+    -if user.name == 'anybody'
+      %span.label.label-success=user.name
+    -else
+      = user.fullname_or_name
     -if user.id != current_user.id && @doc.privileges.index(/s/)
       %span.remove.ui-icon.ui-icon-close.live-tipsy-e{ :"original-title" => t('acl.remove') }
     %span.privileges

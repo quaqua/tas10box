@@ -8,7 +8,7 @@ class DataFile < Tas10::Document
   field :extension
   field :published, :type => Boolean, :default => false
 
-  before_save :determine_file_size
+  before_validation :setup_file, :on => :create
   after_save :save_to_datastore
   after_destroy :delete_file
 
@@ -26,23 +26,29 @@ class DataFile < Tas10::Document
   private
 
   def post_process_image
-    return unless @file
     Tas10box::PostProcessImage.run(self.reload)
   end
 
+  def setup_file
+    return unless file
+    self.name = file.original_filename
+    self.content_type = file.content_type
+    puts "GOT FILE"
+    determine_file_size
+  end
+
   def determine_file_size
-    return unless @file
-    @file.rewind
-    self.file_size = @file.read.size
+    file.tempfile.rewind
+    self.file_size = file.tempfile.read.size
   end
 
   def save_to_datastore
-    return unless @file
+    return unless file
     require 'fileutils'
-    @file.rewind
+    file.tempfile.rewind
     FileUtils::mkdir_p(File::dirname(filename)) unless File::exists?(File::dirname(filename))
     self.extension = File::extname(filename)
-    File::open(filename, "w+b") { |f| f.write(@file.read) }
+    File::open(filename, "w+b") { |f| f.write(file.tempfile.read) }
     post_process_image
   end
 

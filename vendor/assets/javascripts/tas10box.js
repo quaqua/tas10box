@@ -11,6 +11,11 @@
 //= require 3rdparty/i18n/grid.locale-de
 //= require 3rdparty/jquery.jqGrid.min
 //= require 3rdparty/fileuploader
+//= require 3rdparty/fileupload/jquery.iframe-transport
+//= require 3rdparty/fileupload/jquery.fileupload
+//= require 3rdparty/fileupload/jquery.fileupload-ui
+//= require 3rdparty/fileupload/tmpl.min
+//= require 3rdparty/fileupload/jquery.fileupload-fp
 //= require tinymce
 //= require tools/center
 //= require tas10

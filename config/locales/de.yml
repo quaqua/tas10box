@@ -151,6 +151,7 @@ de:
     invited_and_shared: "'Person '%{user_name}' wurde ins System eingeladen und '%{doc_name}' mit Rechten '%{privileges}' geteilt."
     invited_but_sharing_failed: "'Person '%{user_name}' wurde ins System eingeladen, aber beim teilen des Dokuments '%{doc_name}' ist leider ein Fehler aufgetreten (%{reason})"
     sharing_failed: "'%{name}' konnte nicht mit Person '%{user}' geteilt werden (%{reason})"
+    readable_for_public: "Öffentlich einsehbar"
   new_dialog:
     title: "Neues Dokument..."
 
@@ -238,3 +239,4 @@ de:
   data_files:
     uploaded: "'%{name}' wurde erfolgreich auf den Server hochgeladen und mit '%{label}' verknüpft"
     uploading_failed: "'%{name}' konnte nicht auf den Server hochgeladen werden"
+    add: "Dateien hochladen..."

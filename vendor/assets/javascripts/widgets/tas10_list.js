@@ -25,7 +25,7 @@ $(function(){
   });
 
   $('.tas10-list li').liveDraggable({
-    handle: '.title a',
+    handle: '.title',
     helper: 'clone',
     tolerance: 'pointer',
     appendTo: 'body',

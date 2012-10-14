@@ -138,7 +138,12 @@ class DocumentsController < Tas10boxController
   #
   def children_for
     @docs = Tas10::Document
-    @docs = @docs.where(:label_ids => Moped::BSON::ObjectId(params[:id])).order_by(:name.asc)
+    @docs = @docs.where(:label_ids => Moped::BSON::ObjectId(params[:id]))
+    if params[:order_by] && params[:order_by] == "position"
+      @docs = @docs.asc :pos
+    else
+      @docs = @docs.order_by(:name.asc)
+    end
     if params[:_search]
       render :json => get_prepared_json_for_table
     else
