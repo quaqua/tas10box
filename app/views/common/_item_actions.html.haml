@@ -35,7 +35,7 @@
         %span.tas10-icon16.tas10-icon-new.float-left
         %span=t("#{doc.class.name.underscore.pluralize}.new")
     -unless defined?(skip_upload_button)
-      %a.btn.float-right.btn-mini{ :href => "#upload-modal-#{@webpage.id}", :style => "margin-left: 5px", :"data-toggle" => "modal"}
+      %a.btn.float-right.btn-mini{ :href => "#upload-modal-#{doc.id}", :style => "margin-left: 5px", :"data-toggle" => "modal"}
         %i.tas10-icon16.tas10-icon-upload.float-left
         %span=t("upload")
 
