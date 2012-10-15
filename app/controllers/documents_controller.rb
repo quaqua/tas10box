@@ -272,6 +272,13 @@ class DocumentsController < Tas10boxController
           @query << (@query.size > 0 ? "|" : "") << cond
           value = value.to_i if ['age','zip'].include?(key)
           @conditions = @conditions.where(:"#{key}" => { :$lt => value })
+        elsif cond.include? '~'
+          key, value = cond.split('~')
+          key = "email_addresses" if key == "email"
+          key = "phone_numbers" if key == "phone"
+          key = "street_addresses" if key == "street"
+          @query << (@query.size > 0 ? "|" : "") << cond
+          @conditions = @conditions.where(:"#{key}" => /#{value}/i )
         end
       end
     end

@@ -1,6 +1,6 @@
 $('#tas10-main-container').tas10Container( 'append', {
-  title: '<%= t("results_for", :query => CGI::escape(@query)).gsub('%','') %>',
-  id: '_query_<%= CGI::escape(@query).gsub('%','').gsub('+','') %>', 
+  title: '<%= t("results_for", :query => CGI::escape(@query)).gsub('%','').gsub(/\]\[/,'') %>',
+  id: '_query_<%= CGI::escape(@query).gsub('%','').gsub('+','').gsub(/\]\[/,'') %>', 
   content: '<%= escape_javascript render("find") %>'
   }, function( container ){
     $(container).find('.tas10-list').tas10List({ data: <%= raw @docs.to_json %>, labels: <%= raw @labels.to_json %> });

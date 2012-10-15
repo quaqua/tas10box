@@ -188,6 +188,8 @@ $(function(){
 	})
 
 	$('#tas10-find .add-type').on('click', function(){
+		if( $('#tas10-find .types [data-name='+$(this).attr('data-name')+']').length )
+			return;
 		$('#tas10-find .types').append( $(this).clone() );
 		var v = [];
 		if( $('#tas10-find input[name=types]').val().length > 1 )
