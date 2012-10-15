@@ -12,7 +12,7 @@ module Tas10
 
     def self.read
       @defaults ||= HashWithIndifferentAccess.new({ :locales => ["de", "en"],
-        :site => { :name => 'My Company' },
+        :site => { :name => 'My Company', :support_email => "support@tastenwerk.com" },
         :session_timeout => 120,
         :datastore => File::join( ::Rails.root, 'datastore' ),
         :common => {

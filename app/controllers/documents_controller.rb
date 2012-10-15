@@ -137,6 +137,10 @@ class DocumentsController < Tas10boxController
   # find children of this document
   #
   def children_for
+    if params[:id].blank?
+      render :json => {}.to_json
+      return
+    end
     @docs = Tas10::Document
     @docs = @docs.where(:label_ids => Moped::BSON::ObjectId(params[:id]))
     @docs = @docs.where(:_type => params[:_type]) unless params[:_type].blank?

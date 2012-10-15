@@ -240,3 +240,4 @@ de:
     uploaded: "'%{name}' wurde erfolgreich auf den Server hochgeladen und mit '%{label}' verknüpft"
     uploading_failed: "'%{name}' konnte nicht auf den Server hochgeladen werden"
     add: "Dateien hochladen..."
+    upload: "Hochladen"

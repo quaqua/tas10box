@@ -14,6 +14,8 @@
 
     - Tas10box::defaults.each_pair do |key, value|
 
+      -next if key.to_s == "datastore"
+
       .row
         .span8.form-icon{:style => "text-align:center; height: 50px"}
           -if Tas10box::plugins.inject(Array.new){ |arr,plugin| arr << 1 if plugin.name == key ; arr }.size > 0
@@ -99,4 +101,4 @@
                       %label.control-label="#{key}:#{k}"
                       .controls
                         .input-append
-                          =text_field_tag "#{key}[#{k}]", v, :class => "span5"
+                          =text_field_tag "#{key}[#{k}]", v, :class => "span5", :disabled => k.match(/domain_name/)

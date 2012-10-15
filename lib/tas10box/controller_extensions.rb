@@ -72,7 +72,6 @@ module Tas10box
           try_authentication(name,password)
         end
 
-
         def create_user_and_invite
           @user = Tas10::User.new( :email => params[:email], :invited_by => current_user.id )
           if @user.save( :safe => true )
