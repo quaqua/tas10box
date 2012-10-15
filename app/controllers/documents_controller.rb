@@ -182,6 +182,7 @@ class DocumentsController < Tas10boxController
           @label_ids = @docs.inject([]){ |arr,doc| arr += doc.label_ids ; arr }
           @query_scripts = QueryScript.all_with_user( current_user )
           @labels = Tas10::Document.in(:id => @label_ids ).all_with_user( current_user )
+          @docs = @docs.map{ |d| d.as_document.to_hash }
         end
       end
     end
@@ -199,7 +200,6 @@ class DocumentsController < Tas10boxController
       ch = {} #c.as_document.to_hash
       ch[:id] = c.id
       c.attribute_names.each do |a|
-        logger.debug a + "," + c.send(:"#{a}").class.name
         if c.send(:"#{a}").is_a?(Array)
           ch[:"#{a.sub(/_addresses|_numbers/,'')}"] = c.send(:"#{a}").join(', ') 
         else
@@ -208,7 +208,6 @@ class DocumentsController < Tas10boxController
       end
       ch[:details] = ["<a data-remote=\"true\" href=\"#{edit_document_path(c)}\" class=\"\"><i class=\"icon-pencil\" /></a>",
         "<a data-remote=\"true\" href=\"#{info_document_path(c)}\"><i class=\"icon-chevron-right\"></i></a>"].join(' ')
-      logger.debug ch.inspect
       arr << ch
     end
     @docs.sort_by!{ |b| b[:"#{params[:sidx]}"] }
