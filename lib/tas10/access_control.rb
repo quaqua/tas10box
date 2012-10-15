@@ -43,13 +43,13 @@ module Tas10
     # return all objects which have been defined via
     # copy_access_from method
     def copy_access_from_objects
-      self.class.copy_access_from_objects.map{ |a| instance_eval(a.to_s) }
+      self.class.copy_access_from_objects.inject(Array.new){ |arr,a| ae = instance_eval(a.to_s) ; arr << ae if ae ; arr }
     end
 
     # return all objects which have been defined via
     # copy_access_to method
     def copy_access_to_objects
-      self.class.copy_access_to_objects.map{ |a| instance_eval(a.to_s) }
+      self.class.copy_access_to_objects.inject(Array.new){ |arr,a| ae = instance_eval(a.to_s) ; arr << ae if ae ; arr }
     end
 
     # shares this document with given
@@ -147,6 +147,7 @@ module Tas10
     def check_access_inheritance
       # relations like belongs_to
       copy_access_from_objects.each do |klass|
+        puts "klass #{klass.inspect}"
         klass.acl.each_pair do |aid,a|
           self.acl[aid] = a
         end

@@ -24,7 +24,7 @@ class HistoryController < Tas10boxController
       :document_type => l.document_type,
       :label_url => l.label_id && document_path(l.label_id),
       :changed_fields => l.changed_fields,
-      :user_url => user_path(l.user_id),
+      :user_url => (l.user_id ? user_path(l.user_id) : nil),
       :user_id => l.user_id,
       :message => t( l.action, 
         :name => ( l.document_id ? 

@@ -258,6 +258,7 @@ class DocumentsController < Tas10boxController
       params[:conditions].split(',').each do |cond|
         if cond.include? '='
           key, value = cond.split('=')
+          value = (value == 'true') if value.match(/true|false/)
           @query << (@query.size > 0 ? "|" : "") << cond
           value = value.to_i if ['age','zip'].include?(key)
           @conditions = @conditions.where(:"#{key}" => value)

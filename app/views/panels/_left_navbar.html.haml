@@ -30,7 +30,7 @@
 
         - Tas10box.plugins.each do |plugin|
 
-          - if plugin.class.name.match(/NavBarPlugin|Application/)
+          - if plugin.class.name.match(/NavBarPlugin|Application|NavBarBottomPlugin/)
             - next if plugin.skip_navbar
 
             .navtab{ :id => "tab_#{ plugin.name }" }
