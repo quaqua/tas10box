@@ -2,10 +2,11 @@
   %span.spacer
   - if doc.new_record?
     .path
-      -label_ids =( @doc.label_ids.is_a?(Array) ? @doc.label_ids : @doc.label_ids.split(',') )
-      -label_ids.each do |label_id|
-        %span.label.path-item{ :class => "item_new_webpage_#{label_id}_title", :"data-id" => label_id}
-          =get_label_name(label_id)
+      -if doc
+        -label_ids =( doc.label_ids.is_a?(Array) ? doc.label_ids : doc.label_ids.split(',') )
+        -label_ids.each do |label_id|
+          %span.label.path-item{ :class => "item_new_webpage_#{label_id}_title", :"data-id" => label_id}
+            =get_label_name(label_id)
 
   -else
     %a.default.share.live-tipsy{ :"original-title" => t( 'share' ), :onclick => "tas10.showAclMiniDialog( this, '/documents/#{doc._id}/acl', true );"}
