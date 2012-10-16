@@ -142,10 +142,13 @@ route "root :to => 'Dashboard#index'"
 # clean up rails defaults
 remove_file 'public/index.html'
 remove_file 'rm public/images/rails.png'
+remove_file 'rm app/assets/images/rails.png'
 get 'https://raw.github.com/quaqua/tas10box/master/vendor/assets/images/logo_150x150.png', 'app/assets/images/logo_150x150.png'
+get 'https://raw.github.com/quaqua/tas10box/master/favicon.ico', 'public/favicon.ico'
 run "echo '*.swp' >> .gitignore"
 run "echo '.DS_Store' >> .gitignore"
 run "echo 'datastore' >> .gitignore"
+run "echo 'tas10box.yml*' >> .gitignore"
 
 # commit to git
 git :init

@@ -1,30 +1,42 @@
-.item-actions.ui-helper-clearfix
-  %span.spacer
-  - if defined?(additional_icons) && additional_icons
-    - additional_icons.each do |icon|
-      =raw(icon)
-
-  .limit-selector.float-right
-    %label.desc
-      =t('items_per_page')
-    %select{ :name => "limit" }
-
-  .page-selector.float-right
-    %label.desc
-      =t('page')
-    %select{ :name => "page" }
-
-  .column-selector.tas10-selector.float-right
-    %span.ui-icon.ui-icon-disk.save-columns-to-contact-list.float-left
-    %span.ui-icon.ui-icon-triangle-1-s.float-right
-    %label.desc.float-right
-      =t('columns')
-    %ul.column-content.tas10-selector-content
-
-  - if defined?(script_selector) && script_selector
-    .script-template-selector.tas10-selector.float-right
-      %span.ui-icon.ui-icon-triangle-1-s.float-right
-      %ul.available-scripts.columns.tas10-selector-content
-
-
-  %input.new-item{ :type => "hidden", :"data-type" => (defined?(type) && type ? "#{type}s" : 'labels' ), :"data-type-template" => (defined?(template) ? template : nil) }
+.browser-actions-bg
+  .item-actions.ui-helper-clearfix
+    %span.spacer  
+    -if defined?(show_checkbox)
+      %a.multi.single.default.select-all.live-tipsy{ :"original-title" => t( 'select_all' )}
+        %span.tas10-icon16.tas10-icon-checkbox
+    -if defined?(add_item)
+      %a.add-table-item.live-tipsy{ :"original-title" => t( 'add' )}
+        %span.tas10-icon16.tas10-icon-plus
+    %a.default.delete-table-items.live-tipsy{ :href => "#", :"original-title" => t( 'delete' ) }
+      %span.tas10-icon16.tas10-icon-trash
+    -if defined?(copy)
+      %a.default.label-table-items.live-tipsy{ :href => "#", :"original-title" => t( 'copy' ) }
+        %span.tas10-icon16.tas10-icon-copy
+    %a.default.refresh-table.live-tipsy{ :href => "#", :"original-title" => t( 'refresh' ) }
+      %span.tas10-icon16.tas10-icon-refresh
+    -if defined?(combo)
+      %a.default.toggle-list-detail.live-tipsy{ :href => "#", :"original-title" => t( 'list_detail_combo' ) }
+        %span.tas10-icon16.tas10-icon-list-detail-combo
+    %a.default.table-settings.context-trigger.live-tipsy{ :href => "#", :"original-title" => t( 'settings' ) }
+      %span.caret
+      .context-content.table-column-setup{ :"data-popover-title" => t('settings') }
+        -columns = ( (@doc && @doc.respond_to?(:columns) && @doc.columns.size > 0) ? @doc.columns : Contact.default_columns)
+        =form_for (@doc ? @doc : QueryScript.new), :remote => true, :html => { :class => (@doc ? nil : "queryscript-columns-form")} do |f|
+          -unless @doc
+            =f.text_field :name, :required => true, :placeholder => t('name')
+            =f.hidden_field :doc_type, :value => ( params[:types] ? params[:types].split(',').first : 'Contact' )
+            =f.hidden_field :query, :value => "?#{raw @query}"
+          %ul.table-column-list
+            =f.fields_for :columns do |c|
+              -columns.each do |col|
+                -column = (col.is_a?(String) ? HashWithIndifferentAccess.new(eval(col)) : col)
+                %li{:style => (column["name"].to_s.downcase.match(/id|details/) ? "display:none" : nil), :"data-col-name" => column["name"] }
+                  =c.hidden_field :content, :name => "#{c.object_name}[]", :class => "span6", :value => column
+                  %span.show-hide-column.tas10-checkbox.tas10-icon16.tas10-icon-checkbox.pull-left{ :class => (column["hidden"] ? nil : "checked" )}
+                  %span.icon-resize-vertical.pull-right
+                  %strong=t("contacts.#{column["name"]}")
+    -if defined?(new_contact)
+      %span.spacer
+      %a.float-right{ :href => "/contacts/new#{"?label_ids=#{@doc.id}" if @doc}", :"data-remote" => true}
+        %span.tas10-icon16.tas10-icon-new.float-left{:style => "margin-right: 5px"}
+        #{t('contacts.new')}

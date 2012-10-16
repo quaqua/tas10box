@@ -59,8 +59,8 @@
 
 	      
 	      $(this).find('.tas10-container-tabs').sortable({ beforeStop: function( e, ui ){
-	      		if( !$(e.toElement).closest('#tas10-tab-container').length )
-	      			$(ui.item).closest('.tas10-container-obj').tas10Container( 'remove', $(ui.item).attr('id').replace('tab_','') );
+	      	//	if( !$(e.toElement).closest('#tas10-tab-container').length )
+	      	//		$(ui.item).closest('.tas10-container-obj').tas10Container( 'remove', $(ui.item).attr('id').replace('tab_','') );
 	      	} 
 	      });
 				

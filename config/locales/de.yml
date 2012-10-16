@@ -51,6 +51,7 @@ de:
   edit: "Bearbeiten"
   save: "Speichern"
   delete: "Löschen"
+  undo: "Rückgängig machen"
   settings: "Einstellungen"
   create: "Anlegen"
   add: "Hinzufügen"
@@ -102,6 +103,8 @@ de:
   saving_failed: "'%{name}' konnte nicht gespeichert werden (%{reason})"
   deleted: "'%{name}' wurde gelöscht"
   deletion_failed: "'%{name} konnte nicht gelöscht werden"
+  restored: "'%{name}' wurde wiederhergestellt"
+  restoring_failed: "'%{name}' konnte nicht wiederhergestellt werden (Support kontaktieren)"
   marked_favorite: "'%{name}' wurde zu Favoriten hinzugefügt"
   unmarked_favorite: "'%{name}' wurde von Favoriten entfernt"
 

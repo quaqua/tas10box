@@ -122,7 +122,7 @@ class DocumentsController < Tas10boxController
     if @doc = get_doc_by_id
       if @doc.can_delete?
         if @doc.destroy
-          flash[:notice] = t('deleted', :name => @doc.name)
+          flash[:notice] = "#{t('deleted', :name => @doc.name)} <a href=\"/documents/#{@doc.id}/restore\" class=\"undo\" data-remote=\"true\" data-method=\"post\">#{t('undo')}</a>"
         else
           flash[:error] = t('deletion_failed', :name => @doc.name)
         end
@@ -132,6 +132,24 @@ class DocumentsController < Tas10boxController
     else
       flash[:error] = t('not_found')
     end
+  end
+
+  def restore
+    params[:keep_open] = true
+    if @doc = Tas10::Document.deleted.where(:id => params[:id]).first_with_user( current_user )
+      if @doc.can_delete?
+        if @doc.restore && @doc.save(:safe => true)
+          flash[:notice] = t('restored', :name => @doc.name)
+        else
+          flash[:error] = t('restoring_failed', :name => @doc.name)
+        end
+      else
+        flash[:error] = t('insufficient_rights', :name => @doc.name)
+      end
+    else
+      flash[:error] = t('not_found')
+    end
+    render :template => "documents/create"
   end
 
   # find children of this document
@@ -254,23 +272,24 @@ class DocumentsController < Tas10boxController
   end
 
   def get_conditions
+    exceptions = ['age','zip','balance','amount']
     if params[:conditions] && params[:conditions].size > 1
       params[:conditions].split(',').each do |cond|
         if cond.include? '='
           key, value = cond.split('=')
           value = (value == 'true') if value.match(/true|false/)
           @query << (@query.size > 0 ? "|" : "") << cond
-          value = value.to_i if ['age','zip'].include?(key)
+          value = value.to_i if exceptions.include?(key)
           @conditions = @conditions.where(:"#{key}" => value)
         elsif cond.include? '>'
           key, value = cond.split('>')
           @query << (@query.size > 0 ? "|" : "") << cond
-          value = value.to_i if ['age','zip'].include?(key)
+          value = value.to_i if exceptions.include?(key)
           @conditions = @conditions.where(:"#{key}" => { :$gt => value })
         elsif cond.include? '<'
           key, value = cond.split('<')
           @query << (@query.size > 0 ? "|" : "") << cond
-          value = value.to_i if ['age','zip'].include?(key)
+          value = value.to_i if exceptions.include?(key)
           @conditions = @conditions.where(:"#{key}" => { :$lt => value })
         elsif cond.include? '~'
           key, value = cond.split('~')

@@ -42,6 +42,7 @@ Rails.application.routes.draw do
       get :info
       get :children_for
       post :sort
+      match :restore
     end
     resources :comments
     resources :labels

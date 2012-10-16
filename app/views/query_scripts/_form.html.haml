@@ -1,24 +1,34 @@
-- @query_script = @doc unless @query_script
-=form_for( @query_script, :remote => true, :class => 'tas10-form' ) do |f|
-  %p
-    %label.desc
-      =t('query_scripts.name')
-    %br
-    =f.text_field :name, :class => 'js-get-focus', :required => true
-  %p
-    %label.desc
-      =t('query_scripts.query')
-    %br
-    =f.text_field :query, :size => 50
-  %p
-    %label.desc
-      =t('query_scripts.columns')
-    %br
-    =f.text_field :columns
-  %p
-    %label.desc
-      =t('query_scripts.doc_types')
-    %br
-    = f.select( :doc_type, get_options_for_query_script_types, :class => "template tas10-select" )
-  %p
-    =f.submit t('create'), :class => "btn btn-inverse"
+=form_for( @query_script, :remote => true ) do |f|
+  
+  =f.submit :style => "display: none"
+
+  .browser-actions-bg
+    = render :partial => "common/item_actions", :locals => {:doc => @query_script, :skip_view_button => true, :skip_new_button => true, :additional_icons => (@query_script.new_record? ? ["<a class='keep-open-btn btn btn-mini float-right' data-name='keep_open'><span class='tas10-icon16 tas10-icon-checkbox tas10-checkbox float-left'></span> #{t('keep_open')}</a>"] : nil )}
+
+  -if @query_script.new_record?
+    = f.hidden_field( :query_script_ids, :class => "tas10-current-query_script" )
+
+  .content-padding
+    .form-horizontal
+
+      .control-group
+        %label.control-label.desc=t('name')
+        .controls
+          =f.text_field :name, :class => "name js-get-focus span4", :required => true
+
+      .control-group
+        %label.control-label.desc=t('query_scripts.query')
+        .controls
+          =f.text_field :query, :class => "span4"
+
+      .control-group
+        %label.control-label.desc=t('query_scripts.columns')
+        .controls
+          =f.fields_for :columns do |c|
+            -@query_script.columns.each do |col|
+              =c.text_field :content, :name => "#{c.object_name}[]", :class => "span10", :value => col
+
+      .control-group
+        %label.control-label.desc=t('query_scripts.doc_types')
+        .controls
+          =f.select( :doc_type, get_options_for_query_script_types, :class => "template tas10-select" )

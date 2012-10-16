@@ -1,8 +1,49 @@
 $('#tas10-main-container').tas10Container( 'append', {
   title: '<%= t("results_for", :query => CGI::escape(@query)).gsub('%','').gsub(/\]\[/,'') %>',
   id: '_query_<%= CGI::escape(@query).gsub('%','').gsub('+','').gsub(/\]\[/,'') %>', 
-  content: '<%= escape_javascript render("find") %>'
+  content: '<%= escape_javascript (params[:types] == 'contacts' ? render("find_contacts") : render("find") ) %>'
   }, function( container ){
-    $(container).find('.tas10-list').tas10List({ data: <%= raw @docs.to_json %>, labels: <%= raw @labels.to_json %> });
+    <% if params[:types] === 'contacts' %>
+        <% columns = Contact.default_columns %>
+
+      var columnNames = <%= raw columns.map{ |c| t("contacts.#{c["name"]}") }.to_json %>;
+      var colModel = <%= raw columns.map{ |c| c["index"] = c["name"] ; c }.to_json %>;
+  
+      var table = $(container).find('#contact-results').jqGrid({
+        datatype: "local",
+        caption: false,
+        width: $(window).width()-380,
+        height: tas10.calcHeight(270),
+        pager: "#contact-results-pager",
+        scroll: true,
+        rownumbers: true,
+        viewrecords: true,
+        gridview: true,
+        scroll: false,
+        keys: true,
+        colNames: columnNames,
+        colModel: colModel,
+        ondblClickRow: function(rowid){
+          tas10.crm.loadContactDetails( rowid, container, true );
+        },
+        onSelectRow: function(rowid){
+          tas10.crm.loadContactDetails( rowid, container, $(container).find('.tas10-icon-list').length );
+        } 
+      });
+      table.jqGrid('bindKeys', {
+        onEnter: function( rowid ) { 
+          tas10.crm.loadContactDetails( rowid, container, true );
+        }
+      } );
+
+      var contacts = <%= raw(@docs.to_json) %>;
+      for(var i=0, contact; contact=contacts[i]; i++ )
+        table.jqGrid('addRowData', contact._id, contact);
+
+      tas10.crm.setupTableActions( container, table );
+
+    <% else %>
+      $(container).find('.tas10-list').tas10List({ data: <%= raw @docs.to_json %>, labels: <%= raw @labels.to_json %> });
+    <% end %>
   }
 );

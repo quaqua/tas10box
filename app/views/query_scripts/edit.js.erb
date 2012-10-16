@@ -1,2 +1,7 @@
-tas10.dialog( 'new', {content: '<%= escape_javascript( render "query_scripts/form" ) %>', 
-                      title: '<%= t("query_scripts.edit", :name => @query_script.name) %>'} );
+$('#tas10-main-container').tas10Container( 'append', {
+  replace: true,
+  title: '<%= @query_script.name %>', 
+  id: '<%= @query_script.id %>', 
+  content: '<%= escape_javascript render('query_scripts/form') %>'
+  }
+);

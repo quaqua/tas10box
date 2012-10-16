@@ -27,15 +27,13 @@ class QueryScriptsController < Tas10boxController
   end
 
   def create
-    @query_script = QueryScript.new( params[:query_script] ).with_user( current_user )
+    @query_script = @doc = QueryScript.new( params[:query_script] ).with_user( current_user )
     tas10_safe_create( @query_script )
   end
 
   def show
     @query_script = @doc = QueryScript.where(:id => params[:id]).first_with_user( current_user )
-    if @query_script.doc_type
-      render :template => "#{@query_script.doc_type}/find"
-    else
+    unless @query_script.doc_type
       render :text => "alert('no template found');"
     end
   end
