@@ -26,7 +26,14 @@ $(function(){
 			if ( parseInt(amount) < 0 )
 				return "<span style=\"color:red\">"+a+"</span>";
 			return a;
+		},
+		notBlank: function( value ){
+			if( value && value.length > 0 )
+				return true;
+			else
+				return false;
 		}
+
 	})
 
 });

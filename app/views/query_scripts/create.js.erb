@@ -2,6 +2,6 @@
   $('.popover').remove();
   tas10.dialog('close');
   $('#tas10-find .available-scripts').append( $.render.tas10FindQueryScriptMarkup(<%= raw @query_script.to_json %>) );
-  <%= render :partial => "#{@query_script.doc_type}/find" %>
+  <%= render :partial => "#{@query_script.doc_type.blank? ? "query_scripts" : @query_script.doc_type}/find" %>
 <% end %>
 <%= render "common/process_flash" %>

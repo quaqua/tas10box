@@ -26,7 +26,7 @@
             -unless @doc
               =f.text_field :name, :required => true, :placeholder => t('name')
               =f.hidden_field :doc_type, :value => ( params[:types] ? params[:types].split(',').first : klass.name )
-              =f.hidden_field :query, :value => "?#{raw @query}"
+              =f.hidden_field :query, :value => @uri
             %ul.table-column-list
               =f.fields_for :columns do |c|
                 -columns.each do |col|
@@ -49,3 +49,8 @@
       %a.float-right{ :href => "/contacts/new#{"?label_ids=#{@doc.id}" if @doc}", :"data-remote" => true}
         %span.tas10-icon16.tas10-icon-new.float-left{:style => "margin-right: 5px"}
         #{t('contacts.new')}
+    -if defined?(new_invoice)
+      %span.spacer
+      %a.float-right{ :href => "/invoices/new#{"?label_ids=#{@doc.id}" if @doc}", :"data-remote" => true}
+        %span.tas10-icon16.tas10-icon-new.float-left{:style => "margin-right: 5px"}
+        #{t('invoices.new')}

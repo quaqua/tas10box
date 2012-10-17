@@ -194,12 +194,12 @@ class DocumentsController < Tas10boxController
       @docs = @docs.limit( 100 )
       @docs = @docs.all_with_user( current_user )
       respond_to do |format|
-        format.json{ render :json => @docs.to_json }
+        format.json{ render :json => @docs.as_json.to_json }
         format.js do
           @label_ids = @docs.inject([]){ |arr,doc| arr += doc.label_ids ; arr }
           @query_scripts = QueryScript.all_with_user( current_user )
           @labels = Tas10::Document.in(:id => @label_ids ).all_with_user( current_user )
-          @docs = @docs.map{ |d| d.as_document.to_hash }
+          @docs = @docs.map{ |d| d.as_json }
         end
       end
     end
@@ -213,25 +213,9 @@ class DocumentsController < Tas10boxController
     price_total = 0
     tickets_total = 0
     total = ( records > params[:rows].to_i ? records / params[:rows].to_i : 1 )
-    @docs = @docs.all_with_user(current_user).inject(Array.new) do |arr,c|
-      ch = {} #c.as_document.to_hash
-      ch[:id] = c.id
-      c.attribute_names.each do |a|
-        if c.send(:"#{a}").is_a?(Array)
-          ch[:"#{a.sub(/_addresses|_numbers/,'')}"] = c.send(:"#{a}").join(', ') 
-        else
-          ch[:"#{a}"] = c.send(:"#{a}")
-        end
-      end
-      ch[:details] = ["<a data-remote=\"true\" href=\"#{edit_document_path(c)}\" class=\"\"><i class=\"icon-pencil\" /></a>",
-        "<a data-remote=\"true\" href=\"#{info_document_path(c)}\"><i class=\"icon-chevron-right\"></i></a>"].join(' ')
-      arr << ch
-    end
+    @docs = @docs.all_with_user(current_user).as_json
     @docs.sort_by!{ |b| b[:"#{params[:sidx]}"] }
     @docs.reverse! if params[:sord] == "desc"
-    i=1
-    @docs.map!{ |c| c[:position] = i ; i+= 1 ; c }
-
     { :total => @count, 
       :page => params[:page].to_i, 
       :records => records,
@@ -271,30 +255,32 @@ class DocumentsController < Tas10boxController
   end
 
   def get_conditions
+    replacements = {"kontostand" => "balance", "email" => "email_addresses", "phone" => "phone_numbers", "street" => "street_addresses", "alter" => "age"}
     exceptions = ['age','zip','balance','amount']
     if params[:conditions] && params[:conditions].size > 1
       params[:conditions].split(',').each do |cond|
         if cond.include? '='
           key, value = cond.split('=')
+          replacements.each_pair{ |replk,replv| key = replv if key.downcase == replk }
           value = (value == 'true') if value.match(/true|false/)
           @query << (@query.size > 0 ? "|" : "") << cond
           value = value.to_i if exceptions.include?(key)
           @conditions = @conditions.where(:"#{key}" => value)
         elsif cond.include? '>'
           key, value = cond.split('>')
+          replacements.each_pair{ |replk,replv| key = replv if key.downcase == replk }
           @query << (@query.size > 0 ? "|" : "") << cond
           value = value.to_i if exceptions.include?(key)
           @conditions = @conditions.where(:"#{key}" => { :$gt => value })
         elsif cond.include? '<'
           key, value = cond.split('<')
+          replacements.each_pair{ |replk,replv| key = replv if key.downcase == replk }
           @query << (@query.size > 0 ? "|" : "") << cond
           value = value.to_i if exceptions.include?(key)
           @conditions = @conditions.where(:"#{key}" => { :$lt => value })
         elsif cond.include? '~'
           key, value = cond.split('~')
-          key = "email_addresses" if key == "email"
-          key = "phone_numbers" if key == "phone"
-          key = "street_addresses" if key == "street"
+          replacements.each_pair{ |replk,replv| key = replv if key.downcase == replk }
           @query << (@query.size > 0 ? "|" : "") << cond
           @conditions = @conditions.where(:"#{key}" => /#{value}/i )
         end

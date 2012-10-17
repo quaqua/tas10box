@@ -1,21 +1,29 @@
 .tas10-list-wrapper.action-container
   .browser-actions-bg
 
-    = render :partial => "common/browser_actions", :locals => {:show_checkbox => true, :additional_icons => ["<a href=\"#\" class=\"save-query-script live-tipsy-e float-right\" original-title=\"#{t('query_scripts.save_as')}\" data-query=\"#{CGI::escape(@uri)}\"><span class=\"ui-icon ui-icon-disk float-right\"/></a>"]}
+    -if @query_script
+      = render :partial => "common/browser_actions", :locals => {:show_checkbox => true}
+    -else
+      = render :partial => "common/browser_actions", :locals => {:show_checkbox => true, :additional_icons => ["<a href=\"#\" class=\"save-query-script live-tipsy-e float-right\" original-title=\"#{t('query_scripts.save_as')}\" data-query=\"#{CGI::escape(@uri)}\"><span class=\"ui-icon ui-icon-disk float-right\"/></a>"]}
 
-  .results-overview.tas10-right-panel-control
-    %span.desc
-      =t('found', :count => @docs.size)
-    %strong.desc
-      ="(#{params[:query]} #{params[:conditions]} )"
+  .container-padding.tas10-right-panel-control
+    -if @query_script
+      %ul.tas10-list{ :class => "tas10-query-list#{@query_script.id}", :style => "top: 120px" }
+    -else
+      .results-overview
+        %span.desc
+          =t('found', :count => @docs.size)
+        %strong.desc
+          ="(#{params[:query]} #{params[:conditions]} )"
 
-    -if @labels
-      %p.ui-helper-clearfix{:margin => "10px 50px 10px 10px"}
-        =t('labeled_with')
-      .tas10-labels{:style => "margin: 10px 50px 10px 10px"}
-        -@labels.each do |label|
-          %span.tas10-label.float-left{ :style => (!label.respond_to?(:color) || label.color.blank? ? '' : "color: #fff; background-color:#{label.color}") }
-            =label.name
+        -if @labels
+          %p.ui-helper-clearfix{:margin => "10px 50px 10px 10px"}
+            =t('labeled_with')
+          .tas10-labels{:style => "margin: 10px 50px 10px 10px"}
+            -@labels.each do |label|
+              %span.tas10-label.float-left{ :style => (!label.respond_to?(:color) || label.color.blank? ? '' : "color: #fff; background-color:#{label.color}") }
+                =label.name
 
-  %ul.tas10-list.tas10-right-panel-control{ :class => "tas10-list-#{CGI::escape(@query).gsub('%','')}", :style => "top: 120px" }
+      %ul.tas10-list{ :class => "tas10-list-#{CGI::escape(@query).gsub('%','')}", :style => "top: 120px" }
+
   .tas10-right-panel

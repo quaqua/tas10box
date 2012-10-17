@@ -1,0 +1,8 @@
+$('#tas10-main-container').tas10Container( 'append', {
+  title: '<%= @query_script.name %>',
+  id: '_<%= @query_script.id %>', 
+  content: '<%= raw escape_javascript(render("documents/find")) %>'
+  }, function( container ){
+    $(container).find('.tas10-list').tas10List({ data: <%= raw @docs.to_json %>, labels: <%= raw @labels.to_json %> });
+  }
+);

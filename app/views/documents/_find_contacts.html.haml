@@ -2,7 +2,7 @@
 
   .tas10-list-wrapper.action-container{ :id => "contact-results-action-container" }
     .browser-actions-bg
-      = render :partial => "common/table_actions"
+      = render :partial => "common/table_actions", :locals => {:refresh => true, :new_contact => true, :combo => true, :copy => true, :klass => Contact}
 
       %table{:id => "contact-results" }
       %div{ :id => "contact-results-pager"}

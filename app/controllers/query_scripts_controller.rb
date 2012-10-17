@@ -33,9 +33,6 @@ class QueryScriptsController < Tas10boxController
 
   def show
     @query_script = @doc = QueryScript.where(:id => params[:id]).first_with_user( current_user )
-    unless @query_script.doc_type
-      render :text => "alert('no template found');"
-    end
   end
 
   private

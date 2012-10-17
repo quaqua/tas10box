@@ -32,4 +32,4 @@
       .control-group
         %label.control-label.desc=t('query_scripts.doc_types')
         .controls
-          =f.select( :doc_type, get_options_for_query_script_types, :class => "template tas10-select" )
+          =f.select( :doc_type, options_for_select(get_options_for_query_script_types, @query_script.doc_type), :class => "template tas10-select", :include_blank => true )

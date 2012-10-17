@@ -99,21 +99,22 @@ var tas10 = {
 
   },
 
+  loaderWaiting: [],
+
   'pushLoaderTimeout': function pushLoaderTimeout(){
-    this.loaderWaiting || (this.loaderWaiting = []);
-    this.loaderWaiting.push( function(){ tas10.loader(true); } );
+    tas10.loaderWaiting.push( function(){ tas10.loader(true); } );
     setTimeout( function runPendingLoaders(){ tas10.runWaitingLoaders( tas10.loaderWaiting.length-1 ); }, 1000 );
   },
 
   'pullLoaderTimeout': function pushLoaderTimeout(){
     if( this.loaderWaiting )
-      this.loaderWaiting.pop();
-    this.loader(false);
+      tas10.loaderWaiting.pop();
+    tas10.loader(false);
   },
 
   'runWaitingLoaders': function runWaitingLoaders( pos ){
-    if( this.loaderWaiting && this.loaderWaiting.length > pos && this.loaderWaiting[ pos ] )
-      this.loaderWaiting[ pos ]();
+    if( tas10.loaderWaiting && tas10.loaderWaiting.length > pos && tas10.loaderWaiting[ pos ] )
+      tas10.loaderWaiting[ pos ]();
   },
 
   'setupCheckbox': function setupCheckbox( elem ){

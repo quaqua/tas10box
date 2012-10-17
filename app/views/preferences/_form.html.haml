@@ -101,4 +101,8 @@
                       %label.control-label="#{key}:#{k}"
                       .controls
                         .input-append
+                        -if k.match(/domain_name/)
+                          =text_field_tag "#{key}[#{k}]", v, :class => "span5", :disabled => true
+                          =hidden_field_tag "#{key}[#{k}]", v
+                        -else
                           =text_field_tag "#{key}[#{k}]", v, :class => "span5", :disabled => k.match(/domain_name/)
