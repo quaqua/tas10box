@@ -46,6 +46,10 @@ module Tas10box
         def current_user_or_anybody
           current_user ? current_user : Tas10::User.anybody
         end
+
+        def render_document_not_found
+          render :js => "tas10.notify('#{I18n.t('not_found')}','error');"
+        end
     
         # checks for valid user and updates user's last_request attribute
         def renew_authentication( skip_update=nil )

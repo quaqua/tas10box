@@ -31,7 +31,7 @@ $(function(){
 		" <a href=\"/query_scripts/{{:_id}}\" "+
 		"data-remote=\"true\" data-attr-name=\"name-{{:_id}}\" class=\"query_script\">{{:name}}</a></li>");
 
-	$('#tas10-find a.query_script').die().live('click', function(){
+	$('#tas10-find .script-item a').die().live('click', function(){
 		$(this).closest('.find-dropdown-content').slideUp(200);
 	});
 

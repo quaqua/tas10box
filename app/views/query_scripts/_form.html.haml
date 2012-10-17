@@ -25,7 +25,7 @@
         %label.control-label.desc=t('query_scripts.columns')
         .controls
           =f.fields_for :columns do |c|
-            -unless @query_script.new_record?
+            -if !@query_script.new_record? && @query_script.columns
               -@query_script.columns.each do |col|
                 =c.text_field :content, :name => "#{c.object_name}[]", :class => "span10", :value => col
 
