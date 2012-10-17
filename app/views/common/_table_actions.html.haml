@@ -17,30 +17,33 @@
     -if defined?(combo)
       %a.default.toggle-list-detail.live-tipsy{ :href => "#", :"original-title" => t( 'list_detail_combo' ) }
         %span.tas10-icon16.tas10-icon-list-detail-combo
-    %a.default.table-settings.context-trigger.live-tipsy{ :href => "#", :"original-title" => t( 'settings' ) }
-      %span.caret
-      .context-content.table-column-setup{ :"data-popover-title" => t('settings') }
-        -columns = ( (@doc && @doc.respond_to?(:columns) && @doc.columns && @doc.columns.size > 0) ? @doc.columns : klass.default_columns)
-        =form_for (@doc ? @doc : QueryScript.new), :remote => true, :html => { :class => (@doc ? nil : "queryscript-columns-form")} do |f|
-          -unless @doc
-            =f.text_field :name, :required => true, :placeholder => t('name')
-            =f.hidden_field :doc_type, :value => ( params[:types] ? params[:types].split(',').first : klass.name )
-            =f.hidden_field :query, :value => "?#{raw @query}"
-          %ul.table-column-list
-            =f.fields_for :columns do |c|
-              -columns.each do |col|
-                -column = (col.is_a?(String) ? eval(col) : col)
-                -column = HashWithIndifferentAccess.new(column)
-                %li{:style => (column["name"].to_s.downcase.match(/id|details/) ? "display:none" : nil), :"data-col-name" => column["name"] }
-                  =c.hidden_field :content, :name => "#{c.object_name}[]", :class => "span6", :value => column
-                  %span.show-hide-column.tas10-checkbox.tas10-icon16.tas10-icon-checkbox.pull-left{ :class => (column["hidden"] ? nil : "checked" )}
-                  %span.icon-resize-vertical.pull-right
-                  %strong=t("#{klass.name.underscore.pluralize}.#{column["name"]}")
+    -if defined?(klass)
+      %a.default.table-settings.context-trigger.live-tipsy{ :href => "#", :"original-title" => t( 'settings' ) }
+        %span.caret
+        .context-content.table-column-setup{ :"data-popover-title" => t('settings') }
+          -columns = ( (@doc && @doc.respond_to?(:columns) && @doc.columns && @doc.columns.size > 0) ? @doc.columns : klass.default_columns)
+          =form_for (@doc ? @doc : QueryScript.new), :remote => true, :html => { :class => (@doc ? nil : "queryscript-columns-form")} do |f|
+            -unless @doc
+              =f.text_field :name, :required => true, :placeholder => t('name')
+              =f.hidden_field :doc_type, :value => ( params[:types] ? params[:types].split(',').first : klass.name )
+              =f.hidden_field :query, :value => "?#{raw @query}"
+            %ul.table-column-list
+              =f.fields_for :columns do |c|
+                -columns.each do |col|
+                  -column = (col.is_a?(String) ? eval(col) : col)
+                  -column = HashWithIndifferentAccess.new(column)
+                  %li{:style => (column["name"].to_s.downcase.match(/id|details/) ? "display:none" : nil), :"data-col-name" => column["name"] }
+                    =c.hidden_field :content, :name => "#{c.object_name}[]", :class => "span6", :value => column
+                    %span.show-hide-column.tas10-checkbox.tas10-icon16.tas10-icon-checkbox.pull-left{ :class => (column["hidden"] ? nil : "checked" )}
+                    %span.icon-resize-vertical.pull-right
+                    %strong=t("#{klass.name.underscore.pluralize}.#{column["name"]}")
     -if defined?(doc_actions)
       %a.live-tipsy.float-right{ :"original-title" => t( 'delete' ), :"data-method" => "delete", :"data-remote" => true, :href => "documents/#{doc.id}" }
         %span.tas10-icon16.tas10-icon-trash
       %a.live-tipsy.float-right{ :"original-title" => t( 'edit' ), :"data-remote" => true, :href => "documents/#{doc.id}/edit" }
         %span.tas10-icon16.tas10-icon-pencil
+      %a.live-tipsy.float-right{ :"original-title" => t( 'details' ), :"data-remote" => true, :href => "documents/#{doc.id}/info" }
+        %span.tas10-icon16.tas10-icon-details
     -if defined?(new_contact)
       %span.spacer
       %a.float-right{ :href => "/contacts/new#{"?label_ids=#{@doc.id}" if @doc}", :"data-remote" => true}
