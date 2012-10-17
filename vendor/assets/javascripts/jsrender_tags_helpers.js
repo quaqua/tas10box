@@ -22,23 +22,9 @@ $(function(){
 			return s + 'kb';
 		},
 		formattedCurrency: function( amount ){
-			if( typeof(amount) === 'undefined')
-				amount = 0;
-			a = amount.toString();
-			if( a.split('.').length < 2 )
-				a += ".00"
-			else{
-				var comma = a.split('.')[1];
-				if( comma.length < 1 )
-					a += "00";
-				else if( comma.length < 2 )
-					a += "0";
-				else
-					a += comma.substring(0,2);
-			}
-			a += " EUR";
-			if( a.indexOf('-') === 0 )
-				a = "<span style=\"color:red\">" + a + "</span>"
+			var a = accounting.formatMoney(amount);
+			if ( parseInt(amount) < 0 )
+				return "<span style=\"color:red\">"+a+"</span>";
 			return a;
 		}
 	})

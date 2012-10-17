@@ -149,7 +149,6 @@ class DocumentsController < Tas10boxController
     else
       flash[:error] = t('not_found')
     end
-    render :template => "documents/create"
   end
 
   # find children of this document

@@ -29,10 +29,10 @@ $(function(){
 		" data-remote=\"true\"><i class=\"icon-trash\"/></a>"+
 		"<a href=\"/query_scripts/{{:_id}}/edit\" data-remote=\"true\" class=\"float-right\"><i class=\"icon-pencil\" /></a>" +
 		" <a href=\"/query_scripts/{{:_id}}\" "+
-		"data-remote=\"true\" data-attr-name=\"name-{{:_id}}\">{{:name}}</a></li>");
+		"data-remote=\"true\" data-attr-name=\"name-{{:_id}}\" class=\"query_script\">{{:name}}</a></li>");
 
-	$('#tas10-find .query-script-item').on('click', function(){
-		$('#button-find-drop .find-dropdown-content').slideUp(200);
+	$('#tas10-find a.query_script').die().live('click', function(){
+		$(this).closest('.find-dropdown-content').slideUp(200);
 	});
 
   $('#button-find-dropdown').hover(function(e){

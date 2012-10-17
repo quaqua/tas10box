@@ -1,0 +1,6 @@
+<% if flash[:notice] %>
+var doc = <%= raw @doc.to_json %>;
+tas10.appendToList( doc );
+$.getScript( '/documents/'+doc._id )
+<% end %>
+<%= render "common/process_flash" %>
