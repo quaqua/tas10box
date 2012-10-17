@@ -1,1 +1,1 @@
-<%= render :partial => (@query_script.doc_type.blank? ? "find" : "@query_script.doc_type}/find") %>
+<%= render :partial => (@query_script.doc_type.blank? ? "find" : "#{@query_script.doc_type}/find") %>
