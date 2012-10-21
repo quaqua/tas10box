@@ -7,15 +7,26 @@
   var setupTas10TabsEvents = function(tabsContainer){
     $(tabsContainer).find('.settings-tabs > a').each( function(){
       $(this).die().live('click', function(e){
+        var self = this;
         e.preventDefault();
         if( $(this).hasClass('disabled') )
           return;
         $(tabsContainer).find('.current').removeClass('current');
         $(this).addClass('current');
         var id = $(this).attr('href');
-
         $(tabsContainer).find('.settings-tab-content').hide();
-        $(tabsContainer).find(id).show();
+
+        if( id.indexOf('#') === 0 )
+          $(tabsContainer).find(id).show();
+        else
+          $.ajax({url: id, type: 'get', dataType: 'html',
+                  success: function( html ){
+                    $(self).closest('.tas10-settings-tabs').append( html );
+                    id = $(self).closest('.tas10-settings-tabs').find('.settings-tab-content:last').attr('id')
+                    $(self).attr('href','#'+id)
+                    $(tabsContainer).find('#'+id).show();
+                  }
+          })
       });
     });
   };

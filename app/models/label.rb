@@ -9,4 +9,6 @@ class Label < Tas10::Document
   field :columns, :type => Array, :default => []
   field :as_checkbox, :type => Boolean, :default => false
 
+  index as_checkbox: 1
+
 end

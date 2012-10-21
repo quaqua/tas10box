@@ -1,0 +1,7 @@
+$('#tas10-main-container').tas10Container( 'append', {
+  replace: true,
+  title: '<%= t('group.new') %>', 
+  id: '_new_group', 
+  content: '<%= escape_javascript render('edit') %>'
+  }, function( container ){  }
+);

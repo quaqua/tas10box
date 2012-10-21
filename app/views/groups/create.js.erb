@@ -1,0 +1,5 @@
+<% if flash[:notice] %>
+  $('.tab.active .tab-close').click();
+  $('.tab.active .groups').append('<%= escape_javascript(link_to( @group.name, @group, :remote => true )) %>')
+<% end %>
+<%= render "common/process_flash" %>
