@@ -4,6 +4,8 @@ class Label < Tas10::Document
   field :template, :type => String
   field :labelable, :type => Boolean, :default => true
 
+  field :settings, :type => Hash, :default => {}
+
   field :columns, :type => Array, :default => []
   field :as_checkbox, :type => Boolean, :default => false
 

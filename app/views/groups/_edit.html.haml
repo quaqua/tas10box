@@ -1,14 +1,16 @@
 =form_for @group, :remote => true, :html => {:class => 'user-form tas10-form' } do |f|
 
   .form-actions
-    %a{ :href => group_path(@group), :"data-remote" => true }
-      =t('cancel')
+    -unless @group.new_record?
+      %a{ :href => group_path(@group), :"data-remote" => true }
+        =t('cancel')
     &nbsp;
     =f.submit t('save'), :class => "btn btn-inverse btn-mini"
 
   .container-padding.user-container
 
-    %img.userpic.float-left.x_100{ :src => "#{picture_of_user_path(@group)}/?size=100" }
+    -unless @group.new_record?
+      %img.userpic.float-left.x_100{ :src => "#{picture_of_user_path(@group)}/?size=100" }
 
     .next-to-picture
 

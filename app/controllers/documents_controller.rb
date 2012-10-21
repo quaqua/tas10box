@@ -136,18 +136,30 @@ class DocumentsController < Tas10boxController
 
   def restore
     params[:keep_open] = true
-    if @doc = Tas10::Document.deleted.where(:id => params[:id]).first_with_user( current_user )
-      if @doc.can_delete?
-        if @doc.restore && @doc.save(:safe => true)
-          flash[:notice] = t('restored', :name => @doc.name)
+    if params[:id]
+      if @doc = Tas10::Document.deleted.where(:id => params[:id]).first_with_user( current_user )
+        if @doc.can_delete?
+          if @doc.restore
+            flash[:notice] = t('restored', :name => @doc.name)
+          else
+            flash[:error] = t('restoring_failed', :name => @doc.name)
+          end
         else
-          flash[:error] = t('restoring_failed', :name => @doc.name)
+          flash[:error] = t('insufficient_rights', :name => @doc.name)
         end
       else
-        flash[:error] = t('insufficient_rights', :name => @doc.name)
+        flash[:error] = t('not_found')
       end
     else
-      flash[:error] = t('not_found')
+      restored = []
+      params[:ids].split(',').each do |id|
+        if @doc = Tas10::Document.deleted.where(:id => params[:id]).first_with_user( current_user )
+          if @doc.restore
+            restored << @doc.name
+          end
+        end
+      end
+      flash[:notice] = t('restored', :name => restored.join(', '))
     end
   end
 

@@ -2,8 +2,22 @@ class GroupsController < Tas10boxController
 
   before_filter :authenticate
 
+  def new
+    @group = Tas10::Group.new
+  end
+
   def show
     @group = get_group_by_id
+  end
+
+  def create
+    @group = Tas10::Group.new( params[:tas10_group] )
+    if @group.save(:safe => true)
+      @group.users << current_user
+      flash[:notice] = t('created', :name => @group.name)
+    else
+      flash[:error] = t('creation_failed')
+    end
   end
 
   def edit

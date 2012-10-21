@@ -202,6 +202,7 @@ de:
   group:
     name: "Gruppenname"
     title: "Gruppe"
+    new: "Neue Gruppe"
 
   audit:
     created: "hat '%{name}' angelegt"

@@ -31,12 +31,15 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :groups
+
   resources :tas10_groups, :controller => "Groups"
 
   resources :documents do
     collection do
       match :find
       get :favorite
+      match :restore
     end
     member do
       get :info

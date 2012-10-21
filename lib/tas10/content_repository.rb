@@ -90,7 +90,7 @@ module Tas10
           keys[:action] = 'audit.modified'
           if c.include? "name"
             keys[:action] = 'audit.renamed'
-            keys[:additional_message] = name_change.join(' -> ')
+            keys[:additional_message] = name_change.join(' -> ') if name_change
           elsif c.include? "published"
             if published?
               keys[:action] = 'audit.published'

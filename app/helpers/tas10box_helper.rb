@@ -41,6 +41,13 @@ module Tas10boxHelper
     options
   end
 
+  def get_accounting_entry_numbers_for_table_select
+    a = AccountingEntry.asc(:nr).map{|ae| "#{ae.id}:#{ae.nr}" }
+    b = [":"]
+    return(b + a) if a
+    b
+  end
+
   def get_user_or_group_by_id( user_id )
     u = Tas10::User.where(:id => user_id).first
     u = Tas10::Group.where(:id => user_id).first unless u

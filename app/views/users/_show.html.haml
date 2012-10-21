@@ -33,12 +33,13 @@
           -else
             =t('never')
 
-    %p
+    %p.groups
       %label.desc
         =t('user.groups')
       %br
       - get_known_groups(@user).each do |group|
         = link_to( group.name, group, :remote => true )
+      = link_to( t('group.new'), new_group_path, :remote => true )
 
     %p
       %label.desc

@@ -147,7 +147,6 @@ module Tas10
     def check_access_inheritance
       # relations like belongs_to
       copy_access_from_objects.each do |klass|
-        puts "klass #{klass.inspect}"
         klass.acl.each_pair do |aid,a|
           self.acl[aid] = a
         end

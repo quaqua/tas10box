@@ -18,12 +18,21 @@ module Tas10
         label_ids == []
       end
 
-      def ancestors( options={:reverse => false} )
+      # get ancestors of this child label
+      # and returns a list with labels starting
+      # with very the top-most label right after
+      # the root label
+      # 
+      # @returns [Array] list of ancestors starting with the top-most label right
+      # after the root
+      #
+      def ancestors
         ancs = []
-        ancs = get_ancs if label_ids.size > 0
-        # ancs are in wrong order by default. :reverse option just keeps wrong order
-        ancs.reverse! unless options[:reverse]
-        ancs
+        if labels.first
+          ancs << labels.first
+          ancs += labels.first.ancestors
+        end
+        ancs.reverse
       end
 
       # return all documents, who are labeled with this document
@@ -67,14 +76,6 @@ module Tas10
         children.each do |doc|
           doc.destroy
         end
-      end
-
-      private
-
-      def get_ancs
-        ancs << self.class.with_user( @user ).where( :id => label_ids.first )
-        ancs << get_ancs( ancs.last.label_ids.first ) if ancs.last.label_ids.size > 0
-        ancs
       end
 
     end
