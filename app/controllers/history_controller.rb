@@ -7,8 +7,15 @@ class HistoryController < Tas10boxController
     logs = Tas10::AuditLog
     logs = logs.where(:created_at.gt => (Time.parse(params[:latest]) + 60.seconds)) if params[:latest]
     logs = logs.where(:created_at.gte => "2012-08-31T18:00:00") unless params[:latest]
+
+    q = [{ :"acl.#{current_user.id}.privileges" => /r\w*/ },
+         { :"acl.#{Tas10::User.everybody_id}.privileges" => /r\w*/ }]
+    current_user.group_ids.each do |group_id|
+      q.push({:"acl.#{group_id.to_s}.privileges" => /r\w*/})
+    end
+    logs = logs.where( "$or" => q )
     logs = logs.order_by(:created_at => :desc).limit(30)
-    history = logs.map{ |l| prepare_entry( l ) }
+    history = logs.inject(Array.new){ |arr,l| arr << prepare_entry( l ) unless l.user_id.nil? ; arr }
     respond_with history
   end
 
@@ -25,23 +32,37 @@ class HistoryController < Tas10boxController
       :label_url => l.label_id && document_path(l.label_id),
       :changed_fields => l.changed_fields,
       :user_url => (l.user_id ? user_path(l.user_id) : nil),
+      :user_name => l.user.fullname_or_name,
       :user_id => l.user_id,
-      :message => t( l.action, 
-        :name => ( l.document_id ? 
+      :message => process_message( l )
+    }
+  end
+
+  def process_message( l )
+    name = ( l.document_id ? 
           "<a href='#{document_path(l.document_id)}' data-remote='true'>#{l.document_name}</a>" :
-          ( l.document_name ? l.document_name : nil ) ),
-        :message => (l.additional_message ? l.additional_message : nil),
-        :user => (l.user_name ?
+          ( l.document_name ? l.document_name : nil ) )
+    msg = (l.additional_message ? l.additional_message : nil)
+    user = (l.user_name ?
           "<a href='#{user_path(l.user_id)}' data-remote='true'>#{l.user_name}</a>" : 
-          nil),
-        :label => (l.label_name ? 
+          nil)
+    label = (l.label_name ? 
           "<a href='#{document_path(l.label_id)}' data-remote='true'>#{l.label_name}</a>" : 
-          nil),
-        :group => (l.group_name && l.group_id ? 
+          nil)
+    group = (l.group_name && l.group_id ? 
           "<a href='#{group_path(l.group_id)}' data-remote='true'>#{l.group_name}</a>" : 
           nil)
+    m = t( l.action, 
+        :name => name,
+        :message => msg,
+        :user => user,
+        :label => label,
+        :group => group
         )
-    }
+    if l.action == 'audit.deleted'
+      m += " <a href=\"/documents/#{l.id}/restore\" class=\"undo\" data-remote=\"true\" data-method=\"post\">#{t('undo')}</a>"
+    end
+    m
   end
 
 end

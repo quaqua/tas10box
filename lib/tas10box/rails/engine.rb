@@ -2,7 +2,7 @@ module Tas10box
 
   class Tas10boxEngine < ::Rails::Engine
 
-    tas10js = %w( tas10box.js )
+    tas10js = %w( tas10box.js jsrender_tags_helpers.js )
     tas10css = %w( tas10box.css )
 
     if ENV['RAILS_ENV'] == 'production'

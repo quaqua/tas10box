@@ -39,6 +39,17 @@ namespace :tas10 do
         end
       end
 
+      everybody = Tas10::User.where(:id => Tas10::User.everybody_id).first
+      unless everybody
+        everybody = Tas10::User.new(:name => 'everybody', :email => "everybody@#{Tas10box::defaults[:site][:domain_name]}")
+        everybody._id = Tas10::User.everybody_id
+        if everybody.save
+          puts " \x1b[36mcreated\x1b[0m #{everybody.name}"
+        else
+          puts " \033[36mfailed\033[0m #{everybody.errors.messages.inspect}"
+        end
+      end
+      
     end
 
   end

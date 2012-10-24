@@ -6,7 +6,9 @@ class CommentsController < Tas10boxController
     @doc = get_doc_by_id
     @comment = @doc.comments.build( params[:tas10_comment].merge({:user => current_user}) )
     if @comment.save(:safe => true)
-      Tas10::AuditLog.create!( :user => current_user, :document => @doc, :additional_message => @comment.content, :action => 'audit.commented' )
+      if @doc.is_a?(Tas10::Document)
+        Tas10::AuditLog.create!( :user => current_user, :document => @doc, :additional_message => @comment.content, :action => 'audit.commented' )
+      end
       flash[:notice] = t('comments.created', :name => @doc.name)
     else
       flash[:error] = t('comments.creation_failed', :name => @doc.name)
@@ -31,7 +33,9 @@ class CommentsController < Tas10boxController
   private
 
   def get_doc_by_id
-    Tas10::Document.where( :id => params[:document_id] ).first_with_user( current_user )
+    doc = Tas10::Document.where( :id => params[:document_id] ).first_with_user( current_user )
+    doc = Tas10::User.where( :id => params[:document_id] ).first unless doc
+    doc
   end
 
 end

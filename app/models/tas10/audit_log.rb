@@ -11,6 +11,7 @@ class Tas10::AuditLog
   field :label_type, type: String
   field :changed_fields, type: Array
   field :user_name, type: String
+  field :acl, type: Hash, default: {}
 
   belongs_to :user, :class_name => "Tas10::User"
   belongs_to :document, :class_name => "Tas10::Document"
@@ -25,6 +26,9 @@ class Tas10::AuditLog
     if document
       self.document_type = document.class.name
       self.document_name = document.name
+      self.acl = document.acl
+    else
+      self.acl = {:"#{Tas10::User.everybody_id}" => {:privileges => 'r'} }
     end
     if label
       self.label_type = label.class.name

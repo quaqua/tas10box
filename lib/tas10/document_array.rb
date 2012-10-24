@@ -14,6 +14,18 @@ module Tas10
 
     attr_accessor :query
 
+    def asc( attr )
+      @query = @query.asc( attr )
+    end
+
+    def desc( attr )
+      @query = @query.desc( attr )
+    end
+
+    def order_by( attr )
+      @query = @query.order_by( attr )
+    end
+
     def all
       run_query unless @loaded
       self

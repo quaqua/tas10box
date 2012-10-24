@@ -48,3 +48,6 @@
       - get_known_users(@user).each do |user|
         -if user.id != current_user.id && user.id != Tas10::User.anybody_id
           %a{ :href => user_path(user), :"data-remote" => true }= image_tag( picture_of_user_path( user ), :class => "userpic x50 live-tipsy userpic-#{user.id}", :"original-title" => user.fullname_or_name)
+
+
+    = render :partial => "common/comments", :locals => { :hidden => false, :doc => @user }

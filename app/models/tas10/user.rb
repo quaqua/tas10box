@@ -18,6 +18,7 @@ class Tas10::User
   field :admin, type: Boolean
 
   embeds_many :user_log_entries
+  embeds_many :comments, :class_name => "Tas10::Comment", :order => :created_at.desc
 
   validates_presence_of :email
   validates_format_of :email,
@@ -47,10 +48,20 @@ class Tas10::User
     Moped::BSON::ObjectId(24.times.inject(""){ |str,i| str << "0" })
   end
 
+  def self.everybody_id
+    Moped::BSON::ObjectId(24.times.inject(""){ |str,i| str << "1" })
+  end
+
   def self.anybody
     anybody = new( :name => 'Anybody' )
     anybody._id = anybody_id
     anybody
+  end
+
+  def self.everybody
+    everybody = new( :name => 'Everybody' )
+    everybody._id = everybody_id
+    everybody
   end
 
   def update_request_log( ip, url )

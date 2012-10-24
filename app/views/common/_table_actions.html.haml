@@ -18,25 +18,34 @@
       %a.default.toggle-list-detail.live-tipsy{ :href => "#", :"original-title" => t( 'list_detail_combo' ) }
         %span.tas10-icon16.tas10-icon-list-detail-combo
     -if defined?(klass)
-      %a.default.table-settings.context-trigger.live-tipsy{ :href => "#", :"original-title" => t( 'settings' ) }
-        %span.caret
-        .context-content.table-column-setup{ :"data-popover-title" => t('settings') }
+      .btn-group.float-left
+        %button.btn.btn-mini
+          =t('settings')
+        %button.btn.btn-mini.dropdown-toggle{ :"data-toggle" => "dropdown" }
+          %span.caret
+        .dropdown-menu
           -columns = ( (@doc && @doc.respond_to?(:columns) && @doc.columns && @doc.columns.size > 0) ? @doc.columns : klass.default_columns)
           =form_for (@doc ? @doc : QueryScript.new), :remote => true, :html => { :class => (@doc ? nil : "queryscript-columns-form")} do |f|
+            %p{:style => "text-align:right"}
+              %input.btn.btn-mini.btn-inverse{:type => "submit", :value => t( (@doc && @doc.respond_to?(:columns) && @doc.columns && @doc.columns.size > 0 ) ? 'save' : 'create' ) }
             -unless @doc
-              =f.text_field :name, :required => true, :placeholder => t('name')
-              =f.hidden_field :doc_type, :value => ( params[:types] ? params[:types].split(',').first : klass.name )
-              =f.hidden_field :query, :value => @uri
+              %p
+                =f.text_field :name, :required => true, :placeholder => t('name')
+                =f.hidden_field :doc_type, :value => ( params[:types] ? params[:types].split(',').first : klass.name )
+                =f.hidden_field :query, :value => @uri
             %ul.table-column-list
               =f.fields_for :columns do |c|
                 -columns.each do |col|
                   -column = (col.is_a?(String) ? eval(col) : col)
                   -column = HashWithIndifferentAccess.new(column)
-                  %li{:style => (column["name"].to_s.downcase.match(/id|details/) ? "display:none" : nil), :"data-col-name" => column["name"] }
+                  //-next if column["name"].downcase.match(/id|details/)
+                  %li.col-item{ :style => (column["name"].downcase.match(/id|details/) ? "display:none" : nil), :"data-col-name" => column["name"], "class" => (column["hidden"] ? nil : "col-visible") }
                     =c.hidden_field :content, :name => "#{c.object_name}[]", :class => "span6", :value => column
                     %span.show-hide-column.tas10-checkbox.tas10-icon16.tas10-icon-checkbox.pull-left{ :class => (column["hidden"] ? nil : "checked" )}
                     %span.icon-resize-vertical.pull-right
                     %strong=t("#{klass.name.underscore.pluralize}.#{column["name"]}")
+
+
     -if defined?(doc_actions)
       %a.live-tipsy.float-right{ :"original-title" => t( 'delete' ), :"data-method" => "delete", :"data-remote" => true, :href => "documents/#{doc.id}" }
         %span.tas10-icon16.tas10-icon-trash

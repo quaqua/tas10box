@@ -63,6 +63,7 @@ de:
   refresh: "Aktualisieren"
   move_to: "Verschieben nach"
   copy_to: "Kopieren nach"
+  export: "Exportieren"
   template: "Vorlage"
   sum: "Summe"
   print_pdf: "PDF zum Drucken"

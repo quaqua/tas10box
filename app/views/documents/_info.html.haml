@@ -50,7 +50,7 @@
       %span.live-tipsy-e.float-right.ui-icon.ui-icon-triangle-1-s{ :"original-title" => t('comments.show'), :onclick => "$(this).closest('.tas10-info-container').find('table.comments').slideToggle()" }
       %label.desc= t('comments.num', :count => @doc.comments.size)
 
-    = render :partial => "common/comments", :locals => { :hidden => true }
+    = render :partial => "common/comments", :locals => { :hidden => true, :doc => @doc }
 
 
     %p

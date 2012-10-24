@@ -26,8 +26,8 @@ module Tas10
         index name: 1
         index label_ids: 1
 
-        before_save :remove_plain_entries, :update_log, :check_write_permission
-        after_save :share_children_on_change, :unshare_children_on_change
+        before_save :remove_plain_entries, :check_write_permission, :update_log
+        after_save :update_audit, :share_children_on_change, :unshare_children_on_change
         before_create :setup_creator, :check_access_inheritance
         before_destroy :check_delete_permission, :update_destroy_log
 
@@ -40,7 +40,9 @@ module Tas10
       end
 
       def with_user( user )
-        q = [{ :"acl.#{user.id}.privileges" => /r\w*/ }]
+        q = [{ :"acl.#{user.id}.privileges" => /r\w*/ },
+             { :"acl.#{Tas10::User.everybody_id}.privileges" => /r\w*/ },
+             { :"acl.#{Tas10::User.anybody_id}.privileges" => /r\w*/ }]
         user.group_ids.each do |group_id|
           q.push({:"acl.#{group_id.to_s}.privileges" => /r\w*/})
         end
@@ -77,15 +79,22 @@ module Tas10
     module InstanceMethods
 
       def update_log
-        return if skip_audit && @user.nil?
+        return if skip_audit || @user.nil?
         c = changed
         c.delete('version')
         c.delete('label_ids')
         self.log_entries.order_by(:created_at.asc)[1].destroy if self.log_entries.size > 10
         self.log_entries.build :user => @user, :changed_fields => c
+      end
+
+      def update_audit
+        return if skip_audit || @user.nil?
         if new_record?
           Tas10::AuditLog.create!( :user => @user, :document => self, :action => 'audit.created' )
         else
+          c = changed
+          c.delete('version')
+          c.delete('label_ids')
           keys = { :user => @user, :document => self, :changed_fields => c }
           keys[:action] = 'audit.modified'
           if c.include? "name"
