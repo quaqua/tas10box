@@ -8,8 +8,9 @@ class DashboardController < Tas10boxController
       @messages += doc.comments
     end
     Tas10::User.desc(:"comments[].created_at").limit(30).each do |user|
-      @messages += user.comments
+      @messages += user.messages
     end
+    @messages.sort!{ |a,b| a.created_at <=> b.created_at }.reverse!
   end
 
 end

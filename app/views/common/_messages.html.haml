@@ -1,0 +1,19 @@
+%table.comments{ :class => "user-#{@user.id}-messages" }
+  %tr
+    %td{:colspan => 2}
+      .comment-form-trigger.btn.btn-inverse
+        =t('messages.new')
+
+  %tr.comment-form
+    %td
+      = image_tag( picture_of_user_path(current_user), :class => "float-right userpic x50" )
+    %td
+      =form_for( @user.messages.build, :url => "#{user_path(@user)}/messages", :remote => true, :html => { :class => 'ui-helper-clearfix' } ) do |f|
+        = f.text_area :content
+        %br
+        = f.submit( t('post'), :class => 'tas10-button float-right' )
+        %a.float-right.comment-form-close{ :href => "#" }= t('cancel')
+
+  -@user.messages.each do |message|
+    - unless message.new_record?
+      = render message

@@ -1,3 +1,5 @@
+-doc = @doc || comment.document
+
 %tr{ :"data-id" => comment.id }
   %td
     - if comment.user
@@ -7,8 +9,8 @@
   %td
     %p.date
       -if comment.user && (current_user.id == comment.user.id || current_user.admin?)
-        -if @doc && @doc.is_a?(Tas10::Document)
-          = link_to( raw("<span class=\"ui-icon ui-icon-trash\"></span>"), document_comment_path( @doc, comment ), :class => "delete-comment float-right tas10-button with-icon delete", :remote => true, :method => :delete, :confirm => t('really_delete', :name => comment.content) )
+        -if doc
+          = link_to( raw("<span class=\"tas10-icon16 tas10-icon-trash\"></span>"), document_comment_path( doc, comment ), :class => "delete-comment float-right tas10-button with-icon delete", :remote => true, :method => :delete, :confirm => t('really_delete', :name => comment.content) )
       %b
         = comment.user.fullname_or_name if comment.user
       = t('ago')

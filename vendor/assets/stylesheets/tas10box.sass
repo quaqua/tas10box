@@ -159,6 +159,9 @@ p
   &.delete
     background-color: #d44
     border: 1px solid #a44
+    &:hover
+      background-color: $button_color
+      border-color: $button_color
 .with-icon
   @extend .tas10-button
   padding: 2px
@@ -292,6 +295,7 @@ fieldset
 
       .icn-btn.add-type
         margin-right: 5px
+        margin-bottom: 5px
         border: 1px solid #ccc
         padding: 5px
         cursor: pointer
@@ -446,7 +450,7 @@ fieldset
     &.float-right
       float: right
     &.btn-mini
-      padding: 2px 6px 3px 6px
+      padding: 2px 0 3px 5px
     .ui-icon
       opacity: 0.5
     &.disabled
@@ -577,6 +581,20 @@ fieldset
     .tas10-icon16
       margin-right: 5px
 
+.tas10-dashboard
+  top: 10px
+.gadget
+  margin: 10px 10px
+  box-shadow: 0 0 5px #999
+  .head
+    color: #fff
+    text-transform: uppercase
+    background-color: $TAS10_COLOR_0
+    border: 1px solid $TAS10_COLOR_0
+    padding: 5px
+  .content
+    padding: 10px
+    border: 1px solid #ddd
 .tas10-dialog
   display: none
   position: absolute

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       post :add_group_to
       post :remove_group_to
     end
+    resources :messages, :controller => "Messages"
   end
   resources :groups do
     member do
@@ -53,6 +54,7 @@ Rails.application.routes.draw do
   end
   resources :tas10_documents, :controller => "Documents"
   resources :tas10_comments, :controller => "Comments"
+  resources :tas10_messages, :controller => "Messages"
   resources :comments
 
   # labels hierarchical organization

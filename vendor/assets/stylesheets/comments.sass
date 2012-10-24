@@ -1,4 +1,11 @@
 table.comments
+  width: 100%
+  td
+    vertical-align: top
+    .userpic
+      margin: 0
+    &:first-child
+      width: 30px
   .comment-form-trigger
     cursor: pointer
   .comment-form-close
@@ -7,11 +14,11 @@ table.comments
     display: none
     textarea
       height: 5em
-      width: 272px
+      width: 100%
   p.date
     color: #999
     font-size: 8px
-  .delete-comment
+  .delete-comment, .delete-message
     opacity: 0.3
     &:hover
       opacity: 1

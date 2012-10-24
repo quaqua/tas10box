@@ -19,10 +19,10 @@
     %table.fill-width
       %tr
         %td
-          %label.desc
+          %span.desc
             =t('user.email')
         %td
-          %label.desc
+          %span.desc
             =t('user.last_login')
       %tr
         %td
@@ -34,20 +34,35 @@
             =t('never')
 
     %p.groups
-      %label.desc
+      %span.desc
         =t('user.groups')
       %br
       - get_known_groups(@user).each do |group|
         = link_to( group.name, group, :remote => true )
       = link_to( t('group.new'), new_group_path, :remote => true )
 
-    %p
-      %label.desc
-        =t('user.known')
-      %br
-      - get_known_users(@user).each do |user|
-        -if user.id != current_user.id && user.id != Tas10::User.anybody_id
-          %a{ :href => user_path(user), :"data-remote" => true }= image_tag( picture_of_user_path( user ), :class => "userpic x50 live-tipsy userpic-#{user.id}", :"original-title" => user.fullname_or_name)
+  .row-fluid
+    .span6
+      .gadget
+        .head
+          =t('user.known')
+        .content
+          %table{:style => "width:100%"}
+            - get_known_users(@user).each do |user|
+              -if user.id != current_user.id && user.id != Tas10::User.anybody_id
+                %tr
+                  %td{:style => "width:20px"}
+                    = image_tag( "#{picture_of_user_path( user )}?size=20", :class => "userpic x20 live-tipsy userpic-#{user.id}", :"original-title" => user.fullname_or_name)
+                    %a{ :href => user_path(user), :"data-remote" => true }
+                  %td
+                    =user.fullname_or_name
+                  %td
+                    %span.desc
+                      = "(" + (user.user_log_entries.first ? l_time_ago_in_words(user.user_log_entries.first.created_at) : t('never'))+")"
 
-
-    = render :partial => "common/comments", :locals => { :hidden => false, :doc => @user }
+    .span6
+      .gadget
+        .head
+          =t('user.messages')
+        .content
+          = render :partial => "common/messages"

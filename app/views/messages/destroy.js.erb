@@ -1,0 +1,4 @@
+<% if flash[:notice] %>
+  $('[data-id=<%= @message.id %>]').remove();
+<% end %>
+tas10.notify( '<%= escape_javascript( flash[:error] || flash[:notice] ) %>' );

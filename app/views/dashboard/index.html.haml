@@ -13,9 +13,21 @@
   #tas10-dashboard.tas10-dashboard
 
     .container-padding
-      %table.comments
-        -@messages.each do |comment|
-          = render comment
+
+      .gadget{:style => "margin-top: 0"}
+        .content
+          =raw t('dashboard_of', :name => current_user.fullname_or_name)
+
+
+      .gadget
+
+        .head
+          =t('latest_comments')
+
+        .content
+          %table.comments
+            -@messages.each do |comment|
+              = render comment
 
 
 =render 'common/tmpls/all'

@@ -93,6 +93,16 @@ $( function(){
          }})
   })
 
+  $('.go-to-dashboard').on('click', function(){
+    if( $('#tas10-dashboard').is(':visible') && $('#tas10-tab-container .tab').length ){
+      $('#tas10-tab-container').fadeIn(300);
+      $('#tas10-dashboard').hide();
+    } else {
+      $('#tas10-tab-container').hide();
+      $('#tas10-dashboard').fadeIn(300);
+    }
+  });
+
   $('.account-trigger').on('click', function(){
     if( $(this).hasClass('white') ){
       $(this).removeClass('white');

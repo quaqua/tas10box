@@ -18,7 +18,7 @@ class Tas10::User
   field :admin, type: Boolean
 
   embeds_many :user_log_entries
-  embeds_many :comments, :class_name => "Tas10::Comment", :order => :created_at.desc
+  embeds_many :messages, :class_name => "Tas10::Message", :order => :created_at.desc, :inverse_of => :user
 
   validates_presence_of :email
   validates_format_of :email,

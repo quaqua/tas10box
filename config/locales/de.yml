@@ -3,8 +3,10 @@ de:
   requested_resource_was_not_found: "Die angeforderte Seite konnte nicht gefunden werden"
   session_expired: "Deine Sitzung ist abgelaufen (Limit: %{limit} Minuten)"
   hit_save_to_save_changes: "Klicken Sie 'speichern' um die Änderungen in die Datenbank zu schreiben"
+  dashboard_of: "Arbeitsplatz von <b>%{name}</b>"
 
   continue_creating: "Weitere anlegen"
+  latest_comments: "Die letzten Kommentare"
   keep_open: "offen halten"
   
   login: 
@@ -176,6 +178,17 @@ de:
     deletion_failed: "Kommentar '%{name} konnte nicht gelöscht werden"
     show: "Kommentare anzeigen"
 
+  messages:
+    title: "Nachrichten"
+    num:
+      zero: "Keine Nachrichten"
+      one: "Eine Nachricht"
+      other: "%{count} Nachrichten"
+    new: "Neue Nachricht schreiben..."
+    created: "Nachricht für '%{user}' wurde gespeichert"
+    deleted: "Nachricht für '%{user}' wurde gelöscht"
+    deletion_failed: "Nachricht für '%{user} konnte nicht gelöscht werden"
+
   user:
     invite: "Emailadresse erstellen und Einladung schicken"
     invitation_failed: "'%{name}' konnte nicht ins System eingeladen werden"
@@ -199,6 +212,8 @@ de:
     pic_uploaded: "Bild für %{name} wurde erfolgreich geändert"
     mypic_uploaded: "Du hast dein Profilbild aktualisiert!"
     pic_upload_failed: "Dein Bild konnte nicht gespeichert und verarbeitet werden"
+    last_seen: "Letztes Mal gesehen"
+    messages: "Persönliche Nachrichten"
 
   group:
     name: "Gruppenname"

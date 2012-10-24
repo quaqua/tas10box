@@ -1,0 +1,19 @@
+%tr{ :"data-id" => message.id }
+  %td
+    - if message.author
+      = image_tag( picture_of_user_path(message.author), :class => "userpic x50 live-tipsy float-right" )
+    - else
+      = image_tag( picture_of_user_path(current_user), :class => "userpic x50 float-right" )
+  %td
+    %p.date
+      -if message.author && (current_user.id == message.user.id || current_user.admin?)
+        -if current_user.id == message.user.id
+          = link_to( raw("<span class=\"tas10-icon16 tas10-icon-trash\"></span>"), user_message_path( message.user, message ), :class => "delete-message float-right tas10-button with-icon delete", :remote => true, :method => :delete, :confirm => t('really_delete', :name => message.content) )
+      %b
+        = link_to(message.author.fullname_or_name, message.author, :remote => true) if message.author
+        &rarr;
+        = link_to(message.user.fullname_or_name, message.user, :remote => true) if message.user
+      = t('ago')
+      %span.live-tipsy{ :"original-title" => l( message.created_at ) }
+        = time_ago_in_words( message.created_at )
+    %p.small= message.content
