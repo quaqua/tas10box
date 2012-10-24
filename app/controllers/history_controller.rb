@@ -4,6 +4,10 @@ class HistoryController < Tas10boxController
 
   def index
     renew_authentication( :skip_update )
+    unless current_user
+      render :text => "", :status => 403
+      return
+    end
     logs = Tas10::AuditLog
     logs = logs.where(:created_at.gt => (Time.parse(params[:latest]) + 60.seconds)) if params[:latest]
     logs = logs.where(:created_at.gte => "2012-08-31T18:00:00") unless params[:latest]
