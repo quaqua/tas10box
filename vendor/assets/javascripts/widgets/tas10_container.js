@@ -13,9 +13,11 @@
 			if( $(e.target).hasClass('tab-close') )
 				return;
     	$(containerItem).find('.tab').removeClass('active');
+    	$('.tas10-container-tabs-menu li').removeClass('active');
     	$(containerItem).find('.tab-content').hide();
     	$(this).addClass('active');
     	var id = $(this).attr('id').replace('tab_','');
+    	$('.tas10-container-tabs-menu li[data-id='+id+']').addClass('active');
     	$(containerItem).find('#tab_content_'+id).show();
     	//$('.tas10-item-title').text( $(this).attr('original-title') || $(this).text() );
 
@@ -101,6 +103,7 @@
 		    }
 
 	    	$('.tab').removeClass('active');
+				$('.tas10-container-tabs-menu li').removeClass('active');
 	    	$('.tab-content').hide();
 
 	    	var container = $('<div class="tab-content" data-id="'+options.id+'" id="tab_content_'+options.id+'" />');
@@ -125,7 +128,7 @@
 	    	$(this).find('.tas10-containers').append(container);
 	    	$(container).show();
 
-	    	var li = $('<li data-id="'+options.id+'">');
+	    	var li = $('<li class="active" data-id="'+options.id+'">');
 	    	li.append('<span class="ui-icon ui-icon-close close-tab-from-menu pull-right" />')
 	    	  .append('<p data-attr-name="name" data-id="'+options.id+'" class="item_'+options.id+'_title">'+options.title+'</p>');
 	    	$('.tas10-container-tabs-menu .context-menu').append(li);

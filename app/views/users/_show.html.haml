@@ -5,16 +5,20 @@
 
   .userpic.float-left.x100
     %img.x100{ :src => "#{picture_of_user_path(@user)}/?size=100", :class => "userpic-#{@user.id}" }
-    .overlay
-      .upload-picture{ :id => "upload-picture-#{@user.id}" }
-        .tas10-icon24.white.tas10-icon-upload.float-right
+    -if current_user.id == @user.id || current_user.admin?
+      .overlay
+        .upload-picture{ :id => "upload-picture-#{@user.id}" }
+          .tas10-icon24.white.tas10-icon-upload.float-right
 
   .next-to-picture
-    %h1
+    %p.desc{:style => "margin: 10px 0 0 0"}
       -if current_user.id == @user.id
-        =t('user.your_profile', :name => @user.fullname_or_name)
+        =t('user.your_profile')
       -else
-        =t('user.profile_of', :name => @user.fullname_or_name)
+        =t('user.profile_of')
+    %h1{:style => "margin-top: 0; line-height: 30px"}
+      =@user.fullname_or_name
+
 
     %table.fill-width
       %tr
@@ -38,8 +42,8 @@
         =t('user.groups')
       %br
       - get_known_groups(@user).each do |group|
-        = link_to( group.name, group, :remote => true )
-      = link_to( t('group.new'), new_group_path, :remote => true )
+        = link_to( group.name, group, :remote => true, :class => "label" )
+      = link_to( t('group.new'), new_group_path, :remote => true ) if current_user.admin?
 
   .row-fluid
     .span6
@@ -55,7 +59,7 @@
                     = image_tag( "#{picture_of_user_path( user )}?size=20", :class => "userpic x20 live-tipsy userpic-#{user.id}", :"original-title" => user.fullname_or_name)
                     %a{ :href => user_path(user), :"data-remote" => true }
                   %td
-                    =user.fullname_or_name
+                    =link_to user.fullname_or_name, user, :remote => true
                   %td
                     %span.desc
                       = "(" + (user.user_log_entries.first ? l_time_ago_in_words(user.user_log_entries.first.created_at) : t('never'))+")"

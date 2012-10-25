@@ -3,5 +3,6 @@ $($('.user-<%= @user.id %>-messages tr')[1]).after('<%= escape_javascript( rende
 $('[data-id=<%= @message.id %>]').effect('highlight', { color: '#fc6' }, 2000 );
 var form = $('.message-form:visible').closest('tr');
 $(form).hide();
+$(form).find('textarea').val('');
 $(form).prev('tr').show();
 $('#tas10-dialog').center();

@@ -42,9 +42,9 @@
 .tas10-container-tabs-wrapper
   position: absolute
   top: -25px
-  left: 0
+  left: 30px
   height: 26px
-  right: 95px
+  right: 60px
   overflow: hidden
   z-index: 2
 
@@ -57,7 +57,7 @@
 .tas10-container-tabs-menu
   position: absolute
   top: -25px
-  right: 60px
+  left: 0px
   cursor: pointer
   z-index: 10
   padding: 7px 5px 5px
@@ -80,7 +80,7 @@
   .context-menu
     position: absolute
     top: 25px
-    right: 0
+    left: 0
     list-style: none
     padding: 0
     margin: 0
@@ -90,13 +90,19 @@
     li
       padding: 5px
       border-bottom: 1px solid #ddd
+      color: #777
+      &.active
+        background-color: #555
+        color: #eee
+        .close-tab-from-menu
+          background-image: url("/assets/3rdparty/jquery-ui/images/ui-icons_ffffff_256x240.png")
+          border-color: #555
       &:last-child
         border-bottom: none
       p
         padding: 2px 5px
         margin: 0 25px 0 0
         white-space: nowrap
-        color: #777
         &:hover
           color: black
       .close-tab-from-menu

@@ -10,7 +10,7 @@
       %span.desc
         =t('at_um')
         =Time.now.strftime('%H:%M')
-      =form_for( doc.comments.build, :url => "#{document_path(doc)}/comments", :remote => true, :html => { :class => 'ui-helper-clearfix' } ) do |f|
+      =form_for( doc.comments.build, :url => "#{document_path(doc)}/comments", :remote => true, :html => { :class => 'ui-helper-clearfix comment-form' } ) do |f|
         = f.text_area :content
         %br
         %a.btn.btn-inverse.btn-mini.pull-right.submit-comment=t('post')

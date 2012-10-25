@@ -4,5 +4,6 @@ $('[data-id=<%= @comment.id %>]').effect('highlight', { color: '#fc6' }, 2000 );
 $('#<%= @doc.id %>-comments-num').text('<%= @doc.comments.size %>');
 var form = $('.comment-form:visible').closest('tr');
 $(form).hide();
+$(form).find('textarea').val('');
 $(form).prev('tr').show();
 $('#tas10-dialog').center();
