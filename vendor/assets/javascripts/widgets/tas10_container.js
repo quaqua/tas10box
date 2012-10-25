@@ -38,6 +38,18 @@
 			$(this).closest('.tas10-container-obj').tas10Container( 'remove', $(this).closest('.tab').attr('id').replace('tab_','') );
 		});
 
+		$('.close-tab-from-menu').live('click', function(e){
+			$('#tab_'+$(this).closest('li').attr('data-id')+' .tab-close').click();
+		})
+
+		$('.tas10-container-tabs-menu li').live('click', function(e){
+			$('#tab_'+$(this).closest('li').attr('data-id')).click();
+		})
+
+		$('.tas10-container-tabs-menu').on('click', function(){
+			$(this).find('.context-menu').slideToggle(200);
+		})
+
 	};
 
 	var tas10ContainerMethods = {
@@ -54,6 +66,7 @@
 	      $(this).addClass('tas10-container-obj');
 
 	      $(this).addClass('tas10-container').html('')
+	      		 .append('<div class="tas10-container-tabs-menu"><span class="icon-bar" /><span class="icon-bar" /><span class="icon-bar" /><ul class="context-menu"></ul></div>')
 	      		 .append('<div class="tas10-container-tabs-wrapper"><div class="tas10-container-tabs-line"></div><ul class="tas10-container-tabs"></ul></div>')
 	      		 .append('<div class="tas10-containers"/>');
 
@@ -111,6 +124,11 @@
 	    	$(this).find('.tas10-container-tabs').append(tab);
 	    	$(this).find('.tas10-containers').append(container);
 	    	$(container).show();
+
+	    	var li = $('<li data-id="'+options.id+'">');
+	    	li.append('<span class="ui-icon ui-icon-close close-tab-from-menu pull-right" />')
+	    	  .append('<p data-attr-name="name" data-id="'+options.id+'" class="item_'+options.id+'_title">'+options.title+'</p>');
+	    	$('.tas10-container-tabs-menu .context-menu').append(li);
 	    	//$('.tas10-item-title').text( $(tab).attr('original-title') || $(tab).text() );
 	    	tas10.dashboard('hide');
 
@@ -154,6 +172,7 @@
 						$('#tab_'+containerId).next('.tab').click();
 		    	}
 		    }
+		    $('.tas10-container-tabs-menu li[data-id='+containerId+']').remove();
 	    	$('#tab_'+containerId).effect('explode');
 	    	setTimeout(function(){ $('#tab_'+containerId).remove(); }, 500);
 	    },

@@ -30,7 +30,7 @@
               %input.btn.btn-mini.btn-inverse{:type => "submit", :value => t( (@doc && @doc.respond_to?(:columns) && @doc.columns && @doc.columns.size > 0 ) ? 'save' : 'create' ) }
             -unless @doc
               %p
-                =f.text_field :name, :required => true, :placeholder => t('name')
+                =f.text_field :name, :placeholder => t('name')
                 =f.hidden_field :doc_type, :value => ( params[:types] ? params[:types].split(',').first : klass.name )
                 =f.hidden_field :query, :value => @uri
             %ul.table-column-list

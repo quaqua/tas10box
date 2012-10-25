@@ -29,7 +29,16 @@ tas10.rightPanel( 'show', '<%= escape_javascript render("documents/info") %>',
         $(elem).addClass('item-color').css('background-color', color);
       $(this).closest('form').submit();
     });
+
+    $('.tas10-info-container .info-nav a').on('click', function(e){
+      $('.tas10-info-container .nav-content').hide();
+      $('.tas10-info-container '+$(this).attr('href')).show();
+      $('.tas10-info-container .info-nav a').removeClass('active');
+      $(this).addClass('active');
+    });
+
+    $('.tas10-info-container .nav-content:first').show();
     
-    $('#tas10-dialog .info-title h1').tas10InlineEdit();
+    $('.tas10-info-container .info-title h1').tas10InlineEdit();
   }
 );

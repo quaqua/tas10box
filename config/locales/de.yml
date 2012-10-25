@@ -41,6 +41,7 @@ de:
   advanced_settings: "Erweiterte Einstellungen"
   upload: "Hochladen"
   details: "Details"
+  color: "Farbe"
   clear: "Zurücksetzen"
   new: "Neu"
   name: "Name"
@@ -89,6 +90,7 @@ de:
 
   by: "von"
   at: "am"
+  at_um: "um"
   ago: "vor"
   never: "nie"
 
@@ -126,8 +128,7 @@ de:
     ordering_failed: "Neue Anordnung konnte nicht gespeichert werden"
 
     log:
-      title: "Logdatei"
-      show: "Logdatei einsehen"
+      title: "Verlauf"
   labels:
     title: "Label"
     title_pl: "Labels"

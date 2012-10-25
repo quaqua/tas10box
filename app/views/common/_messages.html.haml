@@ -1,7 +1,7 @@
 %table.comments{ :class => "user-#{@user.id}-messages" }
   %tr
     %td{:colspan => 2}
-      .comment-form-trigger.btn.btn-inverse
+      .comment-form-trigger.btn.btn-inverse.btn-mini
         =t('messages.new')
 
   %tr.comment-form
@@ -11,7 +11,7 @@
       =form_for( @user.messages.build, :url => "#{user_path(@user)}/messages", :remote => true, :html => { :class => 'ui-helper-clearfix' } ) do |f|
         = f.text_area :content
         %br
-        = f.submit( t('post'), :class => 'tas10-button float-right' )
+        = f.submit( t('post'), :class => 'btn btn-inverse btn-mini float-right' )
         %a.float-right.comment-form-close{ :href => "#" }= t('cancel')
 
   -@user.messages.each do |message|

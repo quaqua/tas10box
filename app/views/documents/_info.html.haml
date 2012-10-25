@@ -3,64 +3,74 @@
     %span.tas10-icon16.float-left{ :class => "tas10-icon-#{@doc.class.name.downcase}"}
     %span.text.title{ :"data-attr-name" => "name-#{@doc.id}" }= @doc.name.blank? ? "NO NAME" : @doc.name
 
-  .tas10-dialog-content
-    %table
-      %tr
-        %td
-          %label.desc= t('document.star')
-        %td
-          %a.float-right.live-tipsy-e{:href => "#{@doc.class.name.underscore.pluralize}/#{@doc.id}/edit", :"data-remote" => true, :"original-title" => t('edit') }
-            %span.tas10-icon16.tas10-icon-pencil
-          %span.starred{ :"data-id" => @doc.id }
-            %span.tas10-icon16.star.live-tipsy.float-left{ :class => "tas10-icon-star-#{@doc.starred ? 'full' : 'empty'}", :"original-title" => t('document.mark_star') }
-      %tr
-        %td
-          %label.desc= t('document.created')
-        %td
-          %span.small= l( @doc.log_entries.last.created_at )
-          %br
-          %span.small= "#{t('by')} #{@doc.log_entries.last.user.fullname_or_name}"
-      %tr
-        %td
-          %label.desc= t('document.modified')
-        %td
-          - if @doc.log_entries.size > 1
-            %span.small= l( @doc.log_entries.first.created_at, :format => :default )
-            %br
-            -if @doc.log_entries.first.user
-              %span.small= "#{t('by')} #{@doc.log_entries.first.user.fullname_or_name}"
-          - else
-            %span.small= t('never')
-      - if @doc.respond_to? :color
+  %ul.info-nav
+    %li
+      %a.active{ :href => "#info" }
+        %span.icon-info-sign
+    %li
+      %a{ :href => "#comments" }
+        %span.icon-comment
+          .num{:id => "#{@doc.id}-comments-num"}=@doc.comments.size
+    %li
+      %a{ :href => "#history" }
+        %span.icon-time
+
+  .tas10-info-content
+
+    #info.nav-content
+      %table
         %tr
           %td
-            %label.desc= t('color')
+            %label.desc= t('document.star')
           %td
-            = render "common/snippets/color_chooser"
+            %a.float-right.live-tipsy-e{:href => "#{@doc.class.name.underscore.pluralize}/#{@doc.id}/edit", :"data-remote" => true, :"original-title" => t('edit') }
+              %span.tas10-icon16.tas10-icon-pencil
+            %span.starred{ :"data-id" => @doc.id }
+              %span.tas10-icon16.star.live-tipsy.float-left{ :class => "tas10-icon-star-#{@doc.starred ? 'full' : 'empty'}", :"original-title" => t('document.mark_star') }
+        %tr
+          %td
+            %label.desc= t('document.created')
+          %td
+            %span.small= l( @doc.log_entries.last.created_at )
+            %br
+            %span.small= "#{t('by')} #{@doc.log_entries.last.user.fullname_or_name}"
+        %tr
+          %td
+            %label.desc= t('document.modified')
+          %td
+            - if @doc.log_entries.size > 1
+              %span.small= l( @doc.log_entries.first.created_at, :format => :default )
+              %br
+              -if @doc.log_entries.first.user
+                %span.small= "#{t('by')} #{@doc.log_entries.first.user.fullname_or_name}"
+            - else
+              %span.small= t('never')
+        - if @doc.respond_to? :color
+          %tr
+            %td
+              %label.desc= t('color')
+            %td
+              = render "common/snippets/color_chooser"
 
-    %p
-      %label.desc= t('labels.title')
-    = render "common/snippets/labels"
+      %p
+        %label.desc= t('labels.title')
+      = render "common/snippets/labels"
 
-    %p
-      %label.desc= t('acl.title')
-    = render "common/snippets/acl"
+      %p
+        %label.desc= t('acl.title')
+      = render "common/snippets/acl"
 
-    %p
-      %span.live-tipsy-e.float-right.ui-icon.ui-icon-triangle-1-s{ :"original-title" => t('comments.show'), :onclick => "$(this).closest('.tas10-info-container').find('table.comments').slideToggle()" }
-      %label.desc= t('comments.num', :count => @doc.comments.size)
+    #comments.nav-content
 
-    = render :partial => "common/comments", :locals => { :hidden => true, :doc => @doc }
+      = render :partial => "common/comments", :locals => { :doc => @doc }
 
-
-    %p
-      %span.live-tipsy-e.float-right.ui-icon.ui-icon-triangle-1-s{ :"original-title" => t('document.log.show'), :onclick => "$(this).closest('.tas10-info-container').find('table.log').slideToggle(); $('#tas10-dialog').center();" }
+    #history.nav-content
       %label.desc= t('document.log.title')
 
-    %table.log
-      - @doc.log_entries.each_with_index do |log_entry, i|
-        -next if log_entry.user.nil?
-        %tr
-          %td.modifier= log_entry.user.fullname_or_name
-          %td.created_at= l( log_entry.created_at )
-          %td.changed= (i == @doc.log_entries.size ? t('document.created') : log_entry.changed_fields)
+      %table.log
+        - @doc.log_entries.each_with_index do |log_entry, i|
+          -next if log_entry.user.nil?
+          %tr
+            %td.modifier= log_entry.user.fullname_or_name
+            %td.created_at= l( log_entry.created_at )
+            %td.changed= (i == @doc.log_entries.size ? t('document.created') : log_entry.changed_fields)

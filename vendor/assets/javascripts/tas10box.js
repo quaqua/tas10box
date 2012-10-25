@@ -93,6 +93,15 @@ $( function(){
          }})
   })
 
+  $('.submit-comment').live('click', function(){
+    $.ajax({ url: $(this).closest('form').attr('action'),
+             type: 'post',
+             dataType: 'script',
+             data: $(this).closest('form').serializeArray()
+    });
+    return false;
+  })
+
   $('.go-to-dashboard').on('click', function(){
     if( $('#tas10-dashboard').is(':visible') && $('#tas10-tab-container .tab').length ){
       $('#tas10-tab-container').fadeIn(300);

@@ -1,5 +1,8 @@
 /**
  * tas10Container styles
+ */
+
+@import colors
 
 .tas10-container, .tas10-dashboard
   position: absolute
@@ -41,7 +44,7 @@
   top: -25px
   left: 0
   height: 26px
-  right: 50px
+  right: 95px
   overflow: hidden
   z-index: 2
 
@@ -50,6 +53,58 @@
   top: 15px
   width: 100%
   height: 0
+
+.tas10-container-tabs-menu
+  position: absolute
+  top: -25px
+  right: 60px
+  cursor: pointer
+  z-index: 10
+  padding: 7px 5px 5px
+  opacity: 0.5
+  background-color: #f0f0f0
+  &:hover
+    opacity: 1
+  .icon-bar
+    display: block
+    width: 18px
+    height: 2px
+    background-color: #555
+    -webkit-border-radius: 1px
+    -moz-border-radius: 1px
+    border-radius: 1px
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25)
+    -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25)
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25)
+    margin-bottom: 2px
+  .context-menu
+    position: absolute
+    top: 25px
+    right: 0
+    list-style: none
+    padding: 0
+    margin: 0
+    background-color: #f0f0f0
+    box-shadow: 2px 5px 5px #999
+    display: none
+    li
+      padding: 5px
+      border-bottom: 1px solid #ddd
+      &:last-child
+        border-bottom: none
+      p
+        padding: 2px 5px
+        margin: 0 25px 0 0
+        white-space: nowrap
+        color: #777
+        &:hover
+          color: black
+      .close-tab-from-menu
+        border: 1px solid #f0f0f0
+        &:hover
+          background-color: $TAS10_COLOR_0
+          border-color: $TAS10_COLOR_0
+          background-image: url("/assets/3rdparty/jquery-ui/images/ui-icons_ffffff_256x240.png")
 
 .tas10-container-tabs
   list-style-type: none

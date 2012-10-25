@@ -21,7 +21,7 @@
     #{doc.new_record? ? t('create') : t('save')}
   -unless doc.new_record?
     -if doc.respond_to?(:published?)
-      %a.live-tipsy.publish-webpage-button.float-right{ :href => publish_webpage_path(doc), :class => "publish-#{doc.id}-button #{doc.published? ? 'published' : nil}", :"original-title" => (doc.published? ? t('webpages.is_published') : t('webpages.is_locked') ), :"data-remote" => true, :"data-method" => "post"}
+      %a.live-tipsy.publish-webpage-button.float-right{ :href => publish_document_path(doc), :class => "publish-#{doc.id}-button #{doc.published? ? 'published' : nil}", :"original-title" => (doc.published? ? t('webpages.is_published') : t('webpages.is_locked') ), :"data-remote" => true, :"data-method" => "post"}
         %span.icon-white{ :class => (doc.published? ? "icon-ok-sign" : "icon-ban-circle")}
     -unless defined?(skip_view_button)
       %a.live-tipsy.view-webpage-button.float-right{ :href => webpage_path(doc), :target => "_blank", :"original-title" => t('webpages.view') }

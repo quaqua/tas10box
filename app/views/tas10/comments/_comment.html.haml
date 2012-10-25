@@ -1,16 +1,17 @@
 -doc = @doc || comment.document
 
 %tr{ :"data-id" => comment.id }
-  %td
-    - if comment.user
-      = image_tag( picture_of_user_path(comment.user), :class => "userpic x50 live-tipsy float-right" )
-    - else
-      = image_tag( picture_of_user_path(current_user), :class => "userpic x50 float-right" )
-  %td
+  -if defined?(withpics) && withpics
+    %td
+      - if comment.user
+        = image_tag( picture_of_user_path(comment.user), :class => "userpic x30 live-tipsy float-right" )
+      - else
+        = image_tag( picture_of_user_path(current_user), :class => "userpic x30 float-right" )
+  %td{:colspan => (defined?(withpics) && withpics ? 1 : 2) }
     %p.date
       -if comment.user && (current_user.id == comment.user.id || current_user.admin?)
         -if doc
-          = link_to( raw("<span class=\"tas10-icon16 tas10-icon-trash\"></span>"), document_comment_path( doc, comment ), :class => "delete-comment float-right tas10-button with-icon delete", :remote => true, :method => :delete, :confirm => t('really_delete', :name => comment.content) )
+          = link_to( t('delete'), document_comment_path( doc, comment ), :class => "desc delete-comment float-right", :remote => true, :method => :delete, :confirm => t('really_delete', :name => comment.content) )
       %b
         = comment.user.fullname_or_name if comment.user
       = t('ago')

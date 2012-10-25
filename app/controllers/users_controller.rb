@@ -62,7 +62,7 @@ class UsersController < Tas10boxController
   # ?size=50
   #
   def picture_of
-    size = params[:size] || "50"
+    size = params[:size] || "30"
     filename = File::join( Tas10box::defaults[:datastore], 'userpics', params[:id], "thumb_#{size}x#{size}.png" )
     use_filename = "userpic_#{params[:id]}_#{size}x#{size}.png"
     puts "looking up #{filename}"

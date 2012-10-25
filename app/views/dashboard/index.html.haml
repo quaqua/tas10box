@@ -27,7 +27,7 @@
         .content
           %table.comments
             -@messages.each do |comment|
-              = render comment
+              = render :partial => comment, :locals => {:withpics => true}
 
 
 =render 'common/tmpls/all'
