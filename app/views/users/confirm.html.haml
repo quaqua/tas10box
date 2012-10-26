@@ -19,12 +19,12 @@
     %p
       %label= t('login.password')
     %p
-      = f.password_field( :password, :class => "js-get-focus new-password", :style => "width: 200px" )
+      = f.password_field( :password, :class => "js-get-focus new-password", :style => "width: 150px" )
 
     %p
       %label= t('login.password_confirm')
     %p
-      = f.password_field( :password_confirmation, :class => "confirm-password", :style => "width: 200px" )
+      = f.password_field( :password_confirmation, :class => "confirm-password", :style => "width: 150px" )
 
       =f.submit( t('user.activate'), :class => "btn btn-inverse" )
 

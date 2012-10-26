@@ -430,6 +430,17 @@ fieldset
     float: left
     height: 16px
     padding: 3px 5px 3px 4px
+  .warn-label
+    position: absolute
+    top: 10px
+    left: 0
+    right: 0
+    margin: auto
+    width: 200px
+    text-align: center
+    color: #d55
+    text-transform: uppercase
+    text-shadow: 1px 0 3px #ccc
   a
     float: left
     padding: 3px 5px 3px 4px
@@ -584,7 +595,9 @@ fieldset
       margin-right: 5px
 
   .close-button
-    margin: 5px 0
+    opacity: 0.5
+    &:hover
+      opacity: 1
 
 .tas10-dashboard
   top: 10px

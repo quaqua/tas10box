@@ -117,7 +117,7 @@ class UsersController < Tas10boxController
     @users_and_groups += @known.all
 
     respond_to do |format|
-      format.json{ render :json => @users_and_groups.map{ |u| {:id => u.id, :name => u.fullname_or_name, :label => u.fullname_or_name } }.to_json }
+      format.json{ render :json => @users_and_groups.map{ |u| {:id => u.id, :name => "#{u.fullname_or_name}#{" - #{u.email}" if u.respond_to?(:email)}}", :label => "#{u.fullname_or_name}#{" - #{u.email}" if u.respond_to?(:email)}" } }.to_json }
     end
   end
 

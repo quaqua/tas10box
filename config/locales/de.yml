@@ -68,6 +68,7 @@ de:
   copy_to: "Kopieren nach"
   export: "Exportieren"
   template: "Vorlage"
+  read_only_access: "Nur Lesezugriff"
   sum: "Summe"
   print_pdf: "PDF zum Drucken"
 

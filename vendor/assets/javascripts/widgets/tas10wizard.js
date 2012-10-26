@@ -17,11 +17,21 @@
 
     if( arguments[0] === 'showMessage' && arguments[1].length > 0 ){
       var error = arguments[2]
-        , msg = $('<div/>');
+        , msg = $('<div/>')
+        , msgs = $(this).find('.wizard-messages');
       if( error )
         msg.addClass('error');
       msg.html( arguments[1] );
-      $(this).find('.wizard-messages').html( msg ).slideDown(200);
+      msgs.html( msg ).slideDown(200);
+      if( $(window).scrollTop() > msgs.offset().top ){
+        var transientMessage = $('<div id="transientMessage"/>')
+        transientMessage.attr('class', msgs.attr('class'))
+        transientMessage.css({ position: 'fixed', top: 10, left: msgs.offset().left, margin: 0, width: msgs.width()})
+        transientMessage.html( msgs.html() ).show();
+        $('body').append(transientMessage)
+        setTimeout( function(){ transientMessage.animate( {top: -100} ); }, 2000 );
+        setTimeout( function(){ transientMessage.remove(); }, 2500 );
+      }
       return;
     }
 
@@ -47,17 +57,26 @@
     this.append(footer);
 
     this.find('fieldset').hide().addClass('wizard').each(function(i, fieldset){
-      var title = $('<div class="title pull-left" data-anchor="'+i+'"><h1>'+_options.i18n.step+' ' + (i+1).toString() + '</h1></div>');
-      title.append($('<p/>').text($(fieldset).find('legend').text()));
+      var title;
+      if( $(window).width() > 767 ){
+        title = $('<div class="title pull-left" data-anchor="'+i+'"><h1>'+_options.i18n.step+' ' + (i+1).toString() + '</h1></div>');
+        title.append($('<p/>').text($(fieldset).find('legend').text()));
+      } else
+        title = $('<div class="title pull-left" data-anchor="'+i+'"><h1>'+(i+1).toString()+'</h1></div>');
       self.find('.wizard-header').append(title);
       $(fieldset).find('legend').hide();
     })
 
     self.find('.wizard-header .title').on('click', function(){
-      $(self).find('button.submit').hide();
-      if( $(self).find('fieldset.active').length && $(self).find('fieldset.active').attr('data-validate') ){
-        if( !eval($(self).find('fieldset.active').attr('data-validate')+'.call(self)' ) )
-          return;
+      self.find('button.submit').hide();
+      if( self.find('.wizard-header .title.active') &&
+          parseInt($(this).attr('data-anchor')) >
+          parseInt(self.find('.wizard-header .title.active').attr('data-anchor'))
+           ){
+        if( $(self).find('fieldset.active').length && $(self).find('fieldset.active').attr('data-validate') ){
+          if( !eval($(self).find('fieldset.active').attr('data-validate')+'.call(self)' ) )
+            return;
+        }
       }
       $(self).find('fieldset').removeClass('active').hide();
       self.find('.wizard-header .title.active').removeClass('active');

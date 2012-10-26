@@ -1,5 +1,8 @@
 .item-actions.ui-helper-clearfix
   %span.spacer
+  - unless doc.can_write?
+    %span.warn-label
+      =t('read_only_access')
   - if doc.new_record?
     .path
       -if doc
@@ -17,7 +20,7 @@
       %span.tas10-icon16.tas10-icon-details
     %span.spacer
 
-  %a.submit-form.btn.btn-inverse.btn-mini.float-right{ :href => "#"}
+  %a.submit-form.btn.btn-inverse.btn-mini.float-right{ :href => "#", :style => "margin-left: 5px"}
     #{doc.new_record? ? t('create') : t('save')}
   -unless doc.new_record?
     -if doc.respond_to?(:published?)
