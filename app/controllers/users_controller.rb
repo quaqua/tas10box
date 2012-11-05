@@ -37,13 +37,17 @@ class UsersController < Tas10boxController
   def update
     if renew_authentication
       @user = get_user_by_id
-      puts "userid: #{@user.id} current: #{current_user.id}"
       if @user.id == current_user.id || current_user.admin?
-        puts 'inside'
+        puts "HEEEE"
         unless params[:tas10_user][:password].blank?
           @user.password = params[:tas10_user][:password]
           @user.password_confirmation = params[:tas10_user][:password_confirmation]
         end
+        if current_user.admin?
+          @user.admin = ( params[:tas10_user][:admin] == "1" )
+        end
+        params[:tas10_user].delete(:admin)
+        params[:tas10_user].delete(:password)
         tas10_safe_update( @user, params[:tas10_user] )
       else
         flash[:error] = t('insufficient_rights', :name => @user.fullname_or_name)

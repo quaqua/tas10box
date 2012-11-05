@@ -16,6 +16,7 @@ de:
     password: "Passwort"
     password_confirm: "Passwort wiederholen"
     failed: "Anmeldung fehlgeschlagen"
+    admin: "Administrator?"
     session_expired: "Deine Sitzung ist abgelaufen (Limit: %{limit} Minuten)"
   logout: "Abmelden"
 

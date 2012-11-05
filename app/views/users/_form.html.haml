@@ -23,6 +23,13 @@
     .controls
       =f.password_field :password, :class => 'new-password'
 
+  -if current_user.admin?
+    .control-group
+      %label.control-label
+        =t('login.admin')
+      .controls
+        =f.check_box :admin
+
   .control-group
     %label.control-label
       =t('login.password_confirm')
