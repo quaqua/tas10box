@@ -64,7 +64,7 @@ class HistoryController < Tas10boxController
         :group => group
         )
     if l.action == 'audit.deleted'
-      m += " <a href=\"/documents/#{l.id}/restore\" class=\"undo\" data-remote=\"true\" data-method=\"post\">#{t('undo')}</a>"
+      m += " <a href=\"/documents/#{l.document_id}/restore\" class=\"undo\" data-remote=\"true\" data-method=\"post\">#{t('undo')}</a>"
     end
     m
   end

@@ -138,6 +138,7 @@ class DocumentsController < Tas10boxController
     params[:keep_open] = true
     if params[:id]
       if @doc = Tas10::Document.deleted.where(:id => params[:id]).first_with_user( current_user )
+        puts @doc.inspect
         if @doc.can_delete?
           if @doc.restore
             flash[:notice] = t('restored', :name => @doc.name)
