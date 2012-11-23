@@ -60,9 +60,9 @@ $(function(){
     var selPrivileges = ""
       , form = $(this).closest('form');
     $(form).find('.sel').each(function(){
-      selPrivileges = $(this).text() + selPrivileges;
+      selPrivileges = selPrivileges + $(this).text();
     });
-    $(form).find('input.privileges').val(selPrivileges);
+    $(form).find('input[name=privileges]').val(selPrivileges);
   });
 
   $('.tas10-acl .add').live('click', function(){
