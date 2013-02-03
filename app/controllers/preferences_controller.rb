@@ -19,6 +19,7 @@ class PreferencesController < Tas10boxController
       end
       Tas10box::defaults_set(key, value)
     end
+    Tas10box::defaults_set('datastore', File::join(Rails.root, 'datastore'))
     require 'fileutils'
     filename = File::join( Rails.root, "config", "tas10box.yml" )
     FileUtils::cp filename, "#{filename}_bak_#{Time.now.strftime('%Y-%m-%d_%H%M%S')}"
