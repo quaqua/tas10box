@@ -8,7 +8,7 @@
         <span class="tas10-icon16 tas10-icon-checkbox tas10-checkbox"></span>
         <span class="type"><span class="tas10-icon16 black tas10-icon-{{:_type.toLowerCase()}} float-left"></span>
         {{if acl["000000000000000000000000"]}}<span class="published"></span>{{/if}}</span>
-        <a href="/{{:_type.toLowerCase()}}s/{{:_id}}?browser=true" data-remote="true" class="title item_{{:_id}}_title{{if color && color.length > 0}} item-color" style="background-color: {{:color}}{{/if}}" data-attr-name="name-{{:_id}}">{{:name}}</a>
+        <a href="/{{:_type === 'DataFile' ? 'image' : _type.toLowerCase()}}s/{{:_id}}?browser=true" data-remote="true" class="title item_{{:_id}}_title{{if color && color.length > 0}} item-color" style="background-color: {{:color}}{{/if}}" data-attr-name="name-{{:_id}}">{{:name}}</a>
         {{if ~defined(balance)}}
           <span class="open-amount balance">{{:~formattedCurrency(balance)}}</span>
         {{/if}}
